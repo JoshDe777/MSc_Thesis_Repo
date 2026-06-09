@@ -1,14 +1,7 @@
 fileFormatVersion: 2
-guid: 40740bafa0baae440b38ff43d74ab854
+guid: f3410f83a53c00c4b939a45642781b99
 DefaultImporter:
   externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 203643
-  packageName: Stadium Crowd Generator
-  packageVersion: 1.0
-  assetPath: Assets/Stadium Crowd Generator/Scenes/Demo.unity
-  uploadId: 463500

@@ -64,8 +64,6 @@ public class GrandstandCreator : MonoBehaviour
                 if (optimization.GPUInstancedMeshes != flag)
                 {
                     //Store Variables at the start
-                    if(optimization.GPUInstancedMeshes)
-                    print("Please check this option only when the grandstand is completely configured. Please read the documentation on the usage of this feature.");
                 }
                 else
                 {

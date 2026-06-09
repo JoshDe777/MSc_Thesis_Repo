@@ -97,7 +97,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Vector1_A72722ED: 52
+    - Vector1_A72722ED: 100
     - Vector1_B480DBBC: 1
     - Vector1_D4141441: 0.92
     - _AlphaClip: 0
@@ -106,11 +106,11 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _Depth: 5.31
-    - _Displacement: 0.1
+    - _Displacement: 0.12
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FoamDistance: 3.85
-    - _FoamStrength: 0.33
+    - _FoamDistance: 65.5
+    - _FoamStrength: -0.01
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -134,9 +134,9 @@ Material:
     - _DeepColour: {r: 0.4764151, g: 0.98757994, b: 1, a: 0.7019608}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainNormalTiling: {r: 30, g: 30, b: 0, a: 0}
-    - _SeaFoamTiling: {r: 22, g: 22, b: 0, a: 0}
+    - _SeaFoamTiling: {r: 100, g: 100, b: 0, a: 0}
     - _SecondaryNormalTiling: {r: 5, g: 5, b: 0, a: 0}
-    - _ShallowColour: {r: 0.5896226, g: 1, b: 0.8537298, a: 0.5803922}
+    - _ShallowColour: {r: 0.14069061, g: 0.92629635, b: 0.9811321, a: 0.5803922}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
