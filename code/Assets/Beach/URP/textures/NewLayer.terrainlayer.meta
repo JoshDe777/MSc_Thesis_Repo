@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 590e27e9995f75344800914342d42c35
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176533
+  packageName: Tropical Beach URP
+  packageVersion: 1.0
+  assetPath: Assets/Beach/URP/textures/NewLayer.terrainlayer
+  uploadId: 485976

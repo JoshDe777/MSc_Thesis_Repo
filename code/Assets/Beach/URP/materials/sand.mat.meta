@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 069fcd1f217f70f4495d7d78080ce513
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176533
+  packageName: Tropical Beach URP
+  packageVersion: 1.0
+  assetPath: Assets/Beach/URP/materials/sand.mat
+  uploadId: 485976

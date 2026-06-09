@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0d45e12d633231d46a8c37b6f4dff85f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176533
+  packageName: Tropical Beach URP
+  packageVersion: 1.0
+  assetPath: Assets/Beach/URP/sample scene/SampleScene_Profiles/Post-process Volume
+    Profile.asset
+  uploadId: 485976

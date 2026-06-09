@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cb6457c8adb8c78499d039c9f6e9d528
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 203643
+  packageName: Stadium Crowd Generator
+  packageVersion: 1.0
+  assetPath: Assets/Stadium Crowd Generator/Prefabs/SkinnedMesh Grandstand.prefab
+  uploadId: 463500

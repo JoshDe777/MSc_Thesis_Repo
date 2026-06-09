@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1d1875f96cf08954f92761d88ac2618f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176533
+  packageName: Tropical Beach URP
+  packageVersion: 1.0
+  assetPath: Assets/Beach/URP/materials/rocks.mat
+  uploadId: 485976

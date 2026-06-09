@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0e58d5455ebce0640aec5902ce0728d8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 176533
+  packageName: Tropical Beach URP
+  packageVersion: 1.0
+  assetPath: Assets/Beach/URP/materials/URP-water.mat
+  uploadId: 485976

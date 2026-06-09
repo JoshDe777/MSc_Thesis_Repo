@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ec68582c6e4de3a408d92b373bd40951
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 203643
+  packageName: Stadium Crowd Generator
+  packageVersion: 1.0
+  assetPath: Assets/Stadium Crowd Generator/Spectators/SkinnedMesh Prefabs/Clothing
+    Materials/Clothes 1.mat
+  uploadId: 463500
