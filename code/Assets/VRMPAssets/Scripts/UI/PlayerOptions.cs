@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.Audio;
 using TMPro;
@@ -45,6 +45,7 @@ namespace XRMultiplayer
         [SerializeField] TMP_Text m_VoiceChatStatus;
 
         [Header("Player Options")]
+        [SerializeField] bool m_tunnelingVignetteEnabledByDefault = true;
         [SerializeField] Vector2 m_MinMaxMoveSpeed = new Vector2(2.0f, 10.0f);
         [SerializeField] Vector2 m_MinMaxTurnAmount = new Vector2(15.0f, 180.0f);
         [SerializeField] float m_SnapTurnUpdateAmount = 15.0f;
@@ -82,6 +83,8 @@ namespace XRMultiplayer
             permCallbacks = new PermissionCallbacks();
             permCallbacks.PermissionDenied += PermissionCallbacks_PermissionDenied;
             permCallbacks.PermissionGranted += PermissionCallbacks_PermissionGranted;
+
+            ToggleTunnelingVignette(m_tunnelingVignetteEnabledByDefault);
         }
 
         private void UpdateHostVisuals(ulong newHostId)
