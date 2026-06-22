@@ -10,6 +10,8 @@ TagManager:
   - PlayerHand
   - Destroyer
   - Spectator
+  - Ground
+  - BoundsFlag
   layers:
   - Default
   - TransparentFX
