@@ -38,13 +38,12 @@ public class CrowdManager : MonoBehaviour
         SetDensity(CrowdStates.DENSE);
     }
 
-    public void SetDensityInput(TMP_Dropdown dropdown)
+    public void SetDensity(CrowdStates newDensity)
     {
-        SetDensity((CrowdStates) dropdown.value);
-    }
+        // spare effort if state unchanged.
+        if (crowdState == newDensity)
+            return;
 
-    private void SetDensity(CrowdStates newDensity)
-    {
         crowdState = newDensity;
         int counter = 0;
 

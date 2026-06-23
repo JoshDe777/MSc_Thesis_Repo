@@ -289,4 +289,6 @@ MonoBehaviour:
   OnBallKilled:
     m_PersistentCalls:
       m_Calls: []
-  selfDestructTimeLeft: 10
+  debugSpherePrefab: {fileID: 6436963157767928321, guid: d9092baa3a1c7a14e9d908257b5a661b,
+    type: 3}
+  selfDestructTimeLeft: 5

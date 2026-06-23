@@ -9,6 +9,7 @@ namespace Volleyball {
     [RequireComponent(typeof(XRGrabInteractable))]
     public class VolleyballController : MonoBehaviour
     {
+        #region variable declaration
         /// <summary>
         /// The Rigidbody attached to the Volleyball; Required to function.
         /// </summary>
@@ -38,8 +39,15 @@ namespace Volleyball {
         public Teams lastTouch { get; private set; } = Teams.Team1;
         public Vector3 killPos { get; private set; } = Vector3.zero;
 
-        [SerializeField] private float selfDestructTimeLeft = 10.0f;
+        #if UNITY_EDITOR
+        [SerializeField] private GameObject debugSpherePrefab;
+        private GameObject activeDebugSphere = null;
+        #endif
 
+        [SerializeField] private float selfDestructTimeLeft = 10.0f;
+        #endregion
+
+        #region Unity Functions
         private void Awake()
         {
             OnBallDestroy = new();
@@ -73,7 +81,9 @@ namespace Volleyball {
             else
                 SelfDestruct();
         }
+        #endregion
 
+        #region game state transition functions
         /// <summary>
         /// Called when instantiated. Disables physics movement & gravity, and sets the ball to a dormant state until grabbed.
         /// </summary>
@@ -82,7 +92,6 @@ namespace Volleyball {
             body.constraints = RigidbodyConstraints.FreezePosition;
             body.useGravity = false;
             lifetime = VolleyballLifetimeState.AwaitingServe;
-            Debug.Log("Entering Start State.");
         }
 
         /// <summary>
@@ -92,7 +101,6 @@ namespace Volleyball {
         {
             body.constraints = RigidbodyConstraints.None;
             lifetime = VolleyballLifetimeState.Serving;
-            Debug.Log("Entering Serve.");
         }
 
         /// <summary>
@@ -104,7 +112,6 @@ namespace Volleyball {
             body.useGravity = true;
             lifetime = VolleyballLifetimeState.InPlay;
             lastTouch = Teams.Team1;                        // stop-gap for now; Assuming only 1 team so far.
-            Debug.Log("Entering Play.");
         }
 
         /// <summary>
@@ -115,7 +122,11 @@ namespace Volleyball {
             // ignore interactions optionally.
             // start self-destruct timer.
             lifetime = VolleyballLifetimeState.DeadBall;
-            Debug.Log("Ball Killed.");
+
+            #if UNITY_EDITOR
+            // instantiate debug sphere on contact point for feedback
+            activeDebugSphere = Instantiate(debugSpherePrefab, killPos, Quaternion.identity);
+            #endif
         }
 
         /// <summary>
@@ -132,20 +143,45 @@ namespace Volleyball {
             OnBallKilled.RemoveAllListeners();
             OnBallDestroy.RemoveAllListeners();
 
-            Debug.Log("Self-destructing.");
+            // destroy any debug spheres attached to the ball.
+            #if UNITY_EDITOR
+            if(activeDebugSphere)
+                Destroy(activeDebugSphere);
+            #endif
 
             // destroy the prefab.
             Destroy(gameObject);
         }
+        #endregion
 
+        #region collision & trigger handling
         private void OnCollisionEnter(Collision collision)
         {
             // ignore collision if not with ground
-            if (!collision.gameObject.CompareTag("Ground"))
+            if (!(lifetime == VolleyballLifetimeState.InPlay) || !collision.gameObject.CompareTag("Ground"))
                 return;
 
+            var contactpoint = collision.GetContact(0);
+            killPos = contactpoint.point;
+
             OnBallKilled.Invoke();
-            killPos = collision.transform.position;
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("BallBoundsCollider")){
+                OnExitBounds();
+            }
+        }
+        #endregion
+
+        #region OOB handling
+        private void OnExitBounds()
+        {
+            killPos = transform.position;
+
+            OnBallKilled.Invoke();
+        }
+        #endregion
     }
 }

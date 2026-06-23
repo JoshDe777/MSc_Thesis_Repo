@@ -12,6 +12,7 @@ TagManager:
   - Spectator
   - Ground
   - BoundsFlag
+  - BallBoundsCollider
   layers:
   - Default
   - TransparentFX

@@ -30,7 +30,7 @@ namespace XRMultiplayer
             transform.rotation = Quaternion.Euler(rot);
 
             transform.position += transform.forward * m_DistanceFromFace;
-            transform.position += Vector3.up * -m_YOffset;
+            transform.position += Vector3.up * m_YOffset;
         }
     }
 }

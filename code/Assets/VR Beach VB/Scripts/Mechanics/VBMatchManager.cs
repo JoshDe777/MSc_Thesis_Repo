@@ -2,19 +2,31 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Volleyball;
+using XRMultiplayer;
 
 namespace Volleyball
 {
     public class VBMatchManager : MonoBehaviour
     {
+
+        [Header("--------------Match Data--------------")]
         [SerializeField] uint[] score = new uint[2] { 0, 0 };
         [SerializeField] uint maxScore = 11;
         [SerializeField] uint crowdChangeInterval = 5;
-        [SerializeField] private Transform[] bounds;
 
-        [SerializeField] List<TMP_Text> scoreFields;
-        [SerializeField] List<Transform> ballSpawnPositions;
+        [Header("--------------Prefabs--------------")]
         [SerializeField] GameObject ballPrefab;
+
+        [Header("--------------Scene Transforms--------------")]
+        [SerializeField] private Transform[] bounds;
+        [SerializeField] List<Transform> ballSpawnPositions;
+
+        [Header("--------------Scene UI Objects--------------")]
+        [SerializeField] List<TMP_Text> scoreFields;
+        [SerializeField] PlayerHudNotification notification;
+
+
+        // --------------Non-Serialized--------------
         private CrowdOptionsMenu crowdOptions;
         private GameObject activeBall = null;
         private Vector3 killPos = Vector3.zero;
@@ -63,8 +75,10 @@ namespace Volleyball
             uint newScore = team1 ? ++score[0] : ++score[1];
 
             // verify if the game is won.
-            if (newScore == maxScore)
+            if (newScore == maxScore){
                 EndMatch(team1);
+                return;
+            }
 
             // place the ball at the back where the winners serve
             UpdateScoreUI();
@@ -72,12 +86,17 @@ namespace Volleyball
             // every n points, pause the game & prompt the player to update the crowd.
             if ((score[0] + score[1]) % crowdChangeInterval == 0)
                 PromptCrowdUpdate();
+
+            string serving = team1 ? "Team 1" : "Team 2";
+            // send a notification to who's serving.
+            notification.ShowText(serving + " serve", 1.5f);
         }
 
         private void EndMatch(bool team1)
         {
+            UpdateScoreUI();
             string winner = team1 ? "Team 1" : "Team 2";
-            Debug.Log("Game Over! " + winner + " won!");
+            notification.ShowText(winner + " wins with " + score[0] + " to " + score[1] + "!");
             score = new uint[2] { 0, 0 };
         }
         #endregion
@@ -85,7 +104,6 @@ namespace Volleyball
         #region ball management
         private void ResetBall(bool team1)
         {
-            Debug.Log("Resetting Ball (not implemented yet).");
             activeBall = Instantiate(ballPrefab, ballSpawnPositions[team1 ? 0 : 1]);
             var ball = activeBall.GetComponent<VolleyballController>();
             ball.OnBallKilled.AddListener(GetKillInfo);
@@ -98,15 +116,16 @@ namespace Volleyball
             if (IsInBounds(killPos))
             {
                 // courtside = ball closer to team 1 z pos/baseline or team 2 baseline?
-                var distToTeam1Baseline = killPos.z - bounds[0].position.z;
-                var distToTeam2Baseline = bounds[1].position.z - killPos.z;
+                var distToTeam1Baseline = Mathf.Abs(killPos.z - bounds[0].position.z);
+                var distToTeam2Baseline = Mathf.Abs(killPos.z - bounds[1].position.z);
 
                 // if ball landed on team 1's court side, point goes to team 2, else team 1
                 pointWinner = distToTeam1Baseline < distToTeam2Baseline ? Teams.Team2 : Teams.Team1;
             }
             // if ball out of bounds, last team to touch lost the point.
-            else
+            else{
                 pointWinner = lastTouch == Teams.Team2 ? Teams.Team1 : Teams.Team2;
+            }
 
             // match updates & ball reset
             TeamScored(pointWinner == Teams.Team1);
