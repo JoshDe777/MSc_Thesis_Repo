@@ -158,19 +158,27 @@ namespace Volleyball {
         private void OnCollisionEnter(Collision collision)
         {
             // ignore collision if not with ground
-            if (!(lifetime == VolleyballLifetimeState.InPlay) || !collision.gameObject.CompareTag("Ground"))
+            if (!(lifetime == VolleyballLifetimeState.InPlay))
                 return;
 
-            var contactpoint = collision.GetContact(0);
-            killPos = contactpoint.point;
+            if(collision.gameObject.CompareTag("Ground")){
+                var contactpoint = collision.GetContact(0);
+                killPos = contactpoint.point;
 
-            OnBallKilled.Invoke();
+                OnBallKilled.Invoke();
+                Debug.Log("Ball Killed [grounded]");
+            }
         }
 
         private void OnTriggerExit(Collider other)
         {
+            // ignore oob if not in play
+            if(!(lifetime == VolleyballLifetimeState.InPlay) || !other.gameObject.CompareTag("BallBoundsCollider"))
+                return;
+
             if (other.CompareTag("BallBoundsCollider")){
                 OnExitBounds();
+                Debug.Log(other.gameObject.name);
             }
         }
         #endregion
@@ -181,6 +189,7 @@ namespace Volleyball {
             killPos = transform.position;
 
             OnBallKilled.Invoke();
+            Debug.Log("Ball Killed [OOB]");
         }
         #endregion
     }
