@@ -104,7 +104,8 @@ namespace Volleyball
         #region ball management
         private void ResetBall(bool team1)
         {
-            activeBall = Instantiate(ballPrefab, ballSpawnPositions[team1 ? 0 : 1]);
+            activeBall = Instantiate(ballPrefab);
+            activeBall.transform.position = ballSpawnPositions[team1 ? 0 : 1].position;
             var ball = activeBall.GetComponent<VolleyballController>();
             ball.OnBallKilled.AddListener(GetKillInfo);
             ball.OnBallDestroy.AddListener(ProcessPoint);

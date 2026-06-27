@@ -92,6 +92,10 @@ namespace Volleyball {
             body.constraints = RigidbodyConstraints.FreezePosition;
             body.useGravity = false;
             lifetime = VolleyballLifetimeState.AwaitingServe;
+
+            // ignore hands physics
+            foreach(var mgr in FindObjectsByType<HandsManager>())
+                mgr.DisableHandPhysics(GetComponent<SphereCollider>());
         }
 
         /// <summary>
@@ -112,6 +116,10 @@ namespace Volleyball {
             body.useGravity = true;
             lifetime = VolleyballLifetimeState.InPlay;
             lastTouch = Teams.Team1;                        // stop-gap for now; Assuming only 1 team so far.
+
+            // reenable hand physics
+            foreach (var mgr in FindObjectsByType<HandsManager>())
+                mgr.RequestEnableHandPhysics();
         }
 
         /// <summary>

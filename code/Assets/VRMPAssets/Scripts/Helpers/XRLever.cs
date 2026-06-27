@@ -1,23 +1,18 @@
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 namespace UnityEngine.XR.Content.Interaction
 {
     /// <summary>
     /// An interactable lever that snaps into an on or off position by a direct interactor
     /// </summary>
-    public class XRLever : XR.Interaction.Toolkit.Interactables.XRBaseInteractable
+    public class XRLever : UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable
     {
         const float k_LeverDeadZone = 0.1f; // Prevents rapid switching between on and off states when right in the middle
 
         [SerializeField]
         [Tooltip("The object that is visually grabbed and manipulated")]
         Transform m_Handle = null;
-
-        [SerializeField]
-        [Tooltip("The transform to snap the interactor to when holding the lever")]
-        Transform m_InteractorSnapTransform = null;
 
         [SerializeField]
         [Tooltip("The value of the lever")]
@@ -128,15 +123,6 @@ namespace UnityEngine.XR.Content.Interaction
             m_Interactor = null;
         }
 
-        public override Transform GetAttachTransform(IXRInteractor interactor)
-        {
-            return m_InteractorSnapTransform;
-        }
-
-        // public override Transform GetAttachTransform(IXRInteractor interactor)
-        // {
-        //     return base.GetAttachTransform(interactor);
-        // }
         public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
         {
             base.ProcessInteractable(updatePhase);
