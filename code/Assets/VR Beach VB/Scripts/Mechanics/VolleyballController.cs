@@ -7,6 +7,7 @@ namespace Volleyball {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(SphereCollider))]
     [RequireComponent(typeof(XRGrabInteractable))]
+    [RequireComponent(typeof(AudioSource))]
     public class VolleyballController : MonoBehaviour
     {
         #region variable declaration
@@ -22,6 +23,10 @@ namespace Volleyball {
         /// The XR Grab Interactable component attached to the Volleyball; Required to function.
         /// </summary>
         private XRGrabInteractable interactable;
+        /// <summary>
+        /// The audio source from which ball clips are played.
+        /// </summary>
+        private AudioSource audioSource;
 
         /// <summary>
         /// A display of the ball's lifetime, from pre-match, serving, in play, to dead.
@@ -42,9 +47,21 @@ namespace Volleyball {
         #if UNITY_EDITOR
         [SerializeField] private GameObject debugSpherePrefab;
         private GameObject activeDebugSphere = null;
-        #endif
+#endif
 
+        [Header("Parameters")]
         [SerializeField] private float selfDestructTimeLeft = 10.0f;
+        [SerializeField] private float defaultAudioModifier = 1.0f;
+
+        [Header("Audio")]
+        [SerializeField] private AudioClip spawnSound;
+        [SerializeField] private AudioClip bounceSound;
+        [SerializeField] private AudioClip digSound;
+        [SerializeField] private AudioClip setSound;
+        [SerializeField] private AudioClip spikeSound;
+        [SerializeField] private AudioClip grabSound;
+        [SerializeField] private AudioClip oobSound;
+        [SerializeField] private AudioClip killSound;
         #endregion
 
         #region Unity Functions
@@ -56,6 +73,8 @@ namespace Volleyball {
             body = GetComponent<Rigidbody>();
             _collider = GetComponent<SphereCollider>();
             interactable = GetComponent<XRGrabInteractable>();
+            audioSource = GetComponent<AudioSource>();
+            audioSource.volume *= defaultAudioModifier;
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -96,6 +115,8 @@ namespace Volleyball {
             // ignore hands physics
             foreach(var mgr in FindObjectsByType<HandsManager>())
                 mgr.DisableHandPhysics(GetComponent<SphereCollider>());
+
+            audioSource.PlayOneShot(spawnSound);
         }
 
         /// <summary>
@@ -105,6 +126,8 @@ namespace Volleyball {
         {
             body.constraints = RigidbodyConstraints.None;
             lifetime = VolleyballLifetimeState.Serving;
+
+            audioSource.PlayOneShot(grabSound);
         }
 
         /// <summary>
@@ -120,6 +143,8 @@ namespace Volleyball {
             // reenable hand physics
             foreach (var mgr in FindObjectsByType<HandsManager>())
                 mgr.RequestEnableHandPhysics();
+
+            audioSource.PlayOneShot(setSound);
         }
 
         /// <summary>
@@ -174,8 +199,11 @@ namespace Volleyball {
                 killPos = contactpoint.point;
 
                 OnBallKilled.Invoke();
+                audioSource.PlayOneShot(killSound);
                 Debug.Log("Ball Killed [grounded]");
             }
+            else
+                audioSource.PlayOneShot(spikeSound);
         }
 
         private void OnTriggerExit(Collider other)
@@ -197,6 +225,7 @@ namespace Volleyball {
             killPos = transform.position;
 
             OnBallKilled.Invoke();
+            audioSource.PlayOneShot(oobSound);
             Debug.Log("Ball Killed [OOB]");
         }
         #endregion
