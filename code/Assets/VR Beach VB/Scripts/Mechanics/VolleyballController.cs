@@ -117,6 +117,7 @@ namespace Volleyball {
                 mgr.DisableHandPhysics(GetComponent<SphereCollider>());
 
             audioSource.PlayOneShot(spawnSound);
+            Debug.Log("Played Spawn Sound.");
         }
 
         /// <summary>
@@ -128,6 +129,7 @@ namespace Volleyball {
             lifetime = VolleyballLifetimeState.Serving;
 
             audioSource.PlayOneShot(grabSound);
+            Debug.Log("Played Grab Sound.");
         }
 
         /// <summary>
@@ -145,6 +147,7 @@ namespace Volleyball {
                 mgr.RequestEnableHandPhysics();
 
             audioSource.PlayOneShot(setSound);
+            Debug.Log("Played Set Sound.");
         }
 
         /// <summary>
@@ -202,14 +205,16 @@ namespace Volleyball {
                 audioSource.PlayOneShot(killSound);
                 Debug.Log("Ball Killed [grounded]");
             }
-            else
+            else{
                 audioSource.PlayOneShot(spikeSound);
+                Debug.Log("Played Spike Sound.");
+            }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            // ignore oob if not in play
-            if(!(lifetime == VolleyballLifetimeState.InPlay) || !other.gameObject.CompareTag("BallBoundsCollider"))
+            // ignore oob if ball dead.
+            if(lifetime == VolleyballLifetimeState.DeadBall || !other.gameObject.CompareTag("BallBoundsCollider"))
                 return;
 
             if (other.CompareTag("BallBoundsCollider")){

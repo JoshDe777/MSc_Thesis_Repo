@@ -3,7 +3,7 @@
 public class HandsManager : MonoBehaviour
 {
     [Header("Collider Assignments")]
-    [SerializeField] private BoxCollider m_HandCollider;
+    [SerializeField] private Collider m_HandCollider;
     //[SerializeField] private BoxCollider m_ThumbCollider;
     private Collider m_ballCollider = null;
 
@@ -30,6 +30,7 @@ public class HandsManager : MonoBehaviour
         m_ballCollider = ball;
         Physics.IgnoreCollision(m_HandCollider, ball, true);
         //Physics.IgnoreCollision(m_ThumbCollider, ball, true);
+        Debug.Log("Disabled Hand Physics!");
     }
 
     // delayed activation for serve
@@ -48,18 +49,6 @@ public class HandsManager : MonoBehaviour
         awaitingHandActivation = false;
         activationTimer = handActivationDelay;
 
-        Debug.Log("Enabled physics!");
-    }
-
-    void OnDrawGizmos()
-    {
-        if (m_HandCollider == null) return;
-
-        Gizmos.color = new Color(0.5f, 1f, 0f, 1f); // Lime green
-
-        // Match the object's transform so the gizmo rotates/scales with it
-        Gizmos.matrix = transform.localToWorldMatrix;
-
-        Gizmos.DrawWireCube(m_HandCollider.center, m_HandCollider.size);
+        Debug.Log("Enabled Hand Physics!");
     }
 }
