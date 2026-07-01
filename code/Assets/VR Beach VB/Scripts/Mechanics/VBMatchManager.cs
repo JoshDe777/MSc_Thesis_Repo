@@ -1,6 +1,8 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
+using Unity.Services.Matchmaker.Models;
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.Events;
 using Volleyball;
 using XRMultiplayer;
 
@@ -25,12 +27,15 @@ namespace Volleyball
         [SerializeField] List<TMP_Text> scoreFields;
         [SerializeField] PlayerHudNotification notification;
 
+        // --------------public events & variables--------------
+        public UnityEvent OnPointScored;
 
         // --------------Non-Serialized--------------
         private CrowdOptionsMenu crowdOptions;
         private GameObject activeBall = null;
         private Vector3 killPos = Vector3.zero;
         private Teams lastTouch = Teams.None;
+        private bool team1WonLastPoint = false;
 
 
         #region Unity Functions
@@ -73,31 +78,41 @@ namespace Volleyball
         {
             // increment the amount of points for the scoring team
             uint newScore = team1 ? ++score[0] : ++score[1];
+            team1WonLastPoint = team1;
 
-            // verify if the game is won.
-            if (newScore == maxScore){
-                EndMatch(team1);
+            // every n points, pause the game & prompt the player to update the crowd.
+            // add listener for EndMatch if match over otherwise ProgressToNextPoint.
+            if ((score[0] + score[1]) % crowdChangeInterval == 0){
+                PromptCrowdUpdate();
+                crowdOptions.OnConfirm.AddListener(newScore == maxScore ? EndMatch : ProgressToNextPoint);
                 return;
             }
 
+            // verify if the game is won.
+            if (newScore == maxScore){
+                EndMatch();
+                return;
+            }
+
+            ProgressToNextPoint();
+        }
+
+        private void EndMatch()
+        {
+            UpdateScoreUI();
+            string winner = team1WonLastPoint ? "Team 1" : "Team 2";
+            notification.ShowText(winner + " wins with " + score[0] + " to " + score[1] + "!");
+            score = new uint[2] { 0, 0 };
+        }
+
+        private void ProgressToNextPoint()
+        {
             // place the ball at the back where the winners serve
             UpdateScoreUI();
 
-            // every n points, pause the game & prompt the player to update the crowd.
-            if ((score[0] + score[1]) % crowdChangeInterval == 0)
-                PromptCrowdUpdate();
-
-            string serving = team1 ? "Team 1" : "Team 2";
+            string serving = team1WonLastPoint ? "Team 1" : "Team 2";
             // send a notification to who's serving.
             notification.ShowText(serving + " serve", 1.5f);
-        }
-
-        private void EndMatch(bool team1)
-        {
-            UpdateScoreUI();
-            string winner = team1 ? "Team 1" : "Team 2";
-            notification.ShowText(winner + " wins with " + score[0] + " to " + score[1] + "!");
-            score = new uint[2] { 0, 0 };
         }
         #endregion
 
@@ -138,6 +153,7 @@ namespace Volleyball
             var ball = activeBall.GetComponent<VolleyballController>();
             killPos = ball.killPos;
             lastTouch = ball.lastTouch;
+            OnPointScored.Invoke();
         }
 
         private bool IsInBounds(Vector3 contact)

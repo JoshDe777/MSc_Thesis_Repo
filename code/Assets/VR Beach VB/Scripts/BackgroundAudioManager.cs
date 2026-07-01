@@ -21,16 +21,6 @@ public class BackgroundAudioManager : MonoBehaviour
     void Start()
     {
         source = GetComponent<AudioSource>();
-
-        AudioListener listener = FindObjectOfType<AudioListener>();
-        if (listener == null)
-            Debug.LogError("No AudioListener found in scene!");
-        else
-            Debug.Log($"AudioListener is on: {listener.gameObject.name}");
-
-        Debug.Log($"Spatial Blend: {source.spatialBlend}");
-        Debug.Log($"Volume: {source.volume}");
-
         NextSong();
     }
 

@@ -30,7 +30,6 @@ public class HandsManager : MonoBehaviour
         m_ballCollider = ball;
         Physics.IgnoreCollision(m_HandCollider, ball, true);
         //Physics.IgnoreCollision(m_ThumbCollider, ball, true);
-        Debug.Log("Disabled Hand Physics!");
     }
 
     // delayed activation for serve
@@ -48,7 +47,5 @@ public class HandsManager : MonoBehaviour
         // reset timer & quit timer consideration
         awaitingHandActivation = false;
         activationTimer = handActivationDelay;
-
-        Debug.Log("Enabled Hand Physics!");
     }
 }

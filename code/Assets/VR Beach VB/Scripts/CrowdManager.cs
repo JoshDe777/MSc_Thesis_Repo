@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Volleyball;
 
 public enum CrowdStates
 {
@@ -13,11 +15,28 @@ public enum CrowdStates
 
 public class CrowdManager : MonoBehaviour
 {
-    private List<GrandstandCreator> crowdManagers = new();
-    private List<GameObject> spectators = new();
-    [SerializeField]
-    private CrowdStates crowdState = CrowdStates.DENSE;
+    // --------------script references--------------
+    private VBMatchManager matchManager;
+    private readonly List<GrandstandCreator> crowdManagers = new();
+    private readonly List<GameObject> spectators = new();
 
+    [Header("Settings & Paramters")]
+    [SerializeField] private CrowdStates crowdState = CrowdStates.EMPTY;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource[] sources;
+    [SerializeField] private List<AudioClip> lv1Ambiant;
+    [SerializeField] private List<AudioClip> lv2Ambiant;
+    [SerializeField] private List<AudioClip> lv3Ambiant;
+    [SerializeField][Tooltip("Applause clips in ascending order of level.")] private AudioClip[] applause;
+
+    // --------------private variables--------------
+    /// <summary>
+    /// The currently playing audio track.
+    /// </summary>
+    private readonly AudioClip[] nowPlaying = new AudioClip[2] { null, null};
+
+    #region Unity Functions
     private void Start()
     {
         // get all GrandstandCreators in scene and add them to the list of stands to manage.
@@ -34,10 +53,27 @@ public class CrowdManager : MonoBehaviour
         if (spectators.Count == 0)
             Debug.LogError("Couldn't find any spectators in game!");
 
+        if (applause.Length != 3)
+            Debug.LogError("Incorrect amount of applause clips assigned! (expecting 3)");
+
         // set to full density by default
         SetDensity(CrowdStates.DENSE);
+
+        matchManager = FindAnyObjectByType<VBMatchManager>();
+        if (matchManager == null)
+            Debug.LogError("Couldn't find a VBMatchManager in scene!");
+
+        matchManager.OnPointScored.AddListener(PlayApplauseSounds);
     }
 
+    private void Update() => UpdateAudio();
+    #endregion
+
+    #region GameObject density
+    /// <summary>
+    /// Updates the crowd's appearance and audio to a new density value.
+    /// </summary>
+    /// <param name="newDensity">The new desired density.</param>
     public void SetDensity(CrowdStates newDensity)
     {
         // spare effort if state unchanged.
@@ -70,7 +106,67 @@ public class CrowdManager : MonoBehaviour
             spectator.SetActive((counter % 3) < (int) crowdState);
             counter++;
         }
+
+        SetAudioDensity();
     }
 
     public string GetCrowdState() => crowdState.ToString();
+    #endregion
+
+    #region Audio Management
+    private void PlayApplauseSounds()
+    {
+        // no applause to play if empty crowds.
+        if (crowdState == CrowdStates.EMPTY)
+            return;
+
+
+        foreach (var source in sources)
+            source.PlayOneShot(applause[(int) crowdState-1]);
+    }
+
+    private void UpdateAudio()
+    {
+        // no updates needed if no crowd or no audio queued.
+        if (crowdState == CrowdStates.EMPTY)
+
+        for (int i=0; i < sources.Length; i++)
+        {
+            if (nowPlaying[i] == null)
+                continue;
+
+            var source = sources[i];
+
+            if (!source.isPlaying || source.time < nowPlaying[i].length)
+                continue;
+
+            Debug.Log(source.time);
+            NextSoundtrack(i);
+        }
+    }
+
+    private void NextSoundtrack(int i)
+    {
+        var source = sources[i];
+        nowPlaying[i] = crowdState == CrowdStates.SPARSE ? 
+            lv1Ambiant[Random.Range(0, lv1Ambiant.Count-1)] : crowdState == CrowdStates.NORMAL ?
+            lv2Ambiant[Random.Range(0, lv2Ambiant.Count - 1)] : lv3Ambiant[Random.Range(0, lv3Ambiant.Count - 1)];
+        source.clip = nowPlaying[i];
+        source.Play();
+    }
+
+    private void SetAudioDensity()
+    {
+        for (int i = 0; i < sources.Length; i++)
+        {
+            var source = sources[i];
+
+            // if no crowds, disable audio
+            if (crowdState == CrowdStates.EMPTY)
+                source.Pause();
+            else    // switch on a new audio track from the given level.
+                NextSoundtrack(i);
+        }
+    }
+    #endregion
 }
