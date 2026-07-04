@@ -275,7 +275,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -343,6 +343,7 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: 436e04c3e53e40442a9eddbd418bd2a9, type: 3}
   oobSound: {fileID: 8300000, guid: ee0e0fb4d742d02479298fabdad35005, type: 3}
   killSound: {fileID: 8300000, guid: b59ee58aeb1d6364180c4ed523257088, type: 3}
+  serveThrowForce: 1.75
 --- !u!82 &3671025353681660117
 AudioSource:
   m_ObjectHideFlags: 0

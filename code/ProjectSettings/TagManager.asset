@@ -13,6 +13,8 @@ TagManager:
   - Ground
   - BoundsFlag
   - BallBoundsCollider
+  - Hand
+  - NeckThreshold
   layers:
   - Default
   - TransparentFX

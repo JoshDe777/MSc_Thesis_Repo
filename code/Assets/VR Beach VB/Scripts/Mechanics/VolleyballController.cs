@@ -47,7 +47,7 @@ namespace Volleyball {
         #if UNITY_EDITOR
         [SerializeField] private GameObject debugSpherePrefab;
         private GameObject activeDebugSphere = null;
-#endif
+        #endif
 
         [Header("Parameters")]
         [SerializeField] private float selfDestructTimeLeft = 10.0f;
@@ -62,6 +62,21 @@ namespace Volleyball {
         [SerializeField] private AudioClip grabSound;
         [SerializeField] private AudioClip oobSound;
         [SerializeField] private AudioClip killSound;
+
+
+        // -------------------- Hit Handling --------------------
+        private bool inRightHand = false;
+        private bool inLeftHand = false;
+        private bool processHitInNextFrame = false;
+
+        private Transform neckThreshold;
+
+        private HitData leftHandData = null;
+        private HitData rightHandData = null;
+
+        [Header("Force Settings")]
+        [SerializeField] private float serveThrowForce = 1.75f;
+        [SerializeField] private float pokeToSpikeSpeedTH = 1.0f;
         #endregion
 
         #region Unity Functions
@@ -75,12 +90,17 @@ namespace Volleyball {
             interactable = GetComponent<XRGrabInteractable>();
             audioSource = GetComponent<AudioSource>();
             audioSource.volume *= defaultAudioModifier;
+
+            var temp = GameObject.FindGameObjectWithTag("NeckThreshold");
+            if (!temp)
+                Debug.LogError("No Neck Threshold object found in scene!");
+            else
+                neckThreshold = temp.transform;
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-
             interactable.selectEntered.AddListener(EnterStateServing);
             interactable.selectExited.AddListener(EnterStateInPlay);
             OnBallKilled.AddListener(EnterStateDeadBall);
@@ -90,6 +110,15 @@ namespace Volleyball {
 
         private void Update()
         {
+            // exit early if ball not in play
+            if (lifetime < VolleyballLifetimeState.InPlay)
+                return;
+
+            if (processHitInNextFrame){
+                processHitInNextFrame = false;
+                ProcessHit();
+            }
+
             // exit update if not in deadball state.
             if (lifetime != VolleyballLifetimeState.DeadBall)
                 return;
@@ -144,6 +173,8 @@ namespace Volleyball {
             foreach (var mgr in FindObjectsByType<HandsManager>())
                 mgr.RequestEnableHandPhysics();
 
+            Vector3 force = Vector3.up * serveThrowForce;
+            body.AddForce(force, ForceMode.Impulse);
             audioSource.PlayOneShot(setSound);
         }
 
@@ -201,20 +232,68 @@ namespace Volleyball {
                 OnBallKilled.Invoke();
                 audioSource.PlayOneShot(killSound);
             }
-            else{
-                audioSource.PlayOneShot(spikeSound);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            // ignore if ball not in play.
+            if (lifetime != VolleyballLifetimeState.InPlay)
+                return;
+
+            if (other.CompareTag("Hand"))
+            {
+                if (other.gameObject.name == "Hand_Left")
+                {
+                    inLeftHand = true;
+                    leftHandData = new(
+                        other.ClosestPoint(transform.position),
+                        neckThreshold.position,
+                        other.GetComponent<Rigidbody>().linearVelocity.magnitude
+                    );
+                    Debug.Log("Enter left hand");
+                }
+                else
+                {
+                    inRightHand = true;
+                    rightHandData = new(
+                        other.ClosestPoint(transform.position),
+                        neckThreshold.position,
+                        other.GetComponent<Rigidbody>().linearVelocity.magnitude
+                    );
+                    Debug.Log("Enter right hand");
+                }
+
+                // play spike if exiting any hand.
+                processHitInNextFrame = true;
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            // ignore oob if ball dead.
-            if(lifetime == VolleyballLifetimeState.DeadBall || !other.gameObject.CompareTag("BallBoundsCollider"))
+            // ignore if ball dead.
+            if(lifetime == VolleyballLifetimeState.DeadBall)
                 return;
 
-            if (other.CompareTag("BallBoundsCollider")){
-                OnExitBounds();
+            // only do hands exit if triggered by hand x is marked as in any hand (so don't trigger on serve throw e.g.)
+            if (other.CompareTag("Hand") && (inLeftHand || inRightHand))
+            {
+                if (other.gameObject.name == "Hand_Left"){
+                    inLeftHand = false;
+                    Debug.Log("Exit left hand");
+                }
+                else
+                {
+                    inRightHand = false;
+                    Debug.Log("Exit right hand");
+                }
+
+                // play spike if exiting any hand.
+                if (!inLeftHand && !inRightHand)
+                    audioSource.PlayOneShot(spikeSound);
             }
+
+            if (other.CompareTag("BallBoundsCollider"))
+                OnExitBounds();
         }
         #endregion
 
@@ -225,6 +304,79 @@ namespace Volleyball {
 
             OnBallKilled.Invoke();
             audioSource.PlayOneShot(oobSound);
+        }
+        #endregion
+
+        #region Ball Handling
+        private void ProcessHit()
+        {
+            // if in both hands, check for set or dig
+            if(inLeftHand && inRightHand)
+            {
+                if (leftHandData == null || rightHandData == null)
+                {
+                    Debug.Log("Invalid selection!");
+                    return;
+                }
+
+                var combinedHitData = leftHandData.CombineWith(rightHandData);
+                if (combinedHitData.hitPos.y >= combinedHitData.torsoThresholdPos.y)
+                    ProcessSet(combinedHitData);
+                else
+                    ProcessDig(combinedHitData);
+            }
+            else    // check for spike, 1-hand dig, or poke.
+            {
+                var selectedHitData = inLeftHand ? leftHandData : rightHandData;
+                if(selectedHitData == null)
+                {
+                    Debug.Log("Invalid selection!");
+                    return;
+                }
+
+                // if speed exceeds threshold it's either an underhand hit or a spike
+                if (selectedHitData.handSpeed > pokeToSpikeSpeedTH)
+                {
+                    // if hit at head level -> spike
+                    if(selectedHitData.hitPos.y > selectedHitData.torsoThresholdPos.y)
+                        ProcessSpike(selectedHitData);
+                    else    // else underhand
+                        ProcessUnderhandHit(selectedHitData);
+                }
+                else    // otherwise it is a poke
+                    ProcessPoke(selectedHitData);
+            }
+
+            leftHandData = null;
+            rightHandData = null;
+        }
+
+        private void ProcessSet(HitData combinedHitData) {
+            audioSource.PlayOneShot(setSound);
+            Debug.Log("Setting!");
+        }
+
+        private void ProcessDig(HitData combinedHitData)
+        {
+            audioSource.PlayOneShot(digSound);
+            Debug.Log("Digging!");
+        }
+
+        private void ProcessPoke(HitData handHitData)
+        {
+            audioSource.PlayOneShot(grabSound);
+            Debug.Log("Poking!");
+        }
+
+        private void ProcessUnderhandHit(HitData handHitData) {
+            audioSource.PlayOneShot(digSound);
+            Debug.Log("Hitting underhand!");
+        }
+
+        private void ProcessSpike(HitData handHitData)
+        {
+            audioSource.PlayOneShot(spikeSound);
+            Debug.Log("Spiking!");
         }
         #endregion
     }
