@@ -167,7 +167,7 @@ namespace Volleyball {
             interactable.enabled = false;
             body.useGravity = true;
             lifetime = VolleyballLifetimeState.InPlay;
-            lastTouch = Teams.Team1;                        // stop-gap for now; Assuming only 1 team so far.
+            lastTouch = Teams.Team2;                        // stop-gap for now; Assuming only 1 team so far.
 
             // reenable hand physics
             foreach (var mgr in FindObjectsByType<HandsManager>())

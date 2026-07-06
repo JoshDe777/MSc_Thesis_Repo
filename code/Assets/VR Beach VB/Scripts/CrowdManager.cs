@@ -22,6 +22,7 @@ public class CrowdManager : MonoBehaviour
 
     [Header("Settings & Paramters")]
     [SerializeField] private CrowdStates crowdState = CrowdStates.EMPTY;
+    [SerializeField] private CrowdStates defaultCrowdState = CrowdStates.EMPTY;
 
     [Header("Audio")]
     [SerializeField] private AudioSource[] sources;
@@ -57,7 +58,7 @@ public class CrowdManager : MonoBehaviour
             Debug.LogError("Incorrect amount of applause clips assigned! (expecting 3)");
 
         // set to full density by default
-        SetDensity(CrowdStates.DENSE);
+        SetDensity(defaultCrowdState, true);
 
         matchManager = FindAnyObjectByType<VBMatchManager>();
         if (matchManager == null)
@@ -74,10 +75,10 @@ public class CrowdManager : MonoBehaviour
     /// Updates the crowd's appearance and audio to a new density value.
     /// </summary>
     /// <param name="newDensity">The new desired density.</param>
-    public void SetDensity(CrowdStates newDensity)
+    public void SetDensity(CrowdStates newDensity, bool overrideState = false)
     {
         // spare effort if state unchanged.
-        if (crowdState == newDensity)
+        if (crowdState == newDensity && !overrideState)
             return;
 
         crowdState = newDensity;

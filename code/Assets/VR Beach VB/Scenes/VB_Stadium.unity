@@ -23422,7 +23422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd8a0553e040bc408682ff70eb4794a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrowdManager
-  crowdState: 0
+  crowdState: 3
+  defaultCrowdState: 3
   sources:
   - {fileID: 1606879161}
   - {fileID: 1984979586}
@@ -23585,38 +23586,20 @@ MonoBehaviour:
   shuffle: 1
   paused: 0
   playlist:
-  - {fileID: 8300000, guid: f9887112466baa24ba57a61dbde082eb, type: 3}
-  - {fileID: 8300000, guid: 2be11a8784b5c1d4c9eb849360b9e785, type: 3}
-  - {fileID: 8300000, guid: e8bbdc3a2b13aaa46af7ae9b5a35d057, type: 3}
-  - {fileID: 8300000, guid: 164590c5695dfb74e86d9213ad8e53d8, type: 3}
-  - {fileID: 8300000, guid: f5c845137d67ef34d8c9d77926fd1191, type: 3}
-  - {fileID: 8300000, guid: bdcdcd0be04461d43b8dde7ff4e8180c, type: 3}
-  - {fileID: 8300000, guid: b7113af3c98d2614e9ef4e7f85f7eabf, type: 3}
-  - {fileID: 8300000, guid: bca22ec30e80e634f9ec3e3faf9f7c52, type: 3}
-  - {fileID: 8300000, guid: 515e1e68209b71c47a530f1279925162, type: 3}
-  - {fileID: 8300000, guid: e27921d1c62da234193c7292acc4322b, type: 3}
+  - {fileID: 8300000, guid: c17a2b3d4264570419c3ad1ec618aad6, type: 3}
+  - {fileID: 8300000, guid: 0dad198b77f4d28468e87363673688df, type: 3}
+  - {fileID: 8300000, guid: 2b953c686ddddd741b3771d06731d370, type: 3}
+  - {fileID: 8300000, guid: 2c53dd589c652784794b36e29e6a8862, type: 3}
   titles:
-  - Fresh Pineapple (Hawaiian Chill Music)
-  - Feels Good
-  - Smilin' And Vibin'
-  - It's A Good Day
-  - Happy Feet
-  - Latin Mexican Latino Music
-  - Blue Island
-  - Las Islas
-  - Spanish Flamenco
-  - Latin Spanish Spain Music
+  - Summer Beach Ambience
+  - A Quiet Seaside Seagulls Distant
+  - Ocean Waves Sea Beach Close Stereo
+  - Tropical Beach Waves On Pebbled Shore 2
   authors:
-  - 9JackJack8
-  - David Fesliyan
-  - David Renda
-  - Steve Oxen
-  - David Renda
-  - HitsLab
-  - matthewmikemusic
-  - Oliver Dee
-  - StudioKolomna
-  - Viacheslav Starostin
+  - delon_boomkin
+  - Freesound Community
+  - Freesound Community
+  - Freesound Community
 --- !u!1 &497929580
 GameObject:
   m_ObjectHideFlags: 0
@@ -138863,7 +138846,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7223899041400243285}
   m_HandleRect: {fileID: 3088556170141049555}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.99999535
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -164441,7 +164424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.001821938}
+  m_AnchoredPosition: {x: 0, y: 0.002496938}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7809520214631591185
