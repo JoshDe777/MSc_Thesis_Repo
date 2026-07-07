@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using XRMultiplayer;
 
 namespace Volleyball {
     [RequireComponent(typeof(Rigidbody))]
@@ -35,25 +36,36 @@ namespace Volleyball {
         /// <summary>
         /// An event called when the volleyball object is destroyed in the scene.
         /// </summary>
-        public UnityEvent OnBallDestroy;
+        public UnityEvent OnBallDestroy { get; private set; }
         /// <summary>
         /// An event called when the volleyball hits the ground (when the ball is 'killed').
         /// </summary>
-        public UnityEvent OnBallKilled;
+        public UnityEvent OnBallKilled { get; private set; }
 
         public Teams lastTouch { get; private set; } = Teams.Team1;
         public Vector3 killPos { get; private set; } = Vector3.zero;
+
+        [Header("Lifetime Parameters")]
+        [SerializeField] private float selfDestructTimeLeft = 10.0f;
 
         #if UNITY_EDITOR
         [SerializeField] private GameObject debugSpherePrefab;
         private GameObject activeDebugSphere = null;
         #endif
 
-        [Header("Parameters")]
-        [SerializeField] private float selfDestructTimeLeft = 10.0f;
-        [SerializeField] private float defaultAudioModifier = 1.0f;
+        [Header("General Hit Settings")]
+        [SerializeField] private float serveThrowForce = 1.75f;
+        [SerializeField] private float pokeToSpikeSpeedTH = 4.0f;
+        [SerializeField] private float underhandVsSpikeDeltaYThreshold = 1.0f;
+
+        [Header("Underhand Spike Smoothing")]
+        [SerializeField][Tooltip("The force multiplicator applied to the weakest recorded hits.")] private float underhandHitMaxForceModifier = 1.5f;
+        [SerializeField][Tooltip("The force multiplicator applied to the strongest recorded hits.")] private float underhandHitMinForceModifier = 0.5f;
+        [SerializeField][Tooltip("The smoothness of the force decay factor.")] private float underhandHitDecayFactor = 0.8f;
+        private float underhandHitMidwaySpeed = 8f;
 
         [Header("Audio")]
+        [SerializeField] private float defaultAudioModifier = 1.0f;
         [SerializeField] private AudioClip spawnSound;
         [SerializeField] private AudioClip bounceSound;
         [SerializeField] private AudioClip digSound;
@@ -74,9 +86,7 @@ namespace Volleyball {
         private HitData leftHandData = null;
         private HitData rightHandData = null;
 
-        [Header("Force Settings")]
-        [SerializeField] private float serveThrowForce = 1.75f;
-        [SerializeField] private float pokeToSpikeSpeedTH = 1.0f;
+        private PlayerHudNotification notification;
         #endregion
 
         #region Unity Functions
@@ -104,6 +114,8 @@ namespace Volleyball {
             interactable.selectEntered.AddListener(EnterStateServing);
             interactable.selectExited.AddListener(EnterStateInPlay);
             OnBallKilled.AddListener(EnterStateDeadBall);
+
+            notification = FindAnyObjectByType<PlayerHudNotification>();
 
             EnterStateAwaitingServe();
         }
@@ -141,10 +153,6 @@ namespace Volleyball {
             body.useGravity = false;
             lifetime = VolleyballLifetimeState.AwaitingServe;
 
-            // ignore hands physics
-            foreach(var mgr in FindObjectsByType<HandsManager>())
-                mgr.DisableHandPhysics(GetComponent<SphereCollider>());
-
             audioSource.PlayOneShot(spawnSound);
         }
 
@@ -168,10 +176,6 @@ namespace Volleyball {
             body.useGravity = true;
             lifetime = VolleyballLifetimeState.InPlay;
             lastTouch = Teams.Team2;                        // stop-gap for now; Assuming only 1 team so far.
-
-            // reenable hand physics
-            foreach (var mgr in FindObjectsByType<HandsManager>())
-                mgr.RequestEnableHandPhysics();
 
             Vector3 force = Vector3.up * serveThrowForce;
             body.AddForce(force, ForceMode.Impulse);
@@ -248,7 +252,7 @@ namespace Volleyball {
                     leftHandData = new(
                         other.ClosestPoint(transform.position),
                         neckThreshold.position,
-                        other.GetComponent<Rigidbody>().linearVelocity.magnitude
+                        other.GetComponent<HandsManager>().velocity
                     );
                     Debug.Log("Enter left hand");
                 }
@@ -258,13 +262,15 @@ namespace Volleyball {
                     rightHandData = new(
                         other.ClosestPoint(transform.position),
                         neckThreshold.position,
-                        other.GetComponent<Rigidbody>().linearVelocity.magnitude
+                        other.GetComponent<HandsManager>().velocity
                     );
                     Debug.Log("Enter right hand");
                 }
 
                 // play spike if exiting any hand.
                 processHitInNextFrame = true;
+                var vel = other.GetComponent<HandsManager>().velocity;
+                Debug.Log($"Hand speed recorded in at {vel.magnitude:0.00} m/s (velocity: {vel})!");
             }
         }
 
@@ -273,24 +279,6 @@ namespace Volleyball {
             // ignore if ball dead.
             if(lifetime == VolleyballLifetimeState.DeadBall)
                 return;
-
-            // only do hands exit if triggered by hand x is marked as in any hand (so don't trigger on serve throw e.g.)
-            if (other.CompareTag("Hand") && (inLeftHand || inRightHand))
-            {
-                if (other.gameObject.name == "Hand_Left"){
-                    inLeftHand = false;
-                    Debug.Log("Exit left hand");
-                }
-                else
-                {
-                    inRightHand = false;
-                    Debug.Log("Exit right hand");
-                }
-
-                // play spike if exiting any hand.
-                if (!inLeftHand && !inRightHand)
-                    audioSource.PlayOneShot(spikeSound);
-            }
 
             if (other.CompareTag("BallBoundsCollider"))
                 OnExitBounds();
@@ -337,8 +325,8 @@ namespace Volleyball {
                 // if speed exceeds threshold it's either an underhand hit or a spike
                 if (selectedHitData.handSpeed > pokeToSpikeSpeedTH)
                 {
-                    // if hit at head level -> spike
-                    if(selectedHitData.hitPos.y > selectedHitData.torsoThresholdPos.y)
+                    // if hitting upwards (deltaY > TH) -> underhand, else spike.
+                    if(selectedHitData.handVelocity.y < underhandVsSpikeDeltaYThreshold)
                         ProcessSpike(selectedHitData);
                     else    // else underhand
                         ProcessUnderhandHit(selectedHitData);
@@ -347,36 +335,66 @@ namespace Volleyball {
                     ProcessPoke(selectedHitData);
             }
 
+            // cancel all hit data & tracking after processing.
+            // if done in OnTriggerExit incurs risk of cancelling the bools before processing -> invalid stuff.
+            inLeftHand = false;
             leftHandData = null;
+            inRightHand = false;
             rightHandData = null;
         }
 
-        private void ProcessSet(HitData combinedHitData) {
+        private void ProcessSet(HitData combinedHitData)
+        {
+            // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(setSound);
             Debug.Log("Setting!");
+            notification.ShowText("Setting!");
         }
 
         private void ProcessDig(HitData combinedHitData)
         {
+            // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(digSound);
             Debug.Log("Digging!");
+            notification.ShowText("Digging!");
         }
 
         private void ProcessPoke(HitData handHitData)
         {
+            // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(grabSound);
             Debug.Log("Poking!");
+            notification.ShowText("Poking!");
         }
 
-        private void ProcessUnderhandHit(HitData handHitData) {
+        private void ProcessUnderhandHit(HitData handHitData)
+        {
+            // underhand = send ball in hand direction, with force derived from hand speed.
+            float forceModifier = CalculateUnderhandHitModifier(handHitData.handSpeed) * handHitData.handSpeed;
+            body.AddForce(forceModifier * handHitData.handVelocity.normalized);
+
+            // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(digSound);
             Debug.Log("Hitting underhand!");
+            notification.ShowText("underhand!");
         }
+
+        /// <summary>
+        /// Logistic decay function based on the parameters passed in the inspector, with the variable representing the hand's speed.
+        /// </summary>
+        /// <param name="x">The hand's speed.</param>
+        /// <returns></returns>
+        private float CalculateUnderhandHitModifier(float x) => 
+            (underhandHitMaxForceModifier - underhandHitMinForceModifier) / 
+            (1+Mathf.Exp(underhandHitDecayFactor * (x - underhandHitMidwaySpeed))) + 
+            underhandHitMinForceModifier;
 
         private void ProcessSpike(HitData handHitData)
         {
+            // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(spikeSound);
             Debug.Log("Spiking!");
+            notification.ShowText("Spiking!");
         }
         #endregion
     }

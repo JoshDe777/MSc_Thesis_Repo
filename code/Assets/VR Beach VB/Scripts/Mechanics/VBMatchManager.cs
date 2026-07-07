@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using TMPro;
-using Unity.Services.Matchmaker.Models;
 using UnityEngine;
 using UnityEngine.Events;
-using Volleyball;
 using XRMultiplayer;
 
 namespace Volleyball

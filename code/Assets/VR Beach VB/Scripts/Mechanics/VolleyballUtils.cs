@@ -20,16 +20,17 @@ namespace Volleyball
 
     public class HitData
     {
-        public HitData(Vector3 _hitPos, Vector3 _ttp, float _handSpeed)
-        {
+        public HitData(Vector3 _hitPos, Vector3 _ttp, Vector3 _handVelocity) {
             hitPos = _hitPos;
             torsoThresholdPos = _ttp;
-            handSpeed = _handSpeed;
+            handVelocity = _handVelocity;
+            handSpeed = _handVelocity.magnitude;
         }
 
-        public Vector3 hitPos;
-        public Vector3 torsoThresholdPos;
-        public float handSpeed;
+        public Vector3 hitPos { get; private set; }
+        public Vector3 torsoThresholdPos { get; private set; }
+        public Vector3 handVelocity { get; private set; }
+        public float handSpeed { get; private set; }
 
         public static HitData CombineData(HitData data1, HitData data2)
         {
@@ -37,7 +38,7 @@ namespace Volleyball
             return new(
                 Vector3.Lerp(data1.hitPos, data2.hitPos, 0.5f),
                 Vector3.Lerp(data1.torsoThresholdPos, data2.torsoThresholdPos, 0.5f),
-                Mathf.Lerp(data1.handSpeed, data2.handSpeed, 0.5f)
+                Vector3.Lerp(data1.handVelocity, data2.handVelocity, 0.5f)
             );
         }
 

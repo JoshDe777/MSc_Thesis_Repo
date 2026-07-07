@@ -40306,8 +40306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab72a6cb3677e746866ada7be58d5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandsManager
-  m_HandCollider: {fileID: 794182063}
-  handActivationDelay: 0.1
 --- !u!65 &794182063
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -113177,8 +113175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab72a6cb3677e746866ada7be58d5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandsManager
-  m_HandCollider: {fileID: 2138273891}
-  handActivationDelay: 0.1
 --- !u!65 &2138273891
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -138847,7 +138843,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3088556170141049555}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99999535
+  m_Size: 0.99998224
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -164424,7 +164420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.002299681}
+  m_AnchoredPosition: {x: 0, y: 0.0006076979}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7809520214631591185
