@@ -101,6 +101,7 @@ namespace Volleyball
             string winner = team1WonLastPoint ? "Team 1" : "Team 2";
             notification.ShowText(winner + " wins with " + score[0] + " to " + score[1] + "!");
             score = new uint[2] { 0, 0 };
+            ResetBall(true);
         }
 
         private void ProgressToNextPoint()
@@ -111,6 +112,7 @@ namespace Volleyball
             string serving = team1WonLastPoint ? "Team 1" : "Team 2";
             // send a notification to who's serving.
             notification.ShowText(serving + " serve", 1.5f);
+            ResetBall(true /*team1WonLastPoint*/);
         }
         #endregion
 
@@ -143,7 +145,6 @@ namespace Volleyball
 
             // match updates & ball reset
             TeamScored(pointWinner == Teams.Team1);
-            ResetBall(pointWinner == Teams.Team1);
         }
 
         private void GetKillInfo()

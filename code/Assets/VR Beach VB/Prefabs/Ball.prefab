@@ -139,15 +139,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad10ee5eaf8a8d4e84ce14028814df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Volleyball.VolleyballController
-  OnBallDestroy:
-    m_PersistentCalls:
-      m_Calls: []
-  OnBallKilled:
-    m_PersistentCalls:
-      m_Calls: []
+  selfDestructTimeLeft: 5
   debugSpherePrefab: {fileID: 6436963157767928321, guid: d9092baa3a1c7a14e9d908257b5a661b,
     type: 3}
-  selfDestructTimeLeft: 5
+  serveThrowForce: 7.5
+  pokeToSpikeSpeedTH: 3
+  underhandVsSpikeDeltaYThreshold: 1
+  hitCooldownTime: 0.1
+  oneHandHitMaxModifier: 50
+  oneHandHitMinModifier: 13
+  oneHandHitDecayFactor: 0.25
+  oneHandHitMidwaySpd: 8
+  pokeMaxModifier: 30
+  pokeMinModifier: 15
+  pokeDecayFactor: 0.8
+  pokeMidwaySpd: 2
   defaultAudioModifier: 1
   spawnSound: {fileID: 8300000, guid: 7ffe8ce811727804aac97aee7c060adc, type: 3}
   bounceSound: {fileID: 8300000, guid: 9fffcfa5967cedb4b84d440c1c8fbecb, type: 3}
@@ -157,9 +163,6 @@ MonoBehaviour:
   grabSound: {fileID: 8300000, guid: 436e04c3e53e40442a9eddbd418bd2a9, type: 3}
   oobSound: {fileID: 8300000, guid: ee0e0fb4d742d02479298fabdad35005, type: 3}
   killSound: {fileID: 8300000, guid: b59ee58aeb1d6364180c4ed523257088, type: 3}
-  serveThrowForce: 1.75
-  pokeToSpikeSpeedTH: 3
-  underhandHitForceModifier: 1.5
 --- !u!135 &7996253527446046165
 SphereCollider:
   m_ObjectHideFlags: 0
