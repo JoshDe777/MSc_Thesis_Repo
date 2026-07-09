@@ -143,17 +143,17 @@ MonoBehaviour:
   debugSpherePrefab: {fileID: 6436963157767928321, guid: d9092baa3a1c7a14e9d908257b5a661b,
     type: 3}
   serveThrowForce: 7.5
-  pokeToSpikeSpeedTH: 3
-  underhandVsSpikeDeltaYThreshold: 1
+  pokeToSpikeSpeedTH: 0.1
   hitCooldownTime: 0.1
-  oneHandHitMaxModifier: 50
-  oneHandHitMinModifier: 13
-  oneHandHitDecayFactor: 0.25
-  oneHandHitMidwaySpd: 8
-  pokeMaxModifier: 30
-  pokeMinModifier: 15
-  pokeDecayFactor: 0.8
-  pokeMidwaySpd: 2
+  testingHits: 0
+  oneHandHitMaxModifier: 225
+  oneHandHitMinModifier: 90
+  oneHandHitDecayFactor: 2.9
+  oneHandHitMidwaySpd: 1.3
+  pokeMaxModifier: 500
+  pokeMinModifier: 130
+  pokeDecayFactor: 2.9
+  pokeMidwaySpd: 0.7
   defaultAudioModifier: 1
   spawnSound: {fileID: 8300000, guid: 7ffe8ce811727804aac97aee7c060adc, type: 3}
   bounceSound: {fileID: 8300000, guid: 9fffcfa5967cedb4b84d440c1c8fbecb, type: 3}

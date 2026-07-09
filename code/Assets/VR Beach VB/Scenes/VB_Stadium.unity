@@ -40325,8 +40325,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.026234813, y: 0.03871604, z: 0.01084575}
-  m_Center: {x: 0.014650827, y: 0.0033325185, z: -0.005945143}
+  m_Size: {x: 0.034975298, y: 0.05394559, z: 0.018887157}
+  m_Center: {x: 0.0145983305, y: 0.0028841053, z: -0.0055378964}
 --- !u!1 &795143079
 GameObject:
   m_ObjectHideFlags: 0
@@ -113194,7 +113194,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.02621228, y: 0.038695235, z: 0.010827535}
+  m_Size: {x: 0.0349753, y: 0.05394559, z: 0.01888716}
   m_Center: {x: -0.01463695, y: 0.003321852, z: -0.005942732}
 --- !u!1 &2139893299
 GameObject:
@@ -138843,7 +138843,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3088556170141049555}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99999535
+  m_Size: 0.99998224
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -164420,7 +164420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00095286965}
+  m_AnchoredPosition: {x: 0, y: 0.0015690351}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7809520214631591185

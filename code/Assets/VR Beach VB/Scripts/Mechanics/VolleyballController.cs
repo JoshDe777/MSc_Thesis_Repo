@@ -55,9 +55,9 @@ namespace Volleyball {
 
         [Header("General Hit Settings")]
         [SerializeField] private float serveThrowForce = 1.75f;
-        [SerializeField] private float pokeToSpikeSpeedTH = 4.0f;
-        [SerializeField] private float underhandVsSpikeDeltaYThreshold = 1.0f;
+        [SerializeField] private float pokeToSpikeSpeedTH = 0.1f;
         [SerializeField] private float hitCooldownTime = 0.1f;
+        [SerializeField] private bool testingHits = false;
         private float activeCooldown = 0.0f;
 
         [Header("One Hand Hit Smoothing")]
@@ -190,6 +190,7 @@ namespace Volleyball {
 
             Vector3 force = Vector3.up * serveThrowForce;
             body.AddForce(force, ForceMode.VelocityChange);
+            activeCooldown = hitCooldownTime/2;
             audioSource.PlayOneShot(setSound);
         }
 
@@ -246,7 +247,6 @@ namespace Volleyball {
 
                 OnBallKilled.Invoke();
                 audioSource.PlayOneShot(killSound);
-                Debug.Log($"Ball killed in bounds! {transform.position}");
             }
         }
 
@@ -307,7 +307,6 @@ namespace Volleyball {
 
             OnBallKilled.Invoke();
             audioSource.PlayOneShot(oobSound);
-            Debug.Log($"Ball out of bounds! {transform.position}");
         }
         #endregion
 
@@ -338,14 +337,16 @@ namespace Volleyball {
                     return;
                 }
 
-                Process1HandTestHit();
-                
-
-                /*/ if hitting upwards (deltaY > TH) -> underhand, else spike.
-                if(selectedHitData.handSpeed > pokeToSpikeSpeedTH)
-                    Process1HandHit(selectedHitData);
-                else    // otherwise it is a poke
-                    ProcessPoke(selectedHitData);*/
+                if(testingHits)
+                    Process1HandTestHit();
+                else
+                {
+                    // if hitting upwards (deltaY > TH) -> underhand, else spike.
+                    if (selectedHitData.handSpeed > pokeToSpikeSpeedTH)
+                        Process1HandHit(selectedHitData);
+                    else    // otherwise it is a poke
+                        ProcessPoke(selectedHitData);
+                }
             }
 
             // cancel all hit data & tracking after processing.
@@ -360,7 +361,6 @@ namespace Volleyball {
         {
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(setSound);
-            Debug.Log("Setting!");
             notification.ShowText("Setting!");
         }
 
@@ -368,7 +368,6 @@ namespace Volleyball {
         {
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(digSound);
-            Debug.Log("Digging!");
             notification.ShowText("Digging!");
         }
 
@@ -380,24 +379,23 @@ namespace Volleyball {
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(grabSound);
-            Debug.Log("Poking!");
             notification.ShowText("Poking!");
         }
 
-        private static int recordedSpeed = 0;
+        private static int recordedSpeed = 4;
 
         private void Process1HandTestHit()
         {
+            float actualSpeed = (float) recordedSpeed++ / 10f;
             // underhand = send ball in hand direction, with force derived from hand speed.
-            float forceModifier = recordedSpeed < pokeToSpikeSpeedTH ? 
-                CalculatePokeModifier(recordedSpeed) * (float) recordedSpeed : 
-                CalculateUnderhandHitModifier(recordedSpeed) * (float) recordedSpeed;
+            float forceModifier = actualSpeed < pokeToSpikeSpeedTH ? 
+                CalculatePokeModifier(actualSpeed) * (float)actualSpeed : 
+                CalculateUnderhandHitModifier(actualSpeed) * (float)actualSpeed;
             body.AddForce(forceModifier * new Vector3(0, 1, -1).normalized);
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(spikeSound);
-            Debug.Log("Hitting underhand!");
-            notification.ShowText($"(hand: {recordedSpeed++} m/s)");
+            notification.ShowText($"(hand: {actualSpeed:0.000} m/s)");
         }
 
         private void Process1HandHit(HitData handHitData)
@@ -408,8 +406,7 @@ namespace Volleyball {
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(spikeSound);
-            Debug.Log("Hitting underhand!");
-            notification.ShowText("underhand!");
+            notification.ShowText("1 Hand Fast Hit!");
         }
 
         /// <summary>
