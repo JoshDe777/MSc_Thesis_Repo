@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
-using System.Linq;
-using Volleyball;
+using UnityEngine.InputSystem;
+using Unity.XR.CoreUtils;
 
 public class HandsManager : MonoBehaviour
 {
@@ -17,17 +16,27 @@ public class HandsManager : MonoBehaviour
     public const uint nFrames = 5;
 
     /// <summary>
-    /// A vector storing the hand's position in the last frame, to calculate local velocity.
-    /// </summary>
-    private Vector3 lastPos = Vector3.zero;
-
-    /// <summary>
     /// Position change per second, calculated as an aggregate of the last [5] frames (see nFrames).
     /// </summary>
-    public Vector3 stableVelocity { get; private set; }
+    public Vector3 StableVelocity { get; private set; }
+
+    [SerializeField] private InputActionProperty velocityBinding;
+
+    private XROrigin xrOrigin;
+
 
     [Header("Settings")]
+    [SerializeField][Tooltip("Determines whether to smoothen velocity over n frames or not.")] private bool smoothening = false;
     [SerializeField][Tooltip("The importance velocities newly collected have compared to other values.")] private float alpha = 0.5f;
+
+    private void Start()
+    {
+        xrOrigin = FindAnyObjectByType<XROrigin>();
+        if(xrOrigin == null)
+        {
+            Debug.LogError("Couldn't find any XR Origin objects in scene!");
+        }
+    }
 
     private void Update()
     {
@@ -40,9 +49,8 @@ public class HandsManager : MonoBehaviour
         if(lastNFrames.Count == nFrames)
             lastNFrames.Dequeue();
 
-        // calculate local velocity and add to queue
-        var tempVelocity = (transform.position - lastPos) / Time.smoothDeltaTime;
-        lastPos = transform.position;
+        // read local velocity, negate xrOrigin bias, & add to buffer.
+        Vector3 tempVelocity =  xrOrigin.transform.rotation * velocityBinding.action.ReadValue<Vector3>();
         lastNFrames.Enqueue(tempVelocity);
 
         // average over the queued velocities to get 'local' velocity/momentum.
@@ -57,6 +65,6 @@ public class HandsManager : MonoBehaviour
             tempVector += alpha * Mathf.Pow(1-alpha, exp) *  copy.Dequeue();
         }
 
-        stableVelocity = tempVector;
+        StableVelocity = smoothening ? tempVector : tempVelocity;
     }
 }

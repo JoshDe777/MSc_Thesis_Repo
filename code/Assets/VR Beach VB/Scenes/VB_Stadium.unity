@@ -40306,6 +40306,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab72a6cb3677e746866ada7be58d5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandsManager
+  velocityBinding:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Velocity Binding
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 1958f464-536d-4a43-92c9-712f7093fdfe
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 2586316628395517583, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  smoothening: 0
+  alpha: 0.5
 --- !u!65 &794182063
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -113175,6 +113190,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab72a6cb3677e746866ada7be58d5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandsManager
+  velocityBinding:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Velocity Binding
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 79431c59-b5a5-4ee5-81f6-df7f67744e5e
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 424628483730106384, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
+  smoothening: 0
+  alpha: 0.5
 --- !u!65 &2138273891
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -138842,8 +138872,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7223899041400243285}
   m_HandleRect: {fileID: 3088556170141049555}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.99998224
+  m_Value: 0
+  m_Size: 0.99999535
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -159922,7 +159952,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7174019211506205517}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9999999, z: -0, w: -0.0006171167}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -24, y: 29.747, z: 29.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -159933,7 +159963,7 @@ Transform:
   - {fileID: 84309377678296772}
   - {fileID: 5027557366369180411}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180.071, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!222 &7185711628220821304
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -164420,7 +164450,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0015690351}
+  m_AnchoredPosition: {x: 0, y: 0.0025692417}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7809520214631591185

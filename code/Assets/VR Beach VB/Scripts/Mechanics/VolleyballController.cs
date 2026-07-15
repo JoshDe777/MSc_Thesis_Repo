@@ -57,8 +57,14 @@ namespace Volleyball {
         [SerializeField] private float serveThrowForce = 1.75f;
         [SerializeField] private float pokeToSpikeSpeedTH = 0.1f;
         [SerializeField] private float hitCooldownTime = 0.1f;
-        [SerializeField] private bool testingHits = false;
         private float activeCooldown = 0.0f;
+
+        [Header("Hit Testing Parameters")]
+        [SerializeField] private bool testingHits = false;
+        [SerializeField] private float startSpeed = 1f;
+        [SerializeField] private float incrementStep = 1f;
+        private static float recordedSpeed = 0;
+        private static bool firstBall = true;
 
         [Header("One Hand Hit Smoothing")]
         [SerializeField][Tooltip("The force multiplicator applied to the weakest recorded hits.")] private float oneHandHitMaxModifier = 50f;
@@ -114,6 +120,11 @@ namespace Volleyball {
                 Debug.LogError("No Neck Threshold object found in scene!");
             else
                 neckThreshold = temp.transform;
+
+            if (testingHits && firstBall){
+                recordedSpeed = startSpeed;
+                firstBall = false;
+            }
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -246,7 +257,6 @@ namespace Volleyball {
                 killPos = contactpoint.point;
 
                 OnBallKilled.Invoke();
-                audioSource.PlayOneShot(killSound);
             }
         }
 
@@ -265,7 +275,7 @@ namespace Volleyball {
                     leftHandData = new(
                         other.ClosestPoint(transform.position),
                         neckThreshold.position,
-                        hands.stableVelocity
+                        hands.StableVelocity
 
                     );
                 }
@@ -275,13 +285,13 @@ namespace Volleyball {
                     rightHandData = new(
                         other.ClosestPoint(transform.position),
                         neckThreshold.position,
-                        hands.stableVelocity
+                        hands.StableVelocity
                     );
                 }
 
                 // play spike if exiting any hand.
                 processHitInNextFrame = true;
-                var vel = other.GetComponent<HandsManager>().stableVelocity;
+                var vel = other.GetComponent<HandsManager>().StableVelocity;
                 Debug.Log($"Hand speed recorded in at {vel.magnitude:0.00} m/s (velocity: {vel})!");
 
                 // set hit cooldown.
@@ -382,11 +392,9 @@ namespace Volleyball {
             notification.ShowText("Poking!");
         }
 
-        private static int recordedSpeed = 4;
-
         private void Process1HandTestHit()
         {
-            float actualSpeed = (float) recordedSpeed++ / 10f;
+            float actualSpeed = recordedSpeed;
             // underhand = send ball in hand direction, with force derived from hand speed.
             float forceModifier = actualSpeed < pokeToSpikeSpeedTH ? 
                 CalculatePokeModifier(actualSpeed) * (float)actualSpeed : 
@@ -396,6 +404,8 @@ namespace Volleyball {
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(spikeSound);
             notification.ShowText($"(hand: {actualSpeed:0.000} m/s)");
+
+            recordedSpeed += incrementStep;
         }
 
         private void Process1HandHit(HitData handHitData)
@@ -406,7 +416,8 @@ namespace Volleyball {
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(spikeSound);
-            notification.ShowText("1 Hand Fast Hit!");
+            // notification.ShowText("1 Hand Fast Hit!");
+            notification.ShowText($"{handHitData.handSpeed} m/s.");
         }
 
         /// <summary>
@@ -425,6 +436,11 @@ namespace Volleyball {
         private float CalculatePokeModifier(float x) => (pokeMaxModifier - pokeMinModifier) /
             (1 + Mathf.Exp(pokeDecayFactor * (x - pokeMidwaySpd))) +
             pokeMinModifier;
+        #endregion
+
+        #region Audio Handling
+        public void PlayKillInBounds() => audioSource.PlayOneShot(killSound);
+        public void PlayKillOOB() => audioSource.PlayOneShot(oobSound);
         #endregion
     }
 }

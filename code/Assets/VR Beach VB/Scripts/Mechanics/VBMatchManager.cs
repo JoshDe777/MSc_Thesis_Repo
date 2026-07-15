@@ -72,11 +72,10 @@ namespace Volleyball
         #endregion
 
         #region Match Management
-        public void TeamScored(bool team1)
+        public void TeamScored()
         {
             // increment the amount of points for the scoring team
-            uint newScore = team1 ? ++score[0] : ++score[1];
-            team1WonLastPoint = team1;
+            uint newScore = team1WonLastPoint ? ++score[0] : ++score[1];
 
             // every n points, pause the game & prompt the player to update the crowd.
             // add listener for EndMatch if match over otherwise ProgressToNextPoint.
@@ -128,6 +127,17 @@ namespace Volleyball
 
         private void ProcessPoint()
         {
+            // match updates & ball reset
+            TeamScored();
+        }
+
+        private void GetKillInfo()
+        {
+            var ball = activeBall.GetComponent<VolleyballController>();
+            killPos = ball.killPos;
+            lastTouch = ball.lastTouch;
+            OnPointScored.Invoke();
+
             Teams pointWinner = Teams.None;
             if (IsInBounds(killPos))
             {
@@ -137,22 +147,16 @@ namespace Volleyball
 
                 // if ball landed on team 1's court side, point goes to team 2, else team 1
                 pointWinner = distToTeam1Baseline < distToTeam2Baseline ? Teams.Team2 : Teams.Team1;
+                activeBall.GetComponent<VolleyballController>().PlayKillInBounds();
             }
             // if ball out of bounds, last team to touch lost the point.
-            else{
+            else
+            {
                 pointWinner = lastTouch == Teams.Team2 ? Teams.Team1 : Teams.Team2;
+                activeBall.GetComponent<VolleyballController>().PlayKillOOB();
             }
 
-            // match updates & ball reset
-            TeamScored(pointWinner == Teams.Team1);
-        }
-
-        private void GetKillInfo()
-        {
-            var ball = activeBall.GetComponent<VolleyballController>();
-            killPos = ball.killPos;
-            lastTouch = ball.lastTouch;
-            OnPointScored.Invoke();
+            team1WonLastPoint = pointWinner == Teams.Team1;
         }
 
         private bool IsInBounds(Vector3 contact)
