@@ -12,41 +12,29 @@ namespace Volleyball {
     public class VolleyballController : MonoBehaviour
     {
         #region variable declaration
-        /// <summary>
-        /// The Rigidbody attached to the Volleyball; Required to function.
-        /// </summary>
+        /// <summary> The Rigidbody attached to the Volleyball; Required to function. </summary>
         private Rigidbody body;
-        /// <summary>
-        /// The SphereCollider attached to the Volleyball; Required to function.
-        /// </summary>
+        /// <summary> The SphereCollider attached to the Volleyball; Required to function. </summary>
         private SphereCollider _collider;
-        /// <summary>
-        /// The XR Grab Interactable component attached to the Volleyball; Required to function.
-        /// </summary>
+        /// <summary> The XR Grab Interactable component attached to the Volleyball; Required to function. </summary>
         private XRGrabInteractable interactable;
-        /// <summary>
-        /// The audio source from which ball clips are played.
-        /// </summary>
+        /// <summary> The audio source from which ball clips are played. </summary>
         private AudioSource audioSource;
 
-        /// <summary>
-        /// A display of the ball's lifetime, from pre-match, serving, in play, to dead.
-        /// </summary>
+        /// <summary> A display of the ball's lifetime, from pre-match, serving, in play, to dead. </summary>
         public VolleyballLifetimeState lifetime { get; private set; } = VolleyballLifetimeState.DeadBall;
-        /// <summary>
-        /// An event called when the volleyball object is destroyed in the scene.
-        /// </summary>
+        /// <summary> An event called when the volleyball object is destroyed in the scene. </summary>
         public UnityEvent OnBallDestroy { get; private set; }
-        /// <summary>
-        /// An event called when the volleyball hits the ground (when the ball is 'killed').
-        /// </summary>
+        /// <summary> An event called when the volleyball hits the ground (when the ball is 'killed'). </summary>
         public UnityEvent OnBallKilled { get; private set; }
 
+        /// <summary> The team that last touched the ball.</summary>
         public Teams lastTouch { get; private set; } = Teams.Team1;
+        /// <summary> The coordinates in world space where the ball was considered killed.</summary>
         public Vector3 killPos { get; private set; } = Vector3.zero;
 
         [Header("Lifetime Parameters")]
-        [SerializeField] private float selfDestructTimeLeft = 10.0f;
+        [SerializeField][Tooltip("The amount of time given to the ball after a kill to cleanly delete itself from the scene.")] private float selfDestructTimeLeft = 5f;
 
         #if UNITY_EDITOR
         [SerializeField] private GameObject debugSpherePrefab;
@@ -54,29 +42,47 @@ namespace Volleyball {
         #endif
 
         [Header("General Hit Settings")]
-        [SerializeField] private float serveThrowForce = 1.75f;
-        [SerializeField] private float pokeToSpikeSpeedTH = 0.1f;
+        /// <summary>The force at which the ball is sent upwards when serving, instead of relying on throw speed.</summary>
+        [SerializeField] private float serveThrowForce = 7.5f;
+        /// <summary>The hand velocity value beneath which a 1-handed hit is considered a poke.</summary>
+        [SerializeField] private float pokeToSpikeSpeedTH = 3f;
+        /// <summary>The amount of time in seconds between two hits, to avoid double hitting.</summary>
         [SerializeField] private float hitCooldownTime = 0.1f;
+        /// <summary>The time in seconds left before another hit can be registered.</summary>
         private float activeCooldown = 0.0f;
 
         [Header("Hit Testing Parameters")]
+        /// <summary> The switch determining whether to enable debug messages and features or not.</summary>
+        [SerializeField] private bool enableDebugFeatures = true;
+        /// <summary> The switch to determinte whether to fake velocity values for hits or not.</summary>
         [SerializeField] private bool testingHits = false;
+        /// <summary> The fake velocity used for the first hit when testing.</summary>
         [SerializeField] private float startSpeed = 1f;
+        /// <summary> The velocity increment applied after every hit.</summary>
         [SerializeField] private float incrementStep = 1f;
+        /// <summary> The current fake velocity applied to tested hits.</summary>
         private static float recordedSpeed = 0;
+        /// <summary> A switch marking whether it is the first test hit or not. Used to not reset the recordedSpeed value with every new ball.</summary>
         private static bool firstBall = true;
 
-        [Header("One Hand Hit Smoothing")]
-        [SerializeField][Tooltip("The force multiplicator applied to the weakest recorded hits.")] private float oneHandHitMaxModifier = 50f;
-        [SerializeField][Tooltip("The force multiplicator applied to the strongest recorded hits.")] private float oneHandHitMinModifier = 13f;
-        [SerializeField][Tooltip("The smoothness of the force decay factor.")] private float oneHandHitDecayFactor = 0.25f;
-        [SerializeField][Tooltip("The hit speed determined to benefit from half the multiplier.")] private float oneHandHitMidwaySpd = 8f;
+        [Header("One Hand Hit Params")]
+        [SerializeField][Tooltip("[1-Hand Fast Hits] The force multiplicator applied to the weakest recorded hits.")] private float oneHandHitMaxModifier = 55f;
+        [SerializeField][Tooltip("[1-Hand Fast Hits] The force multiplicator applied to the strongest recorded hits.")] private float oneHandHitMinModifier = 13f;
+        [SerializeField][Tooltip("[1-Hand Fast Hits] The smoothness of the force decay factor.")] private float oneHandHitDecayFactor = 0.33f;
+        [SerializeField][Tooltip("[1-Hand Fast Hits] The hit speed determined to benefit from half the multiplier.")] private float oneHandHitMidwaySpd = 5.5f;
 
-        [Header("Poke Smoothing")]
-        [SerializeField][Tooltip("The force multiplicator applied to the weakest recorded hits.")] private float pokeMaxModifier = 1.5f;
-        [SerializeField][Tooltip("The force multiplicator applied to the strongest recorded hits.")] private float pokeMinModifier = 0.5f;
-        [SerializeField][Tooltip("The smoothness of the force decay factor.")] private float pokeDecayFactor = 0.8f;
-        [SerializeField] private float pokeMidwaySpd = 8f;
+        [Header("Poke Params")]
+        [SerializeField][Tooltip("[Poke] The force multiplicator applied to the weakest recorded hits.")] private float pokeMaxModifier = 1.5f;
+        [SerializeField][Tooltip("[Poke] The force multiplicator applied to the strongest recorded hits.")] private float pokeMinModifier = 0.5f;
+        [SerializeField][Tooltip("[Poke] The smoothness of the force decay factor.")] private float pokeDecayFactor = 0.8f;
+        [SerializeField][Tooltip("[Poke] The hit speed determined to benefit from half the multiplier.")] private float pokeMidwaySpd = 8f;
+
+        [Header("Set Params")]
+        [SerializeField][Tooltip("[Set] The force multiplicator applied to the weakest recorded hits.")] private float setMaxModifier = 28.5f;
+        [SerializeField][Tooltip("[Set] The force multiplicator applied to the strongest recorded hits.")] private float setMinModifier = 10f;
+        //[SerializeField][Tooltip("[Set] The smoothness of the force decay factor.")] private float setDecayFactor = 0.33f;
+        [SerializeField][Tooltip("[Set] The hit speed determined to benefit from half the multiplier.")] private float setMaxSpd = 7f;
+        private float setRiseFactor = 0f;
 
         [Header("Audio")]
         [SerializeField] private float defaultAudioModifier = 1.0f;
@@ -91,10 +97,14 @@ namespace Volleyball {
 
 
         // -------------------- Hit Handling --------------------
+        /// <summary> The value determining whether the ball was hit with the right hand this last frame.</summary>
         private bool inRightHand = false;
+        /// <summary> The value determining whether the ball was hit with the left hand this last frame..</summary>
         private bool inLeftHand = false;
+        /// <summary> The switch to indicate a registered hit is to be processed in the next frame in Update().</summary>
         private bool processHitInNextFrame = false;
 
+        /// <summary> The y-value segregating sets from digs.</summary>
         private Transform neckThreshold;
 
         private HitData leftHandData = null;
@@ -125,6 +135,9 @@ namespace Volleyball {
                 recordedSpeed = startSpeed;
                 firstBall = false;
             }
+
+            if(setMaxSpd != 0)
+                setRiseFactor = (setMaxModifier - setMinModifier) / setMaxSpd;
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -214,10 +227,9 @@ namespace Volleyball {
             // start self-destruct timer.
             lifetime = VolleyballLifetimeState.DeadBall;
 
-            #if UNITY_EDITOR
+            if(enableDebugFeatures)
             // instantiate debug sphere on contact point for feedback
-            activeDebugSphere = Instantiate(debugSpherePrefab, killPos, Quaternion.identity);
-            #endif
+                activeDebugSphere = Instantiate(debugSpherePrefab, killPos, Quaternion.identity);
         }
 
         /// <summary>
@@ -235,10 +247,8 @@ namespace Volleyball {
             OnBallDestroy.RemoveAllListeners();
 
             // destroy any debug spheres attached to the ball.
-            #if UNITY_EDITOR
-            if(activeDebugSphere)
+            if(enableDebugFeatures && activeDebugSphere)
                 Destroy(activeDebugSphere);
-            #endif
 
             // destroy the prefab.
             Destroy(gameObject);
@@ -257,6 +267,8 @@ namespace Volleyball {
                 killPos = contactpoint.point;
 
                 OnBallKilled.Invoke();
+                if (enableDebugFeatures)
+                    Debug.Log("Ball killed within bounds.");
             }
         }
 
@@ -269,33 +281,34 @@ namespace Volleyball {
             if (other.CompareTag("Hand"))
             {
                 var hands = other.GetComponent<HandsManager>();
+                // data doesn't change based on handedness
+                HitData data = new(
+                        other.ClosestPoint(transform.position),
+                        neckThreshold.position,
+                        hands.StableVelocity,
+                        hands.GetPalmOrientation()
+                    );
+
                 if (other.gameObject.name == "Hand_Left")
                 {
                     inLeftHand = true;
-                    leftHandData = new(
-                        other.ClosestPoint(transform.position),
-                        neckThreshold.position,
-                        hands.StableVelocity
-
-                    );
+                    leftHandData = data;
+                    if (enableDebugFeatures)
+                        Debug.Log("Hit by left hand!");
                 }
                 else
                 {
                     inRightHand = true;
-                    rightHandData = new(
-                        other.ClosestPoint(transform.position),
-                        neckThreshold.position,
-                        hands.StableVelocity
-                    );
+                    rightHandData = data;
+                    if (enableDebugFeatures)
+                        Debug.Log("Hit by right hand!");
                 }
 
                 // play spike if exiting any hand.
                 processHitInNextFrame = true;
                 var vel = other.GetComponent<HandsManager>().StableVelocity;
-                Debug.Log($"Hand speed recorded in at {vel.magnitude:0.00} m/s (velocity: {vel})!");
-
-                // set hit cooldown.
-                activeCooldown = hitCooldownTime;
+                if (enableDebugFeatures)
+                    notification.ShowText($"Hit velocity: {vel} ({vel.magnitude} m/s).");
             }
         }
 
@@ -305,8 +318,12 @@ namespace Volleyball {
             if(lifetime != VolleyballLifetimeState.InPlay)
                 return;
 
-            if (other.CompareTag("BallBoundsCollider"))
+            if (other.CompareTag("BallBoundsCollider")){
                 OnExitBounds();
+
+                if (enableDebugFeatures)
+                    Debug.Log("Ball out of bounds.");
+            }
         }
         #endregion
 
@@ -333,7 +350,7 @@ namespace Volleyball {
                 }
 
                 var combinedHitData = leftHandData.CombineWith(rightHandData);
-                if (combinedHitData.hitPos.y >= combinedHitData.torsoThresholdPos.y)
+                if (combinedHitData.HitPos.y >= combinedHitData.SetThresholdPos.y)
                     ProcessSet(combinedHitData);
                 else
                     ProcessDig(combinedHitData);
@@ -352,7 +369,7 @@ namespace Volleyball {
                 else
                 {
                     // if hitting upwards (deltaY > TH) -> underhand, else spike.
-                    if (selectedHitData.handSpeed > pokeToSpikeSpeedTH)
+                    if (selectedHitData.HandSpeed > pokeToSpikeSpeedTH)
                         Process1HandHit(selectedHitData);
                     else    // otherwise it is a poke
                         ProcessPoke(selectedHitData);
@@ -365,31 +382,46 @@ namespace Volleyball {
             leftHandData = null;
             inRightHand = false;
             rightHandData = null;
+
+            // set hit cooldown.
+            activeCooldown = hitCooldownTime;
         }
 
         private void ProcessSet(HitData combinedHitData)
         {
+            float forceModifier = CalculateSetModifier(combinedHitData.HandSpeed) * combinedHitData.HandSpeed;
+            var force = forceModifier * combinedHitData.PalmOrientation.normalized;
+            body.AddForce(force, ForceMode.Force);
+
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(setSound);
-            notification.ShowText("Setting!");
+
+            if (enableDebugFeatures){
+                notification.ShowText($"Setting! (force: {force} / hands @ {combinedHitData.HandSpeed:0.00} m/s)");
+                Debug.Log($"Set @ hand spd = {combinedHitData.HandSpeed:0.00}");
+            }
         }
 
         private void ProcessDig(HitData combinedHitData)
         {
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(digSound);
-            notification.ShowText("Digging!");
+
+            if (enableDebugFeatures)
+                notification.ShowText("Digging!");
         }
 
         private void ProcessPoke(HitData handHitData)
         {
             // underhand = send ball in hand direction, with force derived from hand speed.
-            float forceModifier = CalculatePokeModifier(handHitData.handSpeed) * handHitData.handSpeed;
-            body.AddForce(forceModifier * handHitData.handVelocity.normalized);
+            float forceModifier = CalculatePokeModifier(handHitData.HandSpeed) * handHitData.HandSpeed;
+            body.AddForce(forceModifier * handHitData.HandVelocity.normalized, ForceMode.Force);
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(grabSound);
-            notification.ShowText("Poking!");
+
+            if (enableDebugFeatures)
+                notification.ShowText("Poking!");
         }
 
         private void Process1HandTestHit()
@@ -399,7 +431,7 @@ namespace Volleyball {
             float forceModifier = actualSpeed < pokeToSpikeSpeedTH ? 
                 CalculatePokeModifier(actualSpeed) * (float)actualSpeed : 
                 CalculateUnderhandHitModifier(actualSpeed) * (float)actualSpeed;
-            body.AddForce(forceModifier * new Vector3(0, 1, -1).normalized);
+            body.AddForce(forceModifier * new Vector3(0, 1, -1).normalized, ForceMode.Force);
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(spikeSound);
@@ -411,13 +443,15 @@ namespace Volleyball {
         private void Process1HandHit(HitData handHitData)
         {
             // underhand = send ball in hand direction, with force derived from hand speed.
-            float forceModifier = CalculateUnderhandHitModifier(handHitData.handSpeed) * handHitData.handSpeed;
-            body.AddForce(forceModifier * handHitData.handVelocity.normalized);
+            float forceModifier = CalculateUnderhandHitModifier(handHitData.HandSpeed) * handHitData.HandSpeed;
+            body.AddForce(forceModifier * handHitData.HandVelocity.normalized, ForceMode.Force);
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(spikeSound);
-            // notification.ShowText("1 Hand Fast Hit!");
-            notification.ShowText($"{handHitData.handSpeed} m/s.");
+
+            if (enableDebugFeatures)
+                // notification.ShowText("1 Hand Fast Hit!");
+                notification.ShowText($"1-handed fast hit!");
         }
 
         /// <summary>
@@ -436,6 +470,8 @@ namespace Volleyball {
         private float CalculatePokeModifier(float x) => (pokeMaxModifier - pokeMinModifier) /
             (1 + Mathf.Exp(pokeDecayFactor * (x - pokeMidwaySpd))) +
             pokeMinModifier;
+
+        private float CalculateSetModifier(float x) => setRiseFactor * x + setMinModifier;
         #endregion
 
         #region Audio Handling

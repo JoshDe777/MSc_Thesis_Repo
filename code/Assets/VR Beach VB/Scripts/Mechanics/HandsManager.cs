@@ -22,10 +22,16 @@ public class HandsManager : MonoBehaviour
 
     [SerializeField] private InputActionProperty velocityBinding;
 
+    [Header("Hand Orientations")]
+    [SerializeField] private Transform centre;
+    [SerializeField] private Transform palm;
+    [SerializeField] private Transform front;
+
     private XROrigin xrOrigin;
 
 
     [Header("Settings")]
+    [SerializeField] private bool debugPalm = false;
     [SerializeField][Tooltip("Determines whether to smoothen velocity over n frames or not.")] private bool smoothening = false;
     [SerializeField][Tooltip("The importance velocities newly collected have compared to other values.")] private float alpha = 0.5f;
 
@@ -41,6 +47,11 @@ public class HandsManager : MonoBehaviour
     private void Update()
     {
         UpdateVelocity();
+
+        if (!debugPalm)
+            return;
+
+        DrawPalmDebugRay();
     }
 
     private void UpdateVelocity()
@@ -67,4 +78,13 @@ public class HandsManager : MonoBehaviour
 
         StableVelocity = smoothening ? tempVector : tempVelocity;
     }
+
+    public Vector3 GetPalmOrientation() => (palm.position - centre.position).normalized;
+
+    #region debug
+    private void DrawPalmDebugRay()
+    {
+        Debug.DrawRay(transform.position, GetPalmOrientation() * 0.5f, Color.red);
+    }
+    #endregion
 }
