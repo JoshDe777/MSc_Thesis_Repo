@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
@@ -168,7 +168,7 @@ public class GrandstandCreator : MonoBehaviour
                                     seatGO = GameObject.Instantiate(geometry.seat, new Vector3(i + 1.5f, height * (0.6f + (float)j / (float)2), j), Quaternion.identity, transform);
                                     if (geometry.spectator.Count != 0)
                                     {
-                                        spectatorGO = GameObject.Instantiate(geometry.spectator[seatingCapacity % geometry.spectator.Count], new Vector3(i + 1.5f, height * ((float)j / (float)2) - 0.2f, j + 0.3f), Quaternion.Euler(0, 180, 0), transform);
+                                        spectatorGO = GameObject.Instantiate(geometry.spectator[Random.Range(0, geometry.spectator.Count)], new Vector3(i + 1.5f, height * ((float)j / (float)2) - 0.2f, j + 0.3f), Quaternion.Euler(0, 180, 0), transform);
                                     }
                                 }
                             }
@@ -182,7 +182,7 @@ public class GrandstandCreator : MonoBehaviour
                                     seatGO = GameObject.Instantiate(geometry.seat, new Vector3(i * 1.5f + 1.5f, height * (0.6f + (float)j / (float)2), j), Quaternion.identity, transform);
                                     if (geometry.spectator.Count != 0)
                                     {
-                                        spectatorGO = GameObject.Instantiate(geometry.spectator[seatingCapacity % geometry.spectator.Count], new Vector3(i * 1.5f + 1.5f, height * ((float)j / (float)2) - 0.2f, j + 0.3f), Quaternion.Euler(0, 180, 0), transform);
+                                        spectatorGO = GameObject.Instantiate(geometry.spectator[Random.Range(0, geometry.spectator.Count)], new Vector3(i * 1.5f + 1.5f, height * ((float)j / (float)2) - 0.2f, j + 0.3f), Quaternion.Euler(0, 180, 0), transform);
                                     }
                                 }
                             }
@@ -196,7 +196,7 @@ public class GrandstandCreator : MonoBehaviour
                                     seatGO = GameObject.Instantiate(geometry.seat, new Vector3(i / 1.5f + 1.5f, height * (0.6f + (float)j / (float)2), j), Quaternion.identity, transform);
                                     if (geometry.spectator.Count != 0)
                                     {
-                                        spectatorGO = GameObject.Instantiate(geometry.spectator[seatingCapacity % geometry.spectator.Count], new Vector3(i / 1.5f + 1.5f, height * ((float)j / (float)2) - 0.2f, j + 0.3f), Quaternion.Euler(0, 180, 0), transform);
+                                        spectatorGO = GameObject.Instantiate(geometry.spectator[Random.Range(0, geometry.spectator.Count)], new Vector3(i / 1.5f + 1.5f, height * ((float)j / (float)2) - 0.2f, j + 0.3f), Quaternion.Euler(0, 180, 0), transform);
                                     }
                                 }
                             }
