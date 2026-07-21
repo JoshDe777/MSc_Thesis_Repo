@@ -40420,6 +40420,7 @@ MonoBehaviour:
   front: {fileID: 687473363}
   debugPalm: 1
   smoothening: 0
+  rotateVelocityWithXROrigin: 1
   alpha: 0.5
 --- !u!65 &794182063
 BoxCollider:
@@ -113944,6 +113945,7 @@ MonoBehaviour:
   front: {fileID: 1495866370}
   debugPalm: 1
   smoothening: 0
+  rotateVelocityWithXROrigin: 1
   alpha: 0.5
 --- !u!65 &2138273891
 BoxCollider:
@@ -139618,7 +139620,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7223899041400243285}
   m_HandleRect: {fileID: 3088556170141049555}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.99999535
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -165196,7 +165198,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0038029142}
+  m_AnchoredPosition: {x: 0, y: 0.002097409}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7809520214631591185

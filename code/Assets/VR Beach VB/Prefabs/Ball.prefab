@@ -157,7 +157,10 @@ MonoBehaviour:
   pokeMinModifier: 13
   pokeDecayFactor: 0.33
   pokeMidwaySpd: 5.5
-  setForce: 200
+  setMaxModifier: 130
+  setMinModifier: 21.5
+  setEpsilon: 0.01
+  setMaxSpd: 9
   defaultAudioModifier: 1
   spawnSound: {fileID: 8300000, guid: 7ffe8ce811727804aac97aee7c060adc, type: 3}
   bounceSound: {fileID: 8300000, guid: 9fffcfa5967cedb4b84d440c1c8fbecb, type: 3}

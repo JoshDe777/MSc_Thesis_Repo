@@ -33,6 +33,7 @@ public class HandsManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool debugPalm = false;
     [SerializeField][Tooltip("Determines whether to smoothen velocity over n frames or not.")] private bool smoothening = false;
+    [SerializeField][Tooltip("Determines whether to rotate velocity values by the XR Origin's rotation value.")] private bool rotateVelocityWithXROrigin = true;
     [SerializeField][Tooltip("The importance velocities newly collected have compared to other values.")] private float alpha = 0.5f;
 
     private void Start()
@@ -60,8 +61,11 @@ public class HandsManager : MonoBehaviour
         if(lastNFrames.Count == nFrames)
             lastNFrames.Dequeue();
 
-        // read local velocity, negate xrOrigin bias, & add to buffer.
-        Vector3 tempVelocity =  xrOrigin.transform.rotation * velocityBinding.action.ReadValue<Vector3>();
+        // read local velocity, and apply XR origin rotation if selected.
+        Vector3 tempVelocity =  velocityBinding.action.ReadValue<Vector3>();
+        if (rotateVelocityWithXROrigin)
+            tempVelocity = xrOrigin.transform.rotation * tempVelocity;
+
         lastNFrames.Enqueue(tempVelocity);
 
         // average over the queued velocities to get 'local' velocity/momentum.

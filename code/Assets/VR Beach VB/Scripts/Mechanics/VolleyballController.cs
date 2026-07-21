@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using System;
 using XRMultiplayer;
 
 namespace Volleyball {
@@ -78,9 +79,9 @@ namespace Volleyball {
         [SerializeField][Tooltip("[Poke] The hit speed determined to benefit from half the multiplier.")] private float pokeMidwaySpd = 8f;
 
         [Header("Set Params")]
-        [SerializeField][Tooltip("[Set] The force multiplicator applied to the weakest recorded hits.")] private float setMaxModifier = 28.5f;
-        [SerializeField][Tooltip("[Set] The force multiplicator applied to the strongest recorded hits.")] private float setMinModifier = 10f;
-        //[SerializeField][Tooltip("[Set] The smoothness of the force decay factor.")] private float setDecayFactor = 0.33f;
+        [SerializeField][Tooltip("[Set] The force multiplicator applied to the weakest recorded hits.")] private float setMaxModifier = 55f;
+        [SerializeField][Tooltip("[Set] The force multiplicator applied to the strongest recorded hits.")] private float setMinModifier = 27.5f;
+        [SerializeField][Tooltip("[Set] The smoothness of the force decay factor.")] private float setEpsilon = 0.01f;
         [SerializeField][Tooltip("[Set] The hit speed determined to benefit from half the multiplier.")] private float setMaxSpd = 7f;
         private float setRiseFactor = 0f;
 
@@ -397,8 +398,8 @@ namespace Volleyball {
             audioSource.PlayOneShot(setSound);
 
             if (enableDebugFeatures){
-                notification.ShowText($"Setting! (force: {force} / hands @ {combinedHitData.HandSpeed:0.00} m/s)");
-                Debug.Log($"Set @ hand spd = {combinedHitData.HandSpeed:0.00}");
+                notification.ShowText($"Setting! (force of magnitude {forceModifier:0.00}, hands @ {combinedHitData.HandSpeed:0.00}m/s)");
+                Debug.Log($"Set @ hand spd = {combinedHitData.HandSpeed:0.00}, force of magnitude {forceModifier:0.00}.");
             }
         }
 
@@ -458,7 +459,7 @@ namespace Volleyball {
         /// Logistic decay function based on the parameters passed in the inspector, with the variable representing the hand's speed.
         /// Visualised at https://www.geogebra.org/m/gmrpfb4x
         /// </summary>
-        /// <param name="x">The hand's speed.</param>
+        /// <param name="x">The hand's linear velocity magnitude on impact.</param>
         /// <returns></returns>
         private float CalculateUnderhandHitModifier(float x)
         {
@@ -467,11 +468,21 @@ namespace Volleyball {
             return oneHandHitMinModifier + numerator / denominator;
         }
 
-        private float CalculatePokeModifier(float x) => (pokeMaxModifier - pokeMinModifier) /
-            (1 + Mathf.Exp(pokeDecayFactor * (x - pokeMidwaySpd))) +
-            pokeMinModifier;
+        private float CalculatePokeModifier(float x) => CalculateUnderhandHitModifier(x);
 
-        private float CalculateSetModifier(float x) => setRiseFactor * x + setMinModifier;
+        /// <summary>
+        /// Negative e function based on the parameters passed in the inspector, with the variable representing the hand's speed.
+        /// Visualised at https://www.geogebra.org/m/brpustrz
+        /// </summary>
+        /// <param name="x">The hand's linear velocity magnitude on impact.</param>
+        /// <returns></returns>
+        private float CalculateSetModifier(float x)
+        {
+            float a = setMaxModifier - setMinModifier;
+            float ep = setEpsilon * a;
+            float b = -((float) Math.Log(ep) - (float) Math.Log(a)) / setMaxSpd;
+            return a * Mathf.Exp(-b * x) + setMinModifier;
+        }
         #endregion
 
         #region Audio Handling
