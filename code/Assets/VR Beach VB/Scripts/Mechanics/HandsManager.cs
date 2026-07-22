@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using Unity.XR.CoreUtils;
 
+public enum Handedness { 
+    LEFT = 0,
+    RIGHT = 1,
+    COMBINED = 2
+}
+
 public class HandsManager : MonoBehaviour
 {
     /// <summary>
@@ -31,7 +37,9 @@ public class HandsManager : MonoBehaviour
 
 
     [Header("Settings")]
+    [SerializeField] private Handedness handedness;
     [SerializeField] private bool debugPalm = false;
+    [SerializeField] private HandsManager otherHand;
     [SerializeField][Tooltip("Determines whether to smoothen velocity over n frames or not.")] private bool smoothening = false;
     [SerializeField][Tooltip("Determines whether to rotate velocity values by the XR Origin's rotation value.")] private bool rotateVelocityWithXROrigin = true;
     [SerializeField][Tooltip("The importance velocities newly collected have compared to other values.")] private float alpha = 0.5f;
@@ -84,6 +92,12 @@ public class HandsManager : MonoBehaviour
     }
 
     public Vector3 GetPalmOrientation() => (palm.position - centre.position).normalized;
+    public Vector3 GetDigNormal(){ 
+        Vector3 handVector = (front.position - centre.position).normalized;
+        Vector3 I = handedness == Handedness.RIGHT ? (otherHand.centre.position - this.centre.position).normalized : (this.centre.position - otherHand.centre.position).normalized;
+        return handedness == Handedness.RIGHT ? Vector3.Cross(handVector, I).normalized : Vector3.Cross(-I, handVector).normalized;
+    }
+    public Handedness GetHandedness() => handedness;
 
     #region debug
     private void DrawPalmDebugRay()

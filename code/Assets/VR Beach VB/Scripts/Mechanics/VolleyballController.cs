@@ -15,8 +15,6 @@ namespace Volleyball {
         #region variable declaration
         /// <summary> The Rigidbody attached to the Volleyball; Required to function. </summary>
         private Rigidbody body;
-        /// <summary> The SphereCollider attached to the Volleyball; Required to function. </summary>
-        private SphereCollider _collider;
         /// <summary> The XR Grab Interactable component attached to the Volleyball; Required to function. </summary>
         private XRGrabInteractable interactable;
         /// <summary> The audio source from which ball clips are played. </summary>
@@ -72,18 +70,16 @@ namespace Volleyball {
         [SerializeField][Tooltip("[1-Hand Fast Hits] The smoothness of the force decay factor.")] private float oneHandHitDecayFactor = 0.33f;
         [SerializeField][Tooltip("[1-Hand Fast Hits] The hit speed determined to benefit from half the multiplier.")] private float oneHandHitMidwaySpd = 5.5f;
 
-        [Header("Poke Params")]
-        [SerializeField][Tooltip("[Poke] The force multiplicator applied to the weakest recorded hits.")] private float pokeMaxModifier = 1.5f;
-        [SerializeField][Tooltip("[Poke] The force multiplicator applied to the strongest recorded hits.")] private float pokeMinModifier = 0.5f;
-        [SerializeField][Tooltip("[Poke] The smoothness of the force decay factor.")] private float pokeDecayFactor = 0.8f;
-        [SerializeField][Tooltip("[Poke] The hit speed determined to benefit from half the multiplier.")] private float pokeMidwaySpd = 8f;
-
         [Header("Set Params")]
         [SerializeField][Tooltip("[Set] The force multiplicator applied to the weakest recorded hits.")] private float setMaxModifier = 55f;
         [SerializeField][Tooltip("[Set] The force multiplicator applied to the strongest recorded hits.")] private float setMinModifier = 27.5f;
         [SerializeField][Tooltip("[Set] The smoothness of the force decay factor.")] private float setEpsilon = 0.01f;
         [SerializeField][Tooltip("[Set] The hit speed determined to benefit from half the multiplier.")] private float setMaxSpd = 7f;
         private float setRiseFactor = 0f;
+
+        [Header("Dig Params")]
+        [SerializeField][Tooltip("The proportion of ball speed carried over from the ball's velocity on impact.")] private float digBallVelModifier = 0.8f;
+        [SerializeField][Tooltip("The multiplier for combined hand speed applied to the ball when digging.")] private float digHandVelModifier = 1.0f;
 
         [Header("Audio")]
         [SerializeField] private float defaultAudioModifier = 1.0f;
@@ -121,7 +117,6 @@ namespace Volleyball {
             OnBallKilled = new();
 
             body = GetComponent<Rigidbody>();
-            _collider = GetComponent<SphereCollider>();
             interactable = GetComponent<XRGrabInteractable>();
             audioSource = GetComponent<AudioSource>();
             audioSource.volume *= defaultAudioModifier;
@@ -287,17 +282,20 @@ namespace Volleyball {
                         other.ClosestPoint(transform.position),
                         neckThreshold.position,
                         hands.StableVelocity,
-                        hands.GetPalmOrientation()
+                        hands.GetPalmOrientation(),
+                        body.linearVelocity,
+                        hands.GetDigNormal(),
+                        hands.GetHandedness()
                     );
 
-                if (other.gameObject.name == "Hand_Left")
+                if (hands.GetHandedness() == Handedness.LEFT)
                 {
                     inLeftHand = true;
                     leftHandData = data;
                     if (enableDebugFeatures)
                         Debug.Log("Hit by left hand!");
                 }
-                else
+                else if(hands.GetHandedness() == Handedness.RIGHT)
                 {
                     inRightHand = true;
                     rightHandData = data;
@@ -405,11 +403,21 @@ namespace Volleyball {
 
         private void ProcessDig(HitData combinedHitData)
         {
+            Vector3 reflectDirection = Vector3.Reflect(combinedHitData.BallVelocity.normalized, combinedHitData.HandVector.normalized);
+            float ballVelocityModifier = CalculateDigBallVelocityModifier(combinedHitData.BallVelocity.magnitude) * combinedHitData.BallVelocity.magnitude;
+            float handVelocityModifier = CalculateDigHandVelocityModifier(combinedHitData.HandVelocity.magnitude) * combinedHitData.HandVelocity.magnitude;
+            Vector3 force = (ballVelocityModifier + handVelocityModifier) * reflectDirection;
+            body.AddForce(force, ForceMode.Force);
+
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(digSound);
 
             if (enableDebugFeatures)
-                notification.ShowText("Digging!");
+            {
+                notification.ShowText($"Digging! ball @ {ballVelocityModifier}, hand @ {handVelocityModifier}.");
+                Debug.Log($"Registered Dig with modifiers: ball @ {ballVelocityModifier}, hand @ {handVelocityModifier}, for a total force of magnitude {force.magnitude}.");
+                Debug.Log($"Incoming ball direction: {combinedHitData.BallVelocity.normalized}\nHand Normal: {combinedHitData.HandVector}\nReflected direction: {reflectDirection}.");
+            }
         }
 
         private void ProcessPoke(HitData handHitData)
@@ -483,6 +491,10 @@ namespace Volleyball {
             float b = -((float) Math.Log(ep) - (float) Math.Log(a)) / setMaxSpd;
             return a * Mathf.Exp(-b * x) + setMinModifier;
         }
+
+        private float CalculateDigBallVelocityModifier(float x) => digBallVelModifier;
+
+        private float CalculateDigHandVelocityModifier(float x) => digHandVelModifier;
         #endregion
 
         #region Audio Handling
