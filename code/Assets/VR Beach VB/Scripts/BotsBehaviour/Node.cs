@@ -65,5 +65,22 @@ namespace BotBT
             }
             return null;
         }
+
+        public bool ClearData(string key)
+        {
+            bool cleared = false;
+
+            if (_dataContext.ContainsKey(key))
+            {
+                _dataContext.Remove(key);
+                return true;
+            }
+
+            Node node = parent;
+            if(node != null)
+                cleared = node.ClearData(key);
+
+            return cleared;
+        }
     }
 }

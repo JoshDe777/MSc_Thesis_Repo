@@ -305,6 +305,7 @@ namespace Volleyball {
 
                 // play spike if exiting any hand.
                 processHitInNextFrame = true;
+                lastTouch = other.GetComponent<TeamTracker>().GetTeam();
                 var vel = other.GetComponent<HandsManager>().StableVelocity;
                 if (enableDebugFeatures)
                     notification.ShowText($"Hit velocity: {vel} ({vel.magnitude} m/s).");

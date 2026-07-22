@@ -6,17 +6,14 @@ namespace BotBT
     {
         private Node _root = null;
 
-        protected void Start()
+        protected virtual void Start()
         {
             _root = SetupTree();
         }
 
         private void Update()
         {
-            if (_root != null)
-            {
-                _root.Evaluate();
-            }
+            _root?.Evaluate();
         }
 
         protected abstract Node SetupTree();

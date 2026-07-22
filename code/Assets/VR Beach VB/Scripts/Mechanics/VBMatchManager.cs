@@ -10,6 +10,7 @@ namespace Volleyball
     {
 
         [Header("--------------Match Data--------------")]
+        [SerializeField] private bool freeplay = false;
         [SerializeField] uint[] score = new uint[2] { 0, 0 };
         [SerializeField] uint maxScore = 11;
         [SerializeField] uint crowdChangeInterval = 5;
@@ -74,21 +75,24 @@ namespace Volleyball
         #region Match Management
         public void TeamScored()
         {
-            // increment the amount of points for the scoring team
-            uint newScore = team1WonLastPoint ? ++score[0] : ++score[1];
+            if(!freeplay){
+                // increment the amount of points for the scoring team
+                uint newScore = team1WonLastPoint ? ++score[0] : ++score[1];
 
-            // every n points, pause the game & prompt the player to update the crowd.
-            // add listener for EndMatch if match over otherwise ProgressToNextPoint.
-            if ((score[0] + score[1]) % crowdChangeInterval == 0){
-                PromptCrowdUpdate();
-                crowdOptions.OnConfirm.AddListener(newScore == maxScore ? EndMatch : ProgressToNextPoint);
-                return;
-            }
+                // every n points, pause the game & prompt the player to update the crowd.
+                // add listener for EndMatch if match over otherwise ProgressToNextPoint.
+                if ((score[0] + score[1]) % crowdChangeInterval == 0){
+                    PromptCrowdUpdate();
+                    crowdOptions.OnConfirm.AddListener(newScore == maxScore ? EndMatch : ProgressToNextPoint);
+                    return;
+                }
 
-            // verify if the game is won.
-            if (newScore == maxScore){
-                EndMatch();
-                return;
+                    // verify if the game is won.
+                    if (newScore == maxScore)
+                    {
+                        EndMatch();
+                        return;
+                    }
             }
 
             ProgressToNextPoint();
@@ -108,10 +112,10 @@ namespace Volleyball
             // place the ball at the back where the winners serve
             UpdateScoreUI();
 
-            string serving = team1WonLastPoint ? "Team 1" : "Team 2";
+            string serving = freeplay || team1WonLastPoint ? "Team 1" : "Team 2";
             // send a notification to who's serving.
             notification.ShowText(serving + " serve", 1.5f);
-            ResetBall(true /*team1WonLastPoint*/);
+            ResetBall(freeplay || team1WonLastPoint);
         }
         #endregion
 
@@ -170,11 +174,14 @@ namespace Volleyball
         }
         #endregion
 
-        #region crowd update mechanic
+        #region other
         private void PromptCrowdUpdate()
         {
             crowdOptions.OpenMenu();
         }
+
+        public void ExitFreeplay() => freeplay = false;
+        public void EnterFreeplay() => freeplay = true;
         #endregion
     }
 }

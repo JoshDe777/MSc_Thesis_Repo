@@ -15,6 +15,7 @@ TagManager:
   - BallBoundsCollider
   - Hand
   - NeckThreshold
+  - Ball
   layers:
   - Default
   - TransparentFX

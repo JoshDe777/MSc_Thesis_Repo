@@ -2,18 +2,14 @@
 
 namespace BotBT
 {
-    public class DetermineIsBallInReach : MonoBehaviour
+    public class DetermineIsBallInReach : Node
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        public override NodeState Evaluate()
         {
+            // check whether ball in bot's collider
+            // return success if true, else false.
 
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            return base.Evaluate();
         }
     }
 }
