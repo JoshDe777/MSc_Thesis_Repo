@@ -28,12 +28,12 @@ namespace Volleyball {
         public UnityEvent OnBallKilled { get; private set; }
 
         /// <summary> The team that last touched the ball.</summary>
-        public Teams lastTouch { get; private set; } = Teams.Team1;
+        public TeamTracker LastTouch { get; private set; } = null;
 
         /// <summary> The amount of touches made by a team since first getting possession.</summary>
         public int TeamTouches { get; private set; } = 0;
 
-        private bool changePossession = false;
+        private bool changeTeamInPossession = false;
 
         /// <summary> The coordinates in world space where the ball was considered killed.</summary>
         public Vector3 killPos { get; private set; } = Vector3.zero;
@@ -212,7 +212,6 @@ namespace Volleyball {
             interactable.enabled = false;
             body.useGravity = true;
             lifetime = VolleyballLifetimeState.InPlay;
-            lastTouch = Teams.Team2;                        // stop-gap for now; Assuming only 1 team so far.
 
             Vector3 force = Vector3.up * serveThrowForce;
             body.AddForce(force, ForceMode.VelocityChange);
@@ -309,15 +308,21 @@ namespace Volleyball {
                         Debug.Log("Hit by right hand!");
                 }
 
-                // play spike if exiting any hand.
+                // flag the ball to process a hit in the next frame.
                 processHitInNextFrame = true;
-                var touchingTeam = other.GetComponent<TeamTracker>().GetTeam();
-                if (lastTouch != touchingTeam)
-                    changePossession = true;
-                lastTouch = touchingTeam;
-                var vel = other.GetComponent<HandsManager>().StableVelocity;
-                if (enableDebugFeatures)
+
+                var touchingTeam = other.GetComponent<TeamTracker>();
+                LastTouch.Dispossess();
+                if (LastTouch.GetTeam() != touchingTeam.GetTeam())
+                    changeTeamInPossession = true;
+
+                LastTouch = touchingTeam;
+                LastTouch.Touch();
+
+                if (enableDebugFeatures){
+                    var vel = other.GetComponent<HandsManager>().StableVelocity;
                     notification.ShowText($"Hit velocity: {vel} ({vel.magnitude} m/s).");
+                }
             }
         }
 
@@ -395,7 +400,7 @@ namespace Volleyball {
             // set hit cooldown.
             activeCooldown = hitCooldownTime;
             // reset team touches if changing possession.
-            if (changePossession)
+            if (changeTeamInPossession)
                 TeamTouches = 0;
 
             // increment team touches.

@@ -2,7 +2,7 @@
 {
     public class DetermineIsBallInReach : Node
     {
-        BotBT bot;
+        readonly BotBT bot;
 
         public DetermineIsBallInReach(BotBT _bot) 
         {
