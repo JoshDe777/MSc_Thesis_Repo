@@ -10,6 +10,7 @@ namespace BotBT {
 
         private Vector3 restingSpot = Vector3.zero;
         public static float BotSpeed {  get; private set; }
+        public bool BallInRange { get; private set; } = false;
 
         public void Init(Vector3 _restingSpot)
         {
@@ -41,6 +42,18 @@ namespace BotBT {
                 }
             );
             return node;
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Ball"))
+                BallInRange = true;
+        }
+
+        private void OnCollisionExit(Collision collision) 
+        { 
+            if(collision.gameObject.CompareTag("Ball"))
+                BallInRange = false;
         }
     }
 }

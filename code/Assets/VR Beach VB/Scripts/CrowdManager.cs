@@ -94,7 +94,7 @@ public class CrowdManager : MonoBehaviour
     /// <param name="newDensity">The new desired density.</param>
     public void SetDensity(CrowdStates newDensity, bool overrideState = false)
     {
-        RegisterState();
+        RegisterState(newDensity);
 
         // spare effort if state unchanged.
         if (crowdState == newDensity && !overrideState)
@@ -227,10 +227,10 @@ public class CrowdManager : MonoBehaviour
 
     }
 
-    private void RegisterState()
+    private void RegisterState(CrowdStates state)
     {
-        transitionHistory.Add((int) crowdState);
-        Debug.Log($"Registered transition to state {crowdState}");
+        transitionHistory.Add((int) state);
+        Debug.Log($"Registered transition to state {state}");
     }
 
     private void SaveTransitions()

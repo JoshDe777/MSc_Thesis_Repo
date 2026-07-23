@@ -1,15 +1,17 @@
-﻿using UnityEngine;
-
-namespace BotBT
+﻿namespace BotBT
 {
     public class DetermineIsBallInReach : Node
     {
+        BotBT bot;
+
+        public DetermineIsBallInReach(BotBT _bot) 
+        {
+            bot = _bot;
+        }
+
         public override NodeState Evaluate()
         {
-            // check whether ball in bot's collider
-            // return success if true, else false.
-
-            return base.Evaluate();
+            return bot.BallInRange ? NodeState.SUCCESS : NodeState.FAILURE;
         }
     }
 }
