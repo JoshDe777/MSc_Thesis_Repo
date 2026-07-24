@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BotBT
+namespace BotBehaviourTree
 {
     public enum NodeState
     {

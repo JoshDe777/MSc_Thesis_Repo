@@ -139,7 +139,7 @@ namespace Volleyball
         {
             var ball = activeBall.GetComponent<VolleyballController>();
             killPos = ball.killPos;
-            lastTouch = ball.LastTouch;
+            lastTouch = ball.LastTouch.GetTeam();
             OnPointScored.Invoke();
 
             Teams pointWinner = Teams.None;

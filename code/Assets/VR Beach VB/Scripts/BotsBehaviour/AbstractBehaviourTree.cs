@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BotBT
+namespace BotBehaviourTree
 {
     public abstract class AbstractBehaviourTree : MonoBehaviour
     {
@@ -11,7 +11,7 @@ namespace BotBT
             _root = SetupTree();
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             _root?.Evaluate();
         }

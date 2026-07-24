@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BotBT
+namespace BotBehaviourTree
 {
     public class DoGoToTargetPos : Node
     {

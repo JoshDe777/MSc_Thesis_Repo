@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 
-namespace BotBT
+namespace BotBehaviourTree
 {
     public class DetermineIsMyBall : Node
     {

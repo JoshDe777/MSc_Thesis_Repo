@@ -15,6 +15,7 @@ public class TeamTracker : MonoBehaviour
     }
 
     public Teams GetTeam() => team;
+    public void SetTeam(Teams _team) => team = _team;
 
     public void Touch(){ 
         LastTouch = true; 

@@ -41,11 +41,6 @@ namespace Volleyball {
         [Header("Lifetime Parameters")]
         [SerializeField][Tooltip("The amount of time given to the ball after a kill to cleanly delete itself from the scene.")] private float selfDestructTimeLeft = 5f;
 
-        #if UNITY_EDITOR
-        [SerializeField] private GameObject debugSpherePrefab;
-        private GameObject activeDebugSphere = null;
-        #endif
-
         [Header("General Hit Settings")]
         /// <summary>The force at which the ball is sent upwards when serving, instead of relying on throw speed.</summary>
         [SerializeField] private float serveThrowForce = 7.5f;
@@ -57,8 +52,6 @@ namespace Volleyball {
         private float activeCooldown = 0.0f;
 
         [Header("Hit Testing Parameters")]
-        /// <summary> The switch determining whether to enable debug messages and features or not.</summary>
-        [SerializeField] private bool enableDebugFeatures = true;
         /// <summary> The switch to determinte whether to fake velocity values for hits or not.</summary>
         [SerializeField] private bool testingHits = false;
         /// <summary> The fake velocity used for the first hit when testing.</summary>
@@ -213,10 +206,13 @@ namespace Volleyball {
             body.useGravity = true;
             lifetime = VolleyballLifetimeState.InPlay;
 
-            Vector3 force = Vector3.up * serveThrowForce;
-            body.AddForce(force, ForceMode.VelocityChange);
-            activeCooldown = hitCooldownTime/2;
-            audioSource.PlayOneShot(setSound);
+            // only throw up for Human players.
+            if (_ != null){
+                Vector3 force = Vector3.up * serveThrowForce;
+                body.AddForce(force, ForceMode.VelocityChange);
+                activeCooldown = hitCooldownTime/2;
+                audioSource.PlayOneShot(setSound);
+            }
         }
 
         /// <summary>
@@ -227,10 +223,6 @@ namespace Volleyball {
             // ignore interactions optionally.
             // start self-destruct timer.
             lifetime = VolleyballLifetimeState.DeadBall;
-
-            if(enableDebugFeatures)
-            // instantiate debug sphere on contact point for feedback
-                activeDebugSphere = Instantiate(debugSpherePrefab, killPos, Quaternion.identity);
         }
 
         /// <summary>
@@ -246,10 +238,6 @@ namespace Volleyball {
             interactable.selectExited.RemoveListener(EnterStateInPlay);
             OnBallKilled.RemoveAllListeners();
             OnBallDestroy.RemoveAllListeners();
-
-            // destroy any debug spheres attached to the ball.
-            if(enableDebugFeatures && activeDebugSphere)
-                Destroy(activeDebugSphere);
 
             // destroy the prefab.
             Destroy(gameObject);
@@ -268,16 +256,21 @@ namespace Volleyball {
                 killPos = contactpoint.point;
 
                 OnBallKilled.Invoke();
-                if (enableDebugFeatures)
-                    Debug.Log("Ball killed within bounds.");
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
+            // if a bot is serving, auto-speedrun states to serving.
+            if (other.CompareTag("Bot") && lifetime == VolleyballLifetimeState.AwaitingServe)
+            {
+                EnterStateServing(null);
+                EnterStateInPlay(null);
+            }
+
             // ignore if ball not in play, or in hit cooldown.
             if (lifetime != VolleyballLifetimeState.InPlay || activeCooldown > 0)
-                return;
+            return;
 
             if (other.CompareTag("Hand"))
             {
@@ -297,15 +290,11 @@ namespace Volleyball {
                 {
                     inLeftHand = true;
                     leftHandData = data;
-                    if (enableDebugFeatures)
-                        Debug.Log("Hit by left hand!");
                 }
                 else if(hands.GetHandedness() == Handedness.RIGHT)
                 {
                     inRightHand = true;
                     rightHandData = data;
-                    if (enableDebugFeatures)
-                        Debug.Log("Hit by right hand!");
                 }
 
                 // flag the ball to process a hit in the next frame.
@@ -318,12 +307,9 @@ namespace Volleyball {
 
                 LastTouch = touchingTeam;
                 LastTouch.Touch();
-
-                if (enableDebugFeatures){
-                    var vel = other.GetComponent<HandsManager>().StableVelocity;
-                    notification.ShowText($"Hit velocity: {vel} ({vel.magnitude} m/s).");
-                }
             }
+
+            
         }
 
         private void OnTriggerExit(Collider other)
@@ -334,9 +320,6 @@ namespace Volleyball {
 
             if (other.CompareTag("BallBoundsCollider")){
                 OnExitBounds();
-
-                if (enableDebugFeatures)
-                    Debug.Log("Ball out of bounds.");
             }
         }
         #endregion
@@ -378,16 +361,11 @@ namespace Volleyball {
                     return;
                 }
 
-                if(testingHits)
-                    Process1HandTestHit();
-                else
-                {
-                    // if hitting upwards (deltaY > TH) -> underhand, else spike.
-                    if (selectedHitData.HandSpeed > pokeToSpikeSpeedTH)
-                        Process1HandHit(selectedHitData);
-                    else    // otherwise it is a poke
-                        ProcessPoke(selectedHitData);
-                }
+                // if hitting upwards (deltaY > TH) -> underhand, else spike.
+                if (selectedHitData.HandSpeed > pokeToSpikeSpeedTH)
+                    Process1HandHit(selectedHitData);
+                else    // otherwise it is a poke
+                    ProcessPoke(selectedHitData);
             }
 
             // cancel all hit data & tracking after processing.
@@ -415,11 +393,6 @@ namespace Volleyball {
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(setSound);
-
-            if (enableDebugFeatures){
-                notification.ShowText($"Setting! (force of magnitude {forceModifier:0.00}, hands @ {combinedHitData.HandSpeed:0.00}m/s)");
-                Debug.Log($"Set @ hand spd = {combinedHitData.HandSpeed:0.00}, force of magnitude {forceModifier:0.00}.");
-            }
         }
 
         private void ProcessDig(HitData combinedHitData)
@@ -432,13 +405,6 @@ namespace Volleyball {
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(digSound);
-
-            if (enableDebugFeatures)
-            {
-                notification.ShowText($"Digging! ball @ {ballVelocityModifier}, hand @ {handVelocityModifier}.");
-                Debug.Log($"Registered Dig with modifiers: ball @ {ballVelocityModifier}, hand @ {handVelocityModifier}, for a total force of magnitude {force.magnitude}.");
-                Debug.Log($"Incoming ball direction: {combinedHitData.BallVelocity.normalized}\nHand Normal: {combinedHitData.HandVector}\nReflected direction: {reflectDirection}.");
-            }
         }
 
         private void ProcessPoke(HitData handHitData)
@@ -449,25 +415,6 @@ namespace Volleyball {
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(grabSound);
-
-            if (enableDebugFeatures)
-                notification.ShowText("Poking!");
-        }
-
-        private void Process1HandTestHit()
-        {
-            float actualSpeed = recordedSpeed;
-            // underhand = send ball in hand direction, with force derived from hand speed.
-            float forceModifier = actualSpeed < pokeToSpikeSpeedTH ? 
-                CalculatePokeModifier(actualSpeed) * (float)actualSpeed : 
-                CalculateUnderhandHitModifier(actualSpeed) * (float)actualSpeed;
-            body.AddForce(forceModifier * new Vector3(0, 1, -1).normalized, ForceMode.Force);
-
-            // audio queue + debug statement for classification recognition.
-            audioSource.PlayOneShot(spikeSound);
-            notification.ShowText($"(hand: {actualSpeed:0.000} m/s)");
-
-            recordedSpeed += incrementStep;
         }
 
         private void Process1HandHit(HitData handHitData)
@@ -478,10 +425,6 @@ namespace Volleyball {
 
             // audio queue + debug statement for classification recognition.
             audioSource.PlayOneShot(spikeSound);
-
-            if (enableDebugFeatures)
-                // notification.ShowText("1 Hand Fast Hit!");
-                notification.ShowText($"1-handed fast hit!");
         }
 
         /// <summary>

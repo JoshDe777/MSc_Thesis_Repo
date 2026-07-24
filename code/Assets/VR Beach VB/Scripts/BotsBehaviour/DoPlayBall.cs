@@ -3,7 +3,7 @@ using System.Data.SqlTypes;
 using UnityEngine;
 using Volleyball;
 
-namespace BotBT
+namespace BotBehaviourTree
 {
     public class DoPlayBall : Node
     {

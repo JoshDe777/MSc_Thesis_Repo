@@ -1,4 +1,4 @@
-﻿namespace BotBT
+﻿namespace BotBehaviourTree
 {
     public class DetermineIsBallInReach : Node
     {
