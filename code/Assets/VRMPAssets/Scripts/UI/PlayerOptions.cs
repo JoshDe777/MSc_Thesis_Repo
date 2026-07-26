@@ -37,8 +37,6 @@ namespace XRMultiplayer
 
         [Header("Voice Chat")]
         [SerializeField] Button m_MicPermsButton;
-        [SerializeField] Slider m_InputVolumeSlider;
-        [SerializeField] Slider m_OutputVolumeSlider;
         [SerializeField] Image m_LocalPlayerAudioVolume;
         [SerializeField] Image m_MutedIcon;
         [SerializeField] Image m_MicOnIcon;
@@ -53,6 +51,7 @@ namespace XRMultiplayer
         VoiceChatManager m_VoiceChatManager;
         DynamicMoveProvider m_MoveProvider;
         SnapTurnProvider m_TurnProvider;
+        ContinuousTurnProvider m_ContinuousTurnProvider;
         UnityEngine.XR.Interaction.Toolkit.Locomotion.Comfort.TunnelingVignetteController m_TunnelingVignetteController;
 
         PermissionCallbacks permCallbacks;
@@ -62,6 +61,7 @@ namespace XRMultiplayer
             m_VoiceChatManager = FindFirstObjectByType<VoiceChatManager>();
             m_MoveProvider = FindFirstObjectByType<DynamicMoveProvider>();
             m_TurnProvider = FindFirstObjectByType<SnapTurnProvider>();
+            m_ContinuousTurnProvider = FindAnyObjectByType<ContinuousTurnProvider>();
             m_TunnelingVignetteController = FindFirstObjectByType<UnityEngine.XR.Interaction.Toolkit.Locomotion.Comfort.TunnelingVignetteController>();
 
             XRINetworkGameManager.Connected.Subscribe(ConnectOnline);
@@ -70,8 +70,6 @@ namespace XRMultiplayer
 
             m_VoiceChatManager.selfMuted.Subscribe(MutedChanged);
             m_VoiceChatManager.connectionStatus.Subscribe(UpdateVoiceChatStatus);
-            m_InputVolumeSlider.onValueChanged.AddListener(SetInputVolume);
-            m_OutputVolumeSlider.onValueChanged.AddListener(SetOutputVolume);
 
             ConnectOnline(false);
 
@@ -126,8 +124,6 @@ namespace XRMultiplayer
             m_VoiceChatManager.selfMuted.Unsubscribe(MutedChanged);
 
             m_VoiceChatManager.connectionStatus.Unsubscribe(UpdateVoiceChatStatus);
-            m_InputVolumeSlider.onValueChanged.RemoveListener(SetInputVolume);
-            m_OutputVolumeSlider.onValueChanged.RemoveListener(SetOutputVolume);
         }
 
         private void Update()
@@ -300,6 +296,12 @@ namespace XRMultiplayer
             float newTurnAmount = Mathf.Clamp(m_TurnProvider.turnAmount + (m_SnapTurnUpdateAmount * dir), m_MinMaxTurnAmount.x, m_MinMaxTurnAmount.y);
             m_TurnProvider.turnAmount = newTurnAmount;
             m_SnapTurnText.text = $"{newTurnAmount}°";
+        }
+        public void UpdateSmoothTurn(int dir)
+        {
+            float newTurnSpeed = Mathf.Clamp(m_ContinuousTurnProvider.turnSpeed + (m_SnapTurnUpdateAmount * dir), m_MinMaxTurnAmount.x, m_MinMaxTurnAmount.y);
+            m_ContinuousTurnProvider.turnSpeed = newTurnSpeed;
+            m_SnapTurnText.text = $"{newTurnSpeed}";
         }
 
         public void ToggleTunnelingVignette(bool toggle)

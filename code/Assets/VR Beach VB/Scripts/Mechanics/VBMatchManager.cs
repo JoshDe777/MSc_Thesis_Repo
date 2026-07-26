@@ -10,7 +10,7 @@ namespace Volleyball
     {
 
         [Header("--------------Match Data--------------")]
-        [SerializeField] private bool freeplay = false;
+        [SerializeField] private bool freeplay = true;
         [SerializeField] uint[] score = new uint[2] { 0, 0 };
         [SerializeField] uint maxScore = 11;
         [SerializeField] uint crowdChangeInterval = 5;
