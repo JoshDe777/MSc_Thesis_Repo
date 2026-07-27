@@ -53440,6 +53440,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2808410049059023866, guid: 0267a1d338db2bf4c9625e450bbaaad0,
         type: 3}
+      propertyPath: m_SessionType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2808410049059023866, guid: 0267a1d338db2bf4c9625e450bbaaad0,
+        type: 3}
       propertyPath: hideEditorFromLobby
       value: 0
       objectReference: {fileID: 0}
@@ -121929,7 +121934,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 403981004256301005}
   m_HandleRect: {fileID: 5448487143912306917}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.9999968
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -132994,7 +132999,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000045776367, y: 0.0001831602}
+  m_AnchoredPosition: {x: -0.000045776367, y: 0.0014167071}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6171326680252600699
