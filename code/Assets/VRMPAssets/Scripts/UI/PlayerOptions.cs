@@ -48,7 +48,6 @@ namespace XRMultiplayer
         [SerializeField] Vector2 m_MinMaxTurnAmount = new Vector2(15.0f, 180.0f);
         [SerializeField] float m_SnapTurnUpdateAmount = 15.0f;
 
-        VoiceChatManager m_VoiceChatManager;
         DynamicMoveProvider m_MoveProvider;
         SnapTurnProvider m_TurnProvider;
         ContinuousTurnProvider m_ContinuousTurnProvider;
@@ -58,18 +57,10 @@ namespace XRMultiplayer
 
         private void Awake()
         {
-            m_VoiceChatManager = FindFirstObjectByType<VoiceChatManager>();
             m_MoveProvider = FindFirstObjectByType<DynamicMoveProvider>();
             m_TurnProvider = FindFirstObjectByType<SnapTurnProvider>();
             m_ContinuousTurnProvider = FindAnyObjectByType<ContinuousTurnProvider>();
             m_TunnelingVignetteController = FindFirstObjectByType<UnityEngine.XR.Interaction.Toolkit.Locomotion.Comfort.TunnelingVignetteController>();
-
-            XRINetworkGameManager.Connected.Subscribe(ConnectOnline);
-            XRINetworkGameManager.ConnectedRoomName.Subscribe(UpdateRoomName);
-            XRINetworkGameManager.Instance.OnSessionOwnerPromoted += UpdateHostVisuals;
-
-            m_VoiceChatManager.selfMuted.Subscribe(MutedChanged);
-            m_VoiceChatManager.connectionStatus.Subscribe(UpdateVoiceChatStatus);
 
             ConnectOnline(false);
 
@@ -87,8 +78,7 @@ namespace XRMultiplayer
 
         private void UpdateHostVisuals(ulong newHostId)
         {
-            m_HostRoomPanel.SetActive(NetworkManager.Singleton.LocalClientId == newHostId);
-            m_ClientRoomPanel.SetActive(NetworkManager.Singleton.LocalClientId != newHostId);
+            
         }
 
         internal void PermissionCallbacks_PermissionGranted(string permissionName)
@@ -118,25 +108,12 @@ namespace XRMultiplayer
 
         private void OnDestroy()
         {
-            XRINetworkGameManager.Connected.Unsubscribe(ConnectOnline);
-            XRINetworkGameManager.ConnectedRoomName.Unsubscribe(UpdateRoomName);
-            XRINetworkGameManager.Instance.OnSessionOwnerPromoted += UpdateHostVisuals;
-            m_VoiceChatManager.selfMuted.Unsubscribe(MutedChanged);
-
-            m_VoiceChatManager.connectionStatus.Unsubscribe(UpdateVoiceChatStatus);
+            
         }
 
         private void Update()
         {
             m_TimeText.text = $"{DateTime.Now:h:mm}<size=4><voffset=1em>{DateTime.Now:tt}</size></voffset>";
-            if (XRINetworkGameManager.Connected.Value)
-            {
-                m_LocalPlayerAudioVolume.fillAmount = XRINetworkPlayer.LocalPlayer.playerVoiceAmp;
-            }
-            else
-            {
-                m_LocalPlayerAudioVolume.fillAmount = OfflinePlayerAvatar.voiceAmp.Value;
-            }
         }
 
         void ConnectOnline(bool connected)
@@ -153,9 +130,6 @@ namespace XRMultiplayer
 
             if (connected)
             {
-                m_HostRoomPanel.SetActive(XRINetworkPlayer.LocalPlayer.IsSessionOwner);
-                m_ClientRoomPanel.SetActive(!XRINetworkPlayer.LocalPlayer.IsSessionOwner);
-                UpdateRoomName(XRINetworkGameManager.ConnectedRoomName.Value);
                 m_MutedIcon.enabled = false;
                 m_MicOnIcon.enabled = true;
                 m_LocalPlayerAudioVolume.enabled = true;
@@ -224,22 +198,6 @@ namespace XRMultiplayer
         public void SetVolumeLevel(float sliderValue)
         {
             m_Mixer.SetFloat("MainVolume", Mathf.Log10(sliderValue) * 20);
-        }
-        public void SetInputVolume(float volume)
-        {
-            float perc = Mathf.Lerp(-10, 10, volume);
-            m_VoiceChatManager.SetInputVolume(perc);
-        }
-
-        public void SetOutputVolume(float volume)
-        {
-            float perc = Mathf.Lerp(-10, 10, volume);
-            m_VoiceChatManager.SetOutputVolume(perc);
-        }
-
-        public void ToggleMute()
-        {
-            m_VoiceChatManager.ToggleSelfMute();
         }
 
         void MutedChanged(bool muted)
