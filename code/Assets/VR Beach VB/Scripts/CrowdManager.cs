@@ -195,7 +195,7 @@ public class CrowdManager : MonoBehaviour
     private int GetPlayerID()
     {
         // create storage folder if doesn't exist
-        var cwd = UnityEngine.Application.dataPath;
+        var cwd = UnityEngine.Application.persistentDataPath;
         var folderpath = Path.Combine(cwd, foldername);
         if (!Directory.Exists(folderpath))
             Directory.CreateDirectory(folderpath);
@@ -236,7 +236,7 @@ public class CrowdManager : MonoBehaviour
     private void SaveTransitions()
     {
         // create storage folder if doesn't exist
-        var cwd = UnityEngine.Application.dataPath;
+        var cwd = UnityEngine.Application.persistentDataPath;
         var folderpath = Path.Combine(cwd, foldername);
         if (!Directory.Exists(folderpath))
             Directory.CreateDirectory(folderpath);
