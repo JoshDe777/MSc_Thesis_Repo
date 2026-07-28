@@ -12,6 +12,13 @@ namespace Volleyball
         DeadBall = 3
     }
 
+    public enum VolleyballInteractionType
+    {
+        None = 0,
+        Serve = 1,
+        React = 2
+    }
+
     public enum Teams
     {
         None = 0,

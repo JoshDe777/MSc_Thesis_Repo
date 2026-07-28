@@ -22,24 +22,24 @@ namespace Volleyball {
 
         /// <summary> A display of the ball's lifetime, from pre-match, serving, in play, to dead. </summary>
         public VolleyballLifetimeState lifetime { get; private set; } = VolleyballLifetimeState.DeadBall;
+        public VolleyballInteractionType iType { get; private set; } = VolleyballInteractionType.None;
         /// <summary> An event called when the volleyball object is destroyed in the scene. </summary>
         public UnityEvent OnBallDestroy { get; private set; }
         /// <summary> An event called when the volleyball hits the ground (when the ball is 'killed'). </summary>
         public UnityEvent OnBallKilled { get; private set; }
 
         /// <summary> The team that last touched the ball.</summary>
-        public TeamTracker LastTouch { get; private set; } = null;
-
-        /// <summary> The amount of touches made by a team since first getting possession.</summary>
-        public int TeamTouches { get; private set; } = 0;
-
-        private bool changeTeamInPossession = false;
+        public Teams LastTouch { get; private set; } = Teams.Team1;
 
         /// <summary> The coordinates in world space where the ball was considered killed.</summary>
         public Vector3 killPos { get; private set; } = Vector3.zero;
 
         [Header("Lifetime Parameters")]
         [SerializeField][Tooltip("The amount of time given to the ball after a kill to cleanly delete itself from the scene.")] private float selfDestructTimeLeft = 5f;
+        [SerializeField][Tooltip("The amount of time given to the player to react to the ball after it spawns when not serving.")] private float timeUntilSendBall = 3f;
+        [SerializeField] private float[] timeToReachPlayerRange;
+        [SerializeField] private float throwInModifier = 1.2f;
+        private float activeTimer = 0f;
 
         [Header("General Hit Settings")]
         /// <summary>The force at which the ball is sent upwards when serving, instead of relying on throw speed.</summary>
@@ -50,18 +50,6 @@ namespace Volleyball {
         [SerializeField] private float hitCooldownTime = 0.1f;
         /// <summary>The time in seconds left before another hit can be registered.</summary>
         private float activeCooldown = 0.0f;
-
-        [Header("Hit Testing Parameters")]
-        /// <summary> The switch to determinte whether to fake velocity values for hits or not.</summary>
-        [SerializeField] private bool testingHits = false;
-        /// <summary> The fake velocity used for the first hit when testing.</summary>
-        [SerializeField] private float startSpeed = 1f;
-        /// <summary> The velocity increment applied after every hit.</summary>
-        [SerializeField] private float incrementStep = 1f;
-        /// <summary> The current fake velocity applied to tested hits.</summary>
-        private static float recordedSpeed = 0;
-        /// <summary> A switch marking whether it is the first test hit or not. Used to not reset the recordedSpeed value with every new ball.</summary>
-        private static bool firstBall = true;
 
         [Header("One Hand Hit Params")]
         [SerializeField][Tooltip("[1-Hand Fast Hits] The force multiplicator applied to the weakest recorded hits.")] private float oneHandHitMaxModifier = 55f;
@@ -109,6 +97,13 @@ namespace Volleyball {
         private PlayerHudNotification notification;
         #endregion
 
+        public void Init(VolleyballInteractionType type)
+        {
+            iType = type;
+            if (type == VolleyballInteractionType.React)
+                activeTimer = timeUntilSendBall;
+        }
+
         #region Unity Functions
         private void Awake()
         {
@@ -126,11 +121,6 @@ namespace Volleyball {
             else
                 neckThreshold = temp.transform;
 
-            if (testingHits && firstBall){
-                recordedSpeed = startSpeed;
-                firstBall = false;
-            }
-
             if(setMaxSpd != 0)
                 setRiseFactor = (setMaxModifier - setMinModifier) / setMaxSpd;
         }
@@ -143,7 +133,6 @@ namespace Volleyball {
             OnBallKilled.AddListener(EnterStateDeadBall);
 
             notification = FindAnyObjectByType<PlayerHudNotification>();
-
             EnterStateAwaitingServe();
         }
 
@@ -151,6 +140,13 @@ namespace Volleyball {
         {
             if(activeCooldown > 0)
                 activeCooldown -= Time.deltaTime;
+
+            if(iType == VolleyballInteractionType.React && lifetime == VolleyballLifetimeState.AwaitingServe)
+            {
+                activeTimer -= Time.deltaTime;
+                if (activeTimer <= 0)
+                    EnterStateServing(null);
+            }
 
             // exit early if ball not in play
             if (lifetime < VolleyballLifetimeState.InPlay)
@@ -183,6 +179,10 @@ namespace Volleyball {
             body.useGravity = false;
             lifetime = VolleyballLifetimeState.AwaitingServe;
 
+            // disable XR Grab interactable if only reacting.
+            if(iType == VolleyballInteractionType.React)
+                interactable.enabled = false;
+
             audioSource.PlayOneShot(spawnSound);
         }
 
@@ -194,7 +194,13 @@ namespace Volleyball {
             body.constraints = RigidbodyConstraints.None;
             lifetime = VolleyballLifetimeState.Serving;
 
-            audioSource.PlayOneShot(grabSound);
+            if(iType == VolleyballInteractionType.Serve){
+                audioSource.PlayOneShot(grabSound);
+                return;
+            }
+
+            // serving state essentially an immediate skip for the react mode lol, just passing through here for procedure and to lift the constraints.
+            EnterStateInPlay(null);
         }
 
         /// <summary>
@@ -202,17 +208,23 @@ namespace Volleyball {
         /// </summary>
         private void EnterStateInPlay(SelectExitEventArgs _)
         {
-            interactable.enabled = false;
-            body.useGravity = true;
             lifetime = VolleyballLifetimeState.InPlay;
+            body.useGravity = true;
 
-            // only throw up for Human players.
-            if (_ != null){
+            if (iType == VolleyballInteractionType.Serve){
+                interactable.enabled = false;
+
                 Vector3 force = Vector3.up * serveThrowForce;
-                body.AddForce(force, ForceMode.VelocityChange);
-                activeCooldown = hitCooldownTime/2;
-                audioSource.PlayOneShot(setSound);
+                body.linearVelocity = force;
+                activeCooldown = hitCooldownTime / 2;
             }
+            else
+            {
+                var force = SendBallToPlayer();
+                body.linearVelocity = force;
+            }
+            
+            audioSource.PlayOneShot(setSound);
         }
 
         /// <summary>
@@ -247,6 +259,8 @@ namespace Volleyball {
         #region collision & trigger handling
         private void OnCollisionEnter(Collision collision)
         {
+            Debug.Log($"Registered collision with object {collision.gameObject.name} at lifetime {lifetime}.");
+
             // ignore collision if not with ground
             if (!(lifetime == VolleyballLifetimeState.InPlay))
                 return;
@@ -299,14 +313,6 @@ namespace Volleyball {
 
                 // flag the ball to process a hit in the next frame.
                 processHitInNextFrame = true;
-
-                var touchingTeam = other.GetComponent<TeamTracker>();
-                LastTouch.Dispossess();
-                if (LastTouch.GetTeam() != touchingTeam.GetTeam())
-                    changeTeamInPossession = true;
-
-                LastTouch = touchingTeam;
-                LastTouch.Touch();
             }
 
             
@@ -377,12 +383,6 @@ namespace Volleyball {
 
             // set hit cooldown.
             activeCooldown = hitCooldownTime;
-            // reset team touches if changing possession.
-            if (changeTeamInPossession)
-                TeamTouches = 0;
-
-            // increment team touches.
-            TeamTouches++;
         }
 
         private void ProcessSet(HitData combinedHitData)
@@ -459,6 +459,28 @@ namespace Volleyball {
         private float CalculateDigBallVelocityModifier(float x) => digBallVelModifier;
 
         private float CalculateDigHandVelocityModifier(float x) => digHandVelModifier;
+
+        /// <summary>
+        /// Function ideated by Claude AI. Prompt: "Ok, explain to me how I can determine a force to apply as a velocity overwrite (body.linearVelocity = force) so that the ball 
+        /// reaches a target position in more or less a preset amount of time? Obviously the x-z direction can be reached by doing a target - currentpos calculation, but I wonder 
+        /// about the y direction, as well as the magnitude of the force/velocity.
+        /// 
+        /// I also want it to reach within at least that amount of time, no faster, but it's ok if it's potentially slower.I also want it to be relatively pinpoint positionally."
+        /// </summary>
+        /// <returns></returns>
+        private Vector3 SendBallToPlayer()
+        {
+            Vector3 target = GameObject.FindWithTag("PlayerTarget").transform.position;
+            var minReach = Mathf.Min(timeToReachPlayerRange);
+            var maxReach = Mathf.Max(timeToReachPlayerRange);
+            float T = UnityEngine.Random.Range(minReach, maxReach);
+            // direct direction, for x and z deltas
+            Vector3 dir = throwInModifier * (target - transform.position);
+            float g = Physics.gravity.y;
+            float y = (dir.y - 0.5f * g * T * T);
+
+            return  (new Vector3(dir.x, y, dir.z) / T);
+        }
         #endregion
 
         #region Audio Handling

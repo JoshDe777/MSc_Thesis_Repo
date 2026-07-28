@@ -17,6 +17,7 @@ TagManager:
   - NeckThreshold
   - Ball
   - Bot
+  - PlayerTarget
   layers:
   - Default
   - TransparentFX

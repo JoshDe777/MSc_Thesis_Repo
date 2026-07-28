@@ -140,15 +140,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Volleyball.VolleyballController
   selfDestructTimeLeft: 5
-  debugSpherePrefab: {fileID: 6436963157767928321, guid: d9092baa3a1c7a14e9d908257b5a661b,
-    type: 3}
+  timeUntilSendBall: 3
+  timeToReachPlayerRange:
+  - 1.2
+  - 1.5
+  throwInModifier: 1.1
   serveThrowForce: 7.5
   pokeToSpikeSpeedTH: 3
   hitCooldownTime: 0.1
-  enableDebugFeatures: 0
-  testingHits: 0
-  startSpeed: 1
-  incrementStep: 0.5
   oneHandHitMaxModifier: 55
   oneHandHitMinModifier: 13
   oneHandHitDecayFactor: 0.33

@@ -20,7 +20,8 @@ namespace Volleyball
 
         [Header("--------------Scene Transforms--------------")]
         [SerializeField] private Transform[] bounds;
-        [SerializeField] List<Transform> ballSpawnPositions;
+        [SerializeField] private Transform serveSpawnPos;
+        [SerializeField] private Transform[] reactSpawnLine;
 
         [Header("--------------Scene UI Objects--------------")]
         [SerializeField] List<TMP_Text> scoreFields;
@@ -44,17 +45,11 @@ namespace Volleyball
             // initialise a new list if none were assigned in editor.
             scoreFields ??= new();
 
-            // throw an error if less than 2 ball spawn positions are provided (more is ok they'll just be ignored)
-            if (ballSpawnPositions == null || ballSpawnPositions.Count < 2)
-                Debug.LogError("Not enough VB spawn positions provided!");
-            else if (ballSpawnPositions.Count > 2)
-                Debug.LogWarning("Too many VB spawn positions provided! Positions with index 2 and above will be ignored.");
-
             crowdOptions = FindAnyObjectByType<CrowdOptionsMenu>();
             if (!crowdOptions)
                 Debug.LogError("Couldn't find a CrowdOptionsMenu object in scene!");
 
-            ResetBall(true);
+            ResetBall(false);
         }
         #endregion
 
@@ -104,7 +99,7 @@ namespace Volleyball
             string winner = team1WonLastPoint ? "Team 1" : "Team 2";
             notification.ShowText(winner + " wins with " + score[0] + " to " + score[1] + "!");
             score = new uint[2] { 0, 0 };
-            ResetBall(true);
+            ResetBall();
         }
 
         private void ProgressToNextPoint()
@@ -112,21 +107,42 @@ namespace Volleyball
             // place the ball at the back where the winners serve
             UpdateScoreUI();
 
-            string serving = freeplay || team1WonLastPoint ? "Team 1" : "Team 2";
             // send a notification to who's serving.
-            notification.ShowText(serving + " serve", 1.5f);
-            ResetBall(freeplay || team1WonLastPoint);
+            ResetBall();
         }
         #endregion
 
         #region ball management
-        private void ResetBall(bool team1)
+        private void ResetBall(bool doRandom = true)
         {
             activeBall = Instantiate(ballPrefab);
-            activeBall.transform.position = ballSpawnPositions[team1 ? 0 : 1].position;
             var ball = activeBall.GetComponent<VolleyballController>();
+            bool serving = true;
+
+            // if not random set to serving position
+            if (!doRandom){
+                activeBall.transform.position = serveSpawnPos.position;
+            }
+            else
+            {
+                // otherwise give 33% chance of serving, 67% chance to need to react.
+                int rnd = Random.Range(0, 3);
+                if (rnd == 0){
+                    activeBall.transform.position = serveSpawnPos.position;
+                }
+                else
+                {
+                    serving = false;
+                    float dist = Random.Range(0, 1 + Mathf.Epsilon);
+                    Vector3 spawnPos = reactSpawnLine[0].position + dist * (reactSpawnLine[1].position - reactSpawnLine[0].position);
+                    activeBall.transform.position = spawnPos;
+                }
+            }
+
             ball.OnBallKilled.AddListener(GetKillInfo);
             ball.OnBallDestroy.AddListener(ProcessPoint);
+            ball.Init(serving ? VolleyballInteractionType.Serve : VolleyballInteractionType.React);
+            notification.ShowText(serving ? "Serving!" : "Incoming!", 1.5f);
         }
 
         private void ProcessPoint()
@@ -139,8 +155,8 @@ namespace Volleyball
         {
             var ball = activeBall.GetComponent<VolleyballController>();
             killPos = ball.killPos;
-            lastTouch = ball.LastTouch.GetTeam();
-            OnPointScored.Invoke();
+            lastTouch = ball.LastTouch;
+            OnPointScored?.Invoke();
 
             Teams pointWinner = Teams.None;
             if (IsInBounds(killPos))

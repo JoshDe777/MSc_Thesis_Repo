@@ -54,10 +54,10 @@ namespace BotBehaviourTree
             VolleyballController controller = ball.GetComponent<VolleyballController>();
 
             // if n touches < 3 play to teammate,
-            if (controller?.TeamTouches < 3)
-                PlayToTeammate(ball);
+            /*if (controller?.TeamTouches < 3)
+                PlayToTeammate(ball);*/
                                     // else if teammate is the player, just send it over,
-            else if (team == Teams.Team1)
+            if (team == Teams.Team1)
                 PlayOverNet(ball);
             else                    // else just aim for the player.
                 PlayToPlayer(ball);
