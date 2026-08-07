@@ -21,44 +21,44 @@ A level-1 auxiliary file: appendix1.aux
 Reallocating 'name_of_file' (item size: 1) to 14 items.
 A level-1 auxiliary file: appendix2.aux
 Database file #1: refs.bib
-You've used 1 entry,
+You've used 12 entries,
             1935 wiz_defined-function locations,
-            485 strings with 3871 characters,
-and the built_in function-call counts, 345 in all, are:
-= -- 31
-> -- 13
-< -- 1
-+ -- 6
-- -- 4
-* -- 25
-:= -- 65
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 7
-chr.to.int$ -- 1
-cite$ -- 1
-duplicate$ -- 14
-empty$ -- 24
-format.name$ -- 7
-if$ -- 65
+            559 strings with 6891 characters,
+and the built_in function-call counts, 5647 in all, are:
+= -- 535
+> -- 304
+< -- 4
++ -- 112
+- -- 108
+* -- 513
+:= -- 989
+add.period$ -- 37
+call.type$ -- 12
+change.case$ -- 114
+chr.to.int$ -- 12
+cite$ -- 12
+duplicate$ -- 188
+empty$ -- 354
+format.name$ -- 120
+if$ -- 1084
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 2
-newline$ -- 8
-num.names$ -- 3
-pop$ -- 8
+missing$ -- 11
+newline$ -- 63
+num.names$ -- 36
+pop$ -- 99
 preamble$ -- 1
-purify$ -- 7
+purify$ -- 114
 quote$ -- 0
-skip$ -- 11
+skip$ -- 140
 stack$ -- 0
-substring$ -- 14
-swap$ -- 1
-text.length$ -- 0
+substring$ -- 382
+swap$ -- 27
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 4
+type$ -- 72
 warning$ -- 0
-while$ -- 2
+while$ -- 43
 width$ -- 0
-write$ -- 15
+write$ -- 158

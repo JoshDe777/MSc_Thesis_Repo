@@ -1,8 +1,19 @@
 \chapter{Design}
-\label{chap:Design}
+\label{chap::design-3}
 
-At the beginning of each chapter, a description should introduce the reader to the content of the chapter. The description should explain to the reader the layout of the chapter, the contribution that the chapter makes to the overall dissertation and the contribution of the individual sections towards the overall chapter.
+ultimate goal of this project is to propose avenues of further research specific to promoting immersion through plausible crowds. (more details needed)\\
+maybe reexplain choice of (beach) volleyball x crowd population\\
 
+structure of chapter:
+\begin{itemize}
+	\item Problem Formulation
+	\begin{itemize}
+		\item Identified Challenges (gaps in literature),
+		\item Proposed Work (RQ \& rough description of solution)
+	\end{itemize}
+	\item Overview of the design ($\sim$ Methodology)
+	\item Summary of the section
+\end{itemize}
 
 \section{Problem Formulation}
 \label{sec:ProblemFormulation}
@@ -14,6 +25,8 @@ In some dissertations, it may make sense to convert this section into a short ch
 \subsection{Identified Challenges}
 This section should present a short description of the gaps in the existing work and the relationship of these gaps to the work described in this dissertation.
 
+In all reviews, I have never seen Volleyball mentioned as an example, probably because of the huge challenges to reliably portraying and executing VB in iVR.
+
 \subsection{Proposed Work}
 This section should provide a thorough description of the problem and an overview of the work proposed to address the problem.
 
@@ -21,6 +34,20 @@ This section should provide a thorough description of the problem and an overvie
 \section{Overview of the Design}
 \label{sec:OverviewOfDesign}
 A description of the approach that addresses the problem identified above.
+
+Hardware:
+standalone Meta Quest 3 with two controllers, one per hand. -> standalone to accommodate for free arm movement, and 360° physical turning.
+
+Room with small, open windows, allowing for $\sim$ 4x4m unobstructed space for participants to play in. Researcher present in the research space to redirect towards the centre, should they stray a bit too close to an obstacle, and make private observations based on exhibited behaviour and speech. All experiments done in the same room at different times of day throughout a 2 week period. 20 mins minimum play time including freeplay.
+
+Avatar \& body:
+generic VRMP avatar, never rendered or mirrored to participants. Shown hands a generic model that should be ambiguous w.r.t. gender, with blue chosen as skin tone for neutrality in that regard. Hands were not animated whatsoever, always presenting an open palm. No legs for practical reasons.
+
+Participants:
+n participants recruited through email and personal connections -> bias in population towards university students, mostly male.
+Ethics tangent: list up flow of participation + ethics approval by the committee for SCSS @ TCD + unpaid.
+
+Note on questionnaire: 1-10 ratings are called a Likert scale.
 
 
 \section{Summary}

@@ -1,9 +1,26 @@
 \chapter{Implementation}
+\label{chap::implementation-4}
 \lstset{language=Python, captionpos=b, frame=single}
 \captionsetup{width=.8\linewidth} 
 
 
-Guess what? At the beginning of each chapter, a description should introduce the reader to the content of the chapter. The description should explain to the reader the layout of the chapter, the contribution that the chapter makes to the overall dissertation and the contribution of the individual sections towards the overall chapter.
+Focus of this chapter on detailing the game built for the study, as the object used to conduct the study. Presented in [x] order.
+
+structure of chapter:
+\begin{itemize}
+	\item Overview (Detail how there wasn't a satisfactory, commercially available VR VB app for the study, so had to make my own. List requirements.)
+	\item Technical components
+	\begin{itemize}
+		\item VRMP template + assets
+		\item Crowds - visuals, audio, crowd levels
+		\item match management + implemented rules + ball lifetime
+		\item short section on ball physics (citing Unity documentation on basic physics)
+		\item Hitting physics - iterations from built-in physics, velocity approximation, then sensor collection
+		\item hitting mechanics - aim estimation, hit strength modifiers, ways of application.
+		\item Incoming ball mechanic.
+	\end{itemize}
+	\item Summary of the section
+\end{itemize}
 
 
 \section{Overview of the Solution}
@@ -29,6 +46,10 @@ if x == 1:
     print("x is 1.")
 \end{lstlisting}
 
+
+Virtual crowd from plugin (add ref here), modified for: a) randomised seating (! not at runtime, every participant had the exact same crowd), and b) dynamic density adjustment. Audience was composed of a random choice between n different spectator prefabs, each assigned a distinct animation rooted in a different sentiment, and all wearing a different colour shirt. Spectators were diverse* in both gender and ethnicity, and were recognisably Human but did not have any faces, thus couldn't have any facial expressions, any reaction was based solely on gestures.
+
+get framerate from app whenever trials are done.
 
 \section{Summary}
 

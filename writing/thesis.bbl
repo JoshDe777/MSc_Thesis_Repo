@@ -1,8 +1,82 @@
 \begin{thebibliography}{}
 
-\bibitem[Strunk and White, 1999]{strunk}
-Strunk, Jr., W. and White, E.~B. (1999).
-\newblock {\em The Elements of Style}.
-\newblock Pearson Education, 4th edition.
+\bibitem[Cunningham, 2022]{cunningham-2022-half}
+Cunningham, S. (2022).
+\newblock Half of premier league clubs use virtual reality to heal injuries and
+  recreate matchday pressure in training.
+\newblock
+  \url{https://inews.co.uk/sport/football/premier-league-clubs-virtual-reality-heal-injuries-recreate-pressure-training-1635232?ito=link_share_article-top},
+  accessed 04.08.2026.
+
+\bibitem[Farley et~al., 2020]{farley-2020-virtual}
+Farley, O.~R., Spencer, K., and Baudinet, L. (2020).
+\newblock Virtual reality in sports coaching, skill acquisition and application
+  to surfing: A review.
+\newblock {\em Journal of Human Sport and Exercise}, 15(3):535--548.
+
+\bibitem[Gerwann et~al., 2025]{gerwann-2025-immersive}
+Gerwann, S., Baetzner, A.~S., and Hill, Y. (2025).
+\newblock Immersive virtual reality and augmented virtuality in sport and
+  performance psychology: Opportunities, current limitations, and practical
+  recommendations.
+\newblock {\em Sport, Exercise, and Performance Psychology}, 14(1):268.
+
+\bibitem[Gl{\'e}marec et~al., 2021]{glemarec-2021-indifferent}
+Gl{\'e}marec, Y., Lugrin, J.-L., Bosser, A.-G., Collins~Jackson, A., Buche, C.,
+  and Latoschik, M.~E. (2021).
+\newblock Indifferent or enthusiastic? virtual audiences animation and
+  perception in virtual reality.
+\newblock {\em Frontiers in Virtual Reality}, 2:666232.
+
+\bibitem[Gray, 2017]{gray-2017-transfer}
+Gray, R. (2017).
+\newblock Transfer of training from virtual to real baseball batting.
+\newblock {\em Frontiers in psychology}, 8:2183.
+
+\bibitem[Ijsselsteijn et~al., 2004]{ijsselsteijn-2004-fun}
+Ijsselsteijn, W., De~Kort, Y., Westerink, J., De~Jager, M., and Bonants, R.
+  (2004).
+\newblock Fun and sports: Enhancing the home fitness experience.
+\newblock In {\em international conference on entertainment computing}, pages
+  46--56. Springer.
+
+\bibitem[Irwin et~al., 2012]{irwin-2012-aerobic}
+Irwin, B.~C., Scorniaenchi, J., Kerr, N.~L., Eisenmann, J.~C., and Feltz, D.~L.
+  (2012).
+\newblock Aerobic exercise is promoted when individual performance affects the
+  group: a test of the kohler motivation gain effect.
+\newblock {\em Annals of Behavioral Medicine}, 44(2):151--159.
+
+\bibitem[Neumann et~al., 2018]{neumann-2018-systematic}
+Neumann, D.~L., Moffitt, R.~L., Thomas, P.~R., Loveday, K., Watling, D.~P.,
+  Lombard, C.~L., Antonova, S., and Tremeer, M.~A. (2018).
+\newblock A systematic review of the application of interactive virtual reality
+  to sport.
+\newblock {\em Virtual Reality}, 22(3):183--198.
+
+\bibitem[Nunes et~al., 2014]{nunes-2014-motivating}
+Nunes, M., Nedel, L., and Roesler, V. (2014).
+\newblock Motivating people to perform better in exergames: Competition in
+  virtual environments.
+\newblock In {\em proceedings of the 29th annual ACM symposium on applied
+  computing}, pages 970--975.
+
+\bibitem[Richlan et~al., 2023]{richlan-2023-virtual}
+Richlan, F., Wei{\ss}, M., Kastner, P., and Braid, J. (2023).
+\newblock Virtual training, real effects: a narrative review on sports
+  performance enhancement through interventions in virtual reality.
+\newblock {\em Frontiers in psychology}, 14:1240790.
+
+\bibitem[Ritter et~al., 2023]{ritter-2023-gymnastic}
+Ritter, Y., B{\"u}rger, D., Pastel, S., Sprich, M., L{\"u}ck, T., Hacke, M.,
+  Stucke, C., and Witte, K. (2023).
+\newblock Gymnastic skills on a balance beam with simulated height.
+\newblock {\em Human Movement Science}, 87:103023.
+
+\bibitem[Slater et~al., 2023]{slater-2023-sentiment}
+Slater, M., Cabriera, C., Senel, G., Banakou, D., Beacco, A., Oliva, R., and
+  Gallego, J. (2023).
+\newblock The sentiment of a virtual rock concert.
+\newblock {\em Virtual Reality}, 27(2):651--675.
 
 \end{thebibliography}
