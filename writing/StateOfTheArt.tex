@@ -1,44 +1,224 @@
 \chapter{State of the Art}
 \label{chap::sota-2}
 
-At the beginning of each chapter, a description should introduce the reader to the content of the chapter. The description should explain to the reader the layout of the chapter, the contribution that the chapter makes to the overall dissertation and the contribution of the individual sections towards the overall chapter.
-
-From the perspective of this document forming part of your degree, this chapter should demonstrate to the reader your knowledge of the area of your dissertation project. It should present your knowledge in a coherent and detailed form. The reader should understand that you have in-depth knowledge of the area of the dissertation without being overloaded with information.
+In order to set this study apart from existing research into VR application to sport, it is fundamental to understand what angle this paper is approaching the question of plausibility and immersion from, as well as the impact it would aim to make if applied or researched further. Following this exposition, some notable studies that come close to the aims and methodology of this one will be introduced, then compared to each other and the aims of this study in the closing stages of this chapter.
 
 \section{Background}
 
-A section on the background of the dissertation should provide the reader with an introduction to existing technologies and concepts that form the basis of the
-work presented in the dissertation.
+When dissecting the title of this paper, "Evaluating Plausibility in VR Beach Volleyball with varying levels of Crowd Population", there are certain terms that require highlighting and explaining, if one is to understand the aims and approach to this paper.\\
+The first such term, in order of appearance, is "Plausibility", however it is a term that first requires understanding and clearly defining the next "contentious" term, \gls{vr}.
+
+\subsection{Virtual Reality}
+
+The term \acrlong{vr} describes a system using modern hardware and computer rendering techniques to produce a realistic looking, digital world for multi-sensorial experiences (\cite{farley-2020-virtual}), controlled by a tracking system for input, and display system for output (\cite{kulpa-2015-virtual}). In the specific use of \gls{hmd}-controlled VR, sometimes also referred to as \gls{ivr} (\cite{gerwann-2025-immersive}), the viewpoint within the virtual scene is updated based on the position and rotation of the display. Images displayed in such systems are stereoscopic (rendered for both eyes separately) to provide an illusion of depth (\cite{vignais-2015-technology}).\\
+
+For the remainder of this paper, and to interpret the title of this study from now on, \gls{vr} will stand in for \gls{ivr}, as a \gls{hmd}-controlled system (a Meta Quest 3 device, to be specific) was used for this project.
+
+\subsection{Immersion, Illusion of Place, and of Plausibility}
+
+When defining the experience of being cognitively and emotionally invested in a non-physical scenario, be it relating to a well-written character in a novel, or making reflexive kicks whilst playing FIFA a little too seriously, most people would speak of being "immersed" in their material.\\
+For the longest time, this sense was mostly a feeling of mental tunneling into these materials, that never really tried to actively blend out the physical environment surrounding an immersed reader, moviegoer, or other spectator and participant of various forms of media. With the increasing availability and practicality of \gls{ivr} technologies, and notably affordable, commercial-grade \glspl{hmd}, this sense of immersion was taken to a whole new level. \gls{vr} hardware is able to produce high-quality virtual environments, that, when combined with a \gls{hmd}, attempts to entirely phase out the visual environment, instead granting a complete vision of this digital space. Complemented with spatial audio technology, and perhaps in the near future, various devices providing haptic feedback, it is a system that aims to hijack the senses into a new reality.\\
+
+This complete rewriting of immersion for this specific wing of technology has prompted debate around redefining its meaning to suit the newest flavour of the term.\\
+In his paper on "Spirit of Place and Sense of Place in Virtual Realities" (\cite{relph-2007-spirit}), geographer Edward Relph translates the terms Spirit of Place, defined as the distinct identity and identifiability of a physical location, and Sense of Place, described as "the ability to grasp and appreciate the distinctive quality of places", in other words the, notably positive, feelings elicited in a person toward a physical place, to more virtual contexts.\\
+While the main point of that paper was to evaluate what a virtual sense and spirit of place sounds like - concluding that, just like real places, this sense and spirit of digital place will result from long-term interplay between world builders and their communities in creating distinct identities to strong places - the author plays around with the word 'presence' as a large factor in making virtual worlds feel more real, when cautioning about how the border between "real and [...] virtual worlds is already porous".\\
+
+This sense of presence is in turn indirectly picked up in Mel Slater's "Place Illusion and Plausibility can lead to realistic behaviour in immersive virtual environments" (\cite{slater-2009-place}), in which the author presents a definition of the terms "immersion", "\gls{pi}", and "\gls{psi}" to describe the ways in which \gls{ivr} can "transform place and even self-representation". These definitions were revisited in the same author's "A Separate Reality: An Update on Place Illusion and Plausibility in Virtual Reality" (\cite{slater-2022-separate}), informed by a decade of further research into the subject.\\
+
+Immersion is described as an inherent quantitative feature of hardware systems representing the capabilities of these systems at guaranteeing an immersive experience through so-called sensorimotor contingencies, referring to actions we carry out to collect information, e.g. turning our head to view the scenery from a different angle (\cite{slater-2009-place}).\\
+A certain system can be considered 'more immersive' than another if it has, for example, a higher framerate, larger \gls{fov}, more ways to control the environment e.g. degrees of freedom on the headset, various tracking methods such as hand, eye, or full body tracking, or better tracking accuracy.\\
+
+On the other hand, \gls{pi} derives from the sense of presence tangentially mentioned by Relph, which is defined here as the "sense of being there in the environment depicted by the [\gls{vr}] system". \gls{pi} builds upon this sense of presence by implying this feeling is present despite the knowledge that it is not a physically anchored place (\cite{slater-2009-place}, \cite{slater-2022-separate}): "It is the strong illusion of being in a place in spite of the sure knowledge that you are not there".\\
+This more intangible definition makes it a subjective measure that is to be evaluated, according to the author, through more indirect assessments involving feedback from questionnaire and behavioural responses to the environment.\\
+
+Finally, \gls{psi} is a novel addition to the subjective sense of immersion referred to as an introduction to this section, which essentially describes the user reacting to virtual events as if they were real and physical. The exact proposed definition is "the illusion that what is apparently happening is really happening[,] even though you know for sure it is not[.]" (\cite{slater-2009-place}, \cite{slater-2022-separate}), i.e. the illusion that digital events such as a ball flying towards the user are happening, and trigger authentic responses, despite the knowledge these events have no consequences on the physical world, in this case that there would be no feeling of contact and pain when the ball does hit the user's face.\\
+\gls{psi} is a notion with a lot of nuance, as it involves the virtual environment responding to actions performed by the user, events within it being directed at the user, and meeting the expectations users would have of the same event happening in reality (\cite{slater-2022-separate}), which makes it a very tricky sentiment to reliably capture and assess, and even harder to provide universally and reliably due to differing, and at times even contradictory expectations around digital events.\\
+As an example of how subjective this measure is, in a study performed to establish how to improve a \gls{vr} recreation of a Dire Straits concert, participants were asked to reflect on the plausibility of the concert, and some highlighted disturbance at the mix of the crowd (being in one study too male-dominant, and in a second study too female-dominant), the animations of musicians being out of sync with the music being played, or even the absence of smokers amongst the crowd for historical accuracy of the concert being portrayed (\cite{slater-2023-sentiment}).\\
+
+In their revision of the definitions for \gls{pi} and \gls{psi}, Slater et.al. state that both illusions being active results in \gls{vr} users responding realistically to situations and events in \gls{vr}. There are many more such factors that interplay with \gls{pi} and \gls{psi} to enhance or negate subjective immersion, such as embodiment or the illusion of body ownership, describing the comfort and identifiability of users with their digital avatars (\cite{slater-2022-separate}), or coherence, describing the reasonability, and predictability of environments (\cite{skarbez-2018-immersion}), which are however not directly relevant to this study, so will not be detailed any further.
+
+\subsection{Beach Volleyball}
+
+A quick word is needed to introduce volleyball, to give an overview of its main phases of play and certain types of ball interactions, to explain the technical implementation later.\\
+
+The main distinction between classic, or indoor volleyball and beach volleyball, beyond the obvious change in setting and resulting changes in mobility and outfits, is the team size, which features two teams of six in classic volleyball, but downsizes to teams of two (\cite{fivb-2026-volleyball}) for its sandy counterpart, and a few minor variations in rules that are not worth going into for concerns of length, but along the gross lines applied to this study, the rules are more or less the same.\\
+
+A play, or 'rally' is started by a player serving the ball - releasing it, then hitting it with one hand (either 'underarm': from below, upwards, or 'overarm': from above, forwards) to the opposite side of the net directly (\cite{fivb-2026-volleyball}).\\
+
+Following a receive, both teams have to endeavour to land the ball on the ground in the opposite court half, or make the opposing team drop the ball anywhere other than the own half. The official, international governing body of Volleyball identifies several valid ways to manipulate the ball while it is in play (\cite{fivb-2026-volleyball}):
+
+\begin{itemize}
+	\item The \textbf{Dig} is a forearm pass performed by aligning a player's arms to form a platform, to bounce the ball off in a desired direction.
+	\item The \textbf{Set} is an overhead pass performed with both hands aimed at completely changing the direction of the ball, usually to set up a spike to hit the ball over the other side. It is a particularly sensitive move as it requires very short contact with the ball to be not be ruled as grabbing and penalised, and requires much sensitivity to aim and weight properly.
+	\item The \textbf{Spike} is a powerful, one-handed shot aimed at smashing the ball over the net. 
+\end{itemize}
+
+Additionally, the ball is allowed to make contact with any part of a player's body, so long as it is neither grabbed, nor held for any length of time.\\
+
+During a match, the team having won the last point gets the right to serve the next rally, and a point is awarded for every rally, based on where the ball makes contact with any object other than an active player or the net, and the last team to touch the ball before this contact. A team wins a point if either the opposing team last touches a ball that lands out of bounds, or if the ball lands on the ground in the opposing team's court, regardless of last touch (\cite{fivb-2026-volleyball}).\\
+
+Beyond the very basic outline, there are many more rules at various levels of nitpicking such as a maximum of three touches per team before the ball has to be touched by the opponents, as well as more ways to interact with the ball that are not formally recognised by the FIVB as named moves, e.g. the 'poke' which involves lightly touching a ball near the net to lob a block, however as they were not included in the technical contributions and could be outlined over an entire book, and I am sure the page count was already daunting to begin with, any other rules are not worth further consideration for the purposes of this report.\\
+
+Beach Volleyball was chosen for this study due to the initial plan to also incorporate opponents to play against participants, which would, with only three other players, reduce the load, both computational during runtime and for implementation, in employing them. Subjectively, the fact it also accommodates for nicer scenery may have helped sway the decision as well.
+
+\subsection{Crowd Population}
+
+The last concept to introduce is that of Crowd Population.\\
+Crowds form a significant part of matchday pressure, representing the expectations and emotional involvement from outside the pitch being brought directly to athletes and the sporting staff in general. Performance under public scrutiny, be it public speech, artistic or sporting performance, is a widely studied subject under physical conditions, and as mentioned in Chapter \ref{chap::intro-1}, is already a factor motivating football teams to adopt \gls{vr} technology in their training regimes \cite{cunningham-2022-half}.\\
+
+Sports under COVID lockdown conditions have provided a unique case study to research the impact of crowds, or the lack thereof, on performances in sports that chose to pursue competitive matches behind closed doors, such as many professional football or soccer leagues in Europe, with studies (\cite{leitner-2023-cauldron}, \cite{leitner-2021-analysis}, \cite{richlan-2023-subjective}) aiming to explain various such discrepancies between pre-COVID and mid-COVID seasons. In particular, inspecting changes in home advantage - the perceived performance boost received from supporters at a team's home ground, the impact of the missing crowd on staff 'emotionality' during matches, and the impact of the missing crowd on match officials respectively.\\
+
+The findings were that the various effects the crowds were perceived to provide before COVID, with no 'control scenario' to prove or disprove the perception - the boost in motivation on home soil, the stoking of emotional reactions in any direction - mostly dissipated, and change was particularly salient in referee behaviour, who described the games as having been less motivating and less focused than matches with full crowds, despite having been easier to referee, and with more compliant and agreeable players and staff (\cite{richlan-2023-subjective}).\\
+
+As such, the main factors that determine a crowd's impact can be boiled down to their size and density, and their level of involvement or emotional setting.\\
+Therefore, for the purposes of this study, Crowd Population will be defined as the amount and density of virtual spectators to a \gls{vr} sports event, as well as their level of energy and reactivity to the happenings on the court or playing field.
+
+\section{"Feasibility of training athletes for high-pressure situations using virtual reality"}
+
+In this study \cite{stinson-2014-feasibility}, the authors aimed to prove the viability of \gls{vr} simulations for sport psychology training by subjecting football/soccer goalkeepers to a high-fidelity immersive simulation of a penalty shootout scenario, a particularly stressful match event. The specific goal was to measure whether the simulation could elicit a real sense of anxiety that could, in theory, then be practised away using this same environment.\\
+
+The simulation environment bases on three independent variables: known anxiety triggers, field of regard - a measure adjacent to \gls{fov} describing the degree to which the display surrounds the user, and simulation fidelity.\\
+
+The researchers concluded that \gls{vr} sports applications could indeed elicit feelings of anxiety, both physiologically and in test results, although the findings are mitigated by showcasing an overall low level of anxiety despite the rise compared to the baseline scenario, and that the demographic did not present many people with a higher trait anxiety, meaning its generalisability is somewhat debatable, according to the authors.\\
+Additionally, all independent variables were determined to have contributed to the feeling of anxiety, although the influence of field of regard had an adverse effect than expected, with high FoR leading to decreased confidence in lower anxiety-inducing settings w.r.t. the other two parameters.
+
+\subsection{Plausibility Assessment}
+
+The central measure for this study was anxiety, through both quantitative or physiological and qualitative means. This does indirectly measure \gls{psi}, considering that if the simulation was experienced as inauthentic, it would not elicit anxious behaviours whatsoever, though the specific measurement 'fails' to keep track of other factors such as the accuracy of ball movements in a simulated space with bent optics, due to the use of a CAVE-like system.
+
+\subsection{Methodology}
+
+A major difference in fundamental approach is the \gls{vr} system. This study makes use of a CAVE-like display system, which projects the virtual environment onto a cube-shaped room, with 3D glasses employed to preserve the illusion of depth.\\
+Participants therefore have a very different sense of agency in this simulation, as they defended their goal with their full physical body. Behaviour correctness was established through directional head tracking to establish whether a user reacted fast enough, and in the correct direction to theoretically save the penalty.\\
+
+Anxiety was measured through physiological measures including heart rate, heart-rate variability, and galvanic skin response, as well as two standardised anxiety tests, STICSA and CSAI-2R.\\
+
+25 participants completed the study, excluding pilot participants and those that did not finish the study, and were paid for their time alongside a bonus for good performance, thanks to a small price per save, totaling up to US\$30. Ages ranged from 22 to 32, and featured 9 female and 15 male participants, with various levels of experience at competitive levels, and in goalkeeping.
+
+\subsection{Studied Subject}
+
+The study aimed to demonstrate the viability of \gls{vr} simulations for the psychological training of athletes, by showcasing its ability to elicit anxiety in users. This implicitly makes it a study of Presence as a whole, but particularly plausibility as laid out in the Plausibility Assessment section for this study.
+
+The proposed project, in contrast, aims to assess plausibility more broadly to find out points of friction that could cause breaks in presence, as opposed to this proof-of-concept approach with a specific factor in mind.
 
 
-\section{Closely-Related Work}
+\section{"The sentiment of a virtual rock concert"}
 
-Work in research areas tends to address a number of specific aspects. Ideally, the discussion of published research should focus on the aspects that have been addressed by various publications - and not a discussion of the individual publications.
+The paper "The sentiment of a virtual rock concert" (\cite{slater-2023-sentiment}) builds upon a similar study two years prior, based around the same premise of establishing through participant feedback in what ways a digital recreation of a historic concert, here a 1983 live performance of "Sultans of Swing" by Dire Straits, can be improved upon to maximise enjoyment, or by proxy, the \gls{pi} and \gls{psi} metrics.\\
 
-For example, if the topic would be a discussion of work on programming languages, the subsections of the related work could be discussions of object orientation and its realisation in various languages or the use of lambda functions by these languages.
+While the first study was described as mainly focusing on that idea, this second study was informed by surprising reports and findings in the previous study, which prompted a few adjustments to see in what ways the feedback changed. Notably, swinging the surrounding crowd which was, in the first study, described as too male-dominant to being entirely composed of female avatars. Furthermore some improvements were made with regards to band animation accuracy, and the timing of various dancing and clapping animations, all of which were also mentioned negatively during the first study.\\
 
-\subsection{Aspect \#1}
+During both studies, participants were sent a link to complete the study from home (taking place during COVID lockdowns), filling out a questionnaire for demographic data, then running the \gls{vr} simulation on a \gls{hmd}, which ran for around 10 minutes. They would be placed in the crowd, surrounded by digital avatars interacting with the music. In study 1 their behaviour was fully independent of the participant, in study 2, some participants randomly selected between Look and NoLook, the latter being a control group, would experience the avatars staring back at them for 1-3s if they were looked at.\\
+Following the simulation, participants were then asked to write an essay about their experience, taking into account the factors of the feeling of being at the concert, interactions with the crowd, specifically whether any helped immerse better, or took from the experience, then answering a few questions on a 1-7 Likert scale relating to copresence (social belonging within the crowd), the willingness to dance along with the crowd, and how close the experience felt to a real concert experience.\\
 
+The findings largely confirmed those made during the first study, with participants now often being thrown off by being around too many women, both for the occasion of an 80s rock concert and in general, the staring being off-putting and even creepy at times, and still featuring some mild resistance at the band when looked at more closely. However, the reports in this second study seemed to highlight more simple discomfort than the reports of creepy and menacing male audience members.
+Participants also widely seemed to express a high willingness to dance along with the crowd, and the overall feedback reads a lot like "it's fine until you look at the details", resulting in the assessment that overall \gls{psi} is fairly high, and could be improved even more by featuring a more diverse crowd, that stares less, and with more eye for detail regarding things like timing for clapping and musical animation accuracy.\\
 
-\subsection{Aspect \#2}
+\subsection{Plausibility Assessment}
+
+This study aims to directly estimate \gls{psi} levels in participants in order to confirm whether it elicits a reaction at all, that could be construed as a successful implementation, and the sentiment analysis employed as its main methodology for measuring is also used to verify whether this reaction is mostly positive or negative. Whilst the findings are used to improve the simulation itself, the conclusion of the second study is that, for this kind of applications that require a high level of positive Plausibility to be successful, developers should involve users in the design to incrementally improve the experience, as this set of studies has done.
+
+\subsection{Methodology}
+
+In order to assess participants' experience, the authors have asked them to answer a form for demographic data before the experience, then write an essay of at least 150 words relating to their experience, before rating three factors describing specific parts of the experience on a Likert scale.\\
+
+The goal of that study is similar in nature to the proposed study, namely to assess users' plausibility with the underlying purpose to improve on a simulated environment. The study also features a larger participant pool (n=26) than that both envisioned and actually assessed for this study (n=14), a participant count that is neither unsubstantial, nor so rich that the findings can be considered as widely generalisable as can be, although the participant pool is recruited through more professional channels than the researchers' entourages, seeing as participation was proposed to students in foreign programmes, and some influx was recorded from social media advertisements as well.\\
+
+The sentiment analysis, particularly using and comparing several different implementations of it, seems a fitting method for the overall reaction, and yields many avenues for comparison and details as evidenced by this section being the largest by far in the report. It allowed the researchers to narrow down participants in clusters of experience, determining there to have been four distinct groups of experience, by the resulting essays.\\
+
+\subsection{Studied Subject}
+
+The largest difference to the proposed study is the subject of this related work, which was to improve subjective immersion in a virtual concert, meaning focus both in analysis and development was mainly posed on realism and comfort to make the experience as real as possible, when exploring avenues to improve on the simulation. This proposed study aims to explore Plausibility as a factor that is essential to applications in competitive sport, to avoid breaks in immersion that might take athletes out. Same studied metric but to a very different end.\\
+
+There is some overlap to be found however in the fact the virtual audience was subject to much scrutiny throughout the study e.g. in highlighting the anxieties around gender-dominance in both ways, though a dampening to this similarity has to be mentioned due to participants also being cast as spectators, rather than being the spectated ones, as they will be in this study.
+
+\section{"Indifferent or Enthusiastic? Virtual Audiences Animation and Perception in Virtual Reality"}
+
+This study led by a research team around Yann Glémarec looks into configuring a virtual crowd of spectators attending a presentation or public speech made by a \gls{vr} user, with the goal of providing authentic non-verbal behaviour in the virtual crowd for a given level of enthusiasm for the speaker or subject (Arousal), and attitude towards the subject or speaker (Valence).\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/glemarec-etal-arousal-valence.png}
+	\caption[Arousal-Valence relationship graph, from Glémarec et.al. (2021).]{A graph showcasing the 2-dimensional scale used in the paper \cite{glemarec-2021-indifferent} to showcase the relationship between arousal and valence in crowds. The points indicate named configurations used in phase 2 of the study, and the gray area represents an area participants had difficulty differentiating.}
+	\label{fig::arousal-valence}
+\end{figure}
+
+The study was conducted in two separate phases: in the first, twenty participants were asked to adjust a crowd's collective posture, specifically gaze direction, the frequency of looking away from this direction, posture openness and proximity towards the speaker, types of head movements and facial expression, and their frequency. At the end of this adjustment game, participants were asked to rate their satisfaction with the result on a 1-7 satisfaction scale.\\
+In the second phase of the study, 38 participants, none of which participated in the first phase of the study, were asked to hold a presentation in front of an audience generated with behaviour extrapolated from the results of the first phase of the study, and asked to reconstruct the Arousal and Valence values associated with the exhibited behaviour. The crowds consisted of 10 avatars, 5 male, 5 female.\\
+
+The motivation for this study was mostly therapeutic, in helping users become familiar with public speech, and overcome any anxieties or other stresses related to this situation.\\
+
+The findings of the second study were that crowds with a higher valence, i.e. a more positive view of the speaker or presented topic, were better identified along the arousal scale, meaning that participants were well able to tell an enthusiastic crowd apart from an indifferent one. However there was more difficulty in differentiating arousal levels in crowds with negative valence, meaning that participants found it harder to differentiate between a bored and anxious crowd, each being descriptors at opposite ends of the neutral arousal values, as shown in figure \ref{fig::arousal-valence}.\\
+In the guidelines made for audience simulation following the exposition of direct findings, the authors note that the main factors of interpretation for crowd sentiment was the gaze, both the direction and the frequency of change, head movements such as nodding or shaking the head, and the proximity towards the main actor, while noting that facial expressions should alternate between a neutral and a targeted expression to help impress the target, as a sustained facial expression might be interpreted as neutral otherwise, and would predictably be picked up on less if the spectator is further away.\\
+An interesting note in the guidelines was also the authors reinforcing a finding from a different paper based on the results of phase 1, stating that a smaller concentration of negative actors could sway the overall sentiment to negative, stating that the sentiment could be considered positive if only 3 or 4 out of the 10 spectators acted negatively, whilst conversely it needed more than a majority of positive spectators for the sentiment to pass as positive.
+
+\subsection{Plausibility Assessment}
+
+Plausibility or immersion as a whole was not a direct measure of this study, though one could argue it may have been implicitly recorded with the rating of the crowds, since a user that does not believe the crowd to be realistic would not rate it appropriately.
+
+\subsection{Methodology}
+
+The results from the studies here were mostly directly taken from gameplay. In phase 1 of the study, the feature represented the vector of body movements embodied by the virtual crowd, as configured by the participant, paired with the associated valence and arousal values it is to represent. In phase 2, the result is a pair of control V-A pair set by the system, or the 'real' V-A value, and the rating given by the participant, evaluated to compare the disparity.\\
+
+This methodology showcases the efficacy of letting participants control the configurations to preference, as the evaluation of the configurations was left to be conducted by more participants, instead of imposing any interpretation of crowd sentiment by the research team, as stated by \cite{murcia-2020-evaluating}, who conducted a larger study to assess various methodologies to assess plausibility, as a strong point towards this methodology.
+
+\subsection{Studied Subject}
+
+While this subject dives into assessing spectators as the main variable, the conducted study aims more to establish a reliable and recognisable crowd controller, that can accurately recreate the overall sentiment of a set of spectators. It also mainly regards their application in more professional or academic environments, however their findings may possibly be used for more types of crowds, including in sports, though the differences may warrant some dedicated study.
+
+\section{"Factors Affecting Sense of Presence in a Virtual Reality Social Environment: A Qualitative Study"}
+
+In this study aiming to inspect the factors affecting what the authors defined as Sense of Presence, a notion combining Slater's \gls{pi} and \gls{psi} illusions under one hood, \cite{riches-2019-factors} invited 76 participants to participate in a social \gls{vr} experiment, where they joined a room of digital avatars having a party with the instruction to make an opinion of what the avatars thought of them. Following the scripted \gls{vr} scenario lasting around 5 minutes, participants then took part in a semi-structured interview to extract the general feel of the experience.\\
+
+Participants were recruited from a previous study based on scores in the paranoia trait on a Paranoid Thought Scales test, either scoring particularly high or low, and subject to other conditions such as not having a diagnosed history of mental health conditions, or other neurological disorders. 76 participants participated in total, 49 of which were women, and with a mean age of 31.45 years.\\
+
+The authors found that Presence was strongest when "the VR elicited genuine cognitive, emotional, and behavioral responses; and when participants created their own narrative about events [...]", i.e. when participants described a high sense of \gls{psi}. Inversely, Presence was lowest when participants "experienced diminished agency and physical impediments, such as cyber-sickness and awareness of apparatus and body movement".\\
+
+In terms of the factors that affect Presence, the qualitative analysis of the interviews produced a list of themes that have had an impact on participants' presence, including but not limited to introspective thoughts and emotions, outwards-focused thoughts and emotions, physiological reactions, avatar behaviour, interactivity with the environment, and environmental characteristics, each with various subthemes that interacted differently with participants' presence.
+
+\subsection{Plausibility Assessment}
+
+In this study, the main subject of study was this notion of Presence, defined as a state of consciousness reliant on the perception of 'being there' in \gls{vr} environments and as 'a psychological state in which virtual objects are experienced as actual objects in either sensory or nonsensory ways'. This definition mirrors quite accurately the combined definition of \gls{pi}, the sense of "being there" [despite the sure knowledge it is not really the case], and \gls{psi}, the illusion that digital events are really happening.\\
+
+By extension this means it indirectly does measure the cognitive effects of \gls{vr}, but also incorporates \gls{pi} in its assessment. As hinted in the description of the findings above, the observation was made that \gls{psi} had the greater positive effect on Presence, while the negative experiences were mostly attributed to degradation in \gls{pi}, e.g. the awareness of the \gls{vr} hardware, or sensory mismatches leading to cyber-sickness.
+
+\subsection{Methodology}
+
+Methodologically, this study joins the work of \cite{slater-2023-sentiment} in running a purely qualitative assessment with verbal interviews that were analysed through Nvivo 11, a readymade tool to perform qualitative analyses of recorded interviews.\\
+
+The strength of this study, compared to that of Slater et.al. is the sample size, which, with its count of 76, is almost three times larger than their 26, as described above, meaning the findings can be described as more authoritative.\\
+
+\subsection{Studied Subject}
+
+The authors of this study approached the project from a therapeutic point of view, aiming to facilitate psychological assessment, and to demonstrate the viability of \gls{vr} simulated scenarios for such purposes. Its findings can certainly be used for any immersive simulation, however the finding that the effect was strongest when it elicits "genuine cognitive, emotional, and behavioral responses" is akin to suggesting just 'doing it well'.\\
+The outlined themes and subthemes identified from the interviews can be read like a guide for developers of what to look out for, and feelings or reactions to avoid or promote, which, while not a comprehensive guide of do's and don't's, can still be helpful in improving the starting point for any \gls{vr} simulation.
 
 \section{Summary}
 
-Summarize the chapter and present a comparison of the projects that you reviewed.
+In short, we have defined the study's title to be evaluating plausibility, the illusion that events in a \gls{vr} environment are 'real' despite knowledge of the contrary, in an immersive virtual environment featuring a beach volleyball scenario, which will inspect the effect of changes in the density and involvement of a virtual crowd on the side.\\
+
+In highlighting closely related works, we find that the studies into sports-specific adoption of \gls{vr}, examplified by \cite{stinson-2014-feasibility}, used \gls{psi}-adjacent concepts as proof-of-concepts for the viability of \gls{vr} in the specific scenario, in this case the arousal of anxiety in participants.\\
+Other studies more directly tasking themselves with the analysis of Presence or \gls{psi}, such as \cite{riches-2019-factors} or \cite{slater-2023-sentiment}, have in the larger sense made use of qualitative methods to provide extensive insights into the underlying factors affecting this sentiment.\\
+Finally, a study into the realism of crowd sentiment showcased a positive use-case for considering direct participant-controlled, level-based configurations directly in-simulation for assessment, whilst also highlighting useful insights into crowd behaviour and perception.
 
 \begin{table}[!h]
 \begin{center}
-	\begin{tabular}{|l|c|c|} 
+	\begin{tabular}{|p{0.15\linewidth}|p{0.22\linewidth}|p{0.32\linewidth}|p{0.27\linewidth}|} 
 	\hline
- 	\bf  & \bf Aspect \#1  & \bf Aspect \#2 \\
-  	\hline
-	Row 1 & Item 1 & Item 2 \\
-	Row 2 & Item 1 & Item 2 \\
-	Row 3 & Item 1 & Item 2 \\
-	Row 4 & Item 1 & Item 2 \\
+ 	\bf Study  & \bf Plausibility Measured  & \bf Methodology\newline Comparison & \bf Subject \\
+  	\hline\hline
+	\cite{stinson-2014-feasibility} & indirectly, and in limited fashion & physiological measurements + standardised tests & viability of VR for psychological training \\
+	\hline
+	\cite{slater-2023-sentiment} & directly measured & sentiment analysis of essays + small questionnaire & improve on non-sport-ing simulation \\
+	\hline
+	\cite{glemarec-2021-indifferent} & not measured & direct participant choices & crowd sentiment realism in behaviour and animation \\
+	\hline
+	\cite{riches-2019-factors} & indirectly measured as part of Presence & qualitative analysis of semi-structured interviews & viability of \gls{vr} for the-rapeutic purposes on mental conditions \\
 	\hline
 	\end{tabular}
 \end{center}
-\caption[Comparison of Closely-Related Projects]{Caption that explains the table to the reader}	
+\caption[Comparison of Closely-Related Projects]{A comparison of the four presented closely-related works, with the ways \gls{psi} is measured, a quick overview of the employed methodologies, and the overall subject of study.}	
 \label{tab:SummaryProjects}
 \end{table}
+
+Having laid a solid foundation of information to understand the aims and proceedings of this project, the next chapter will build on the information outlined here to flesh out the identified research gap, and propose a research question and methodology to attempt to fill this gap.

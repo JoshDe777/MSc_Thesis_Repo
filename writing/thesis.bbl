@@ -1,5 +1,19 @@
 \begin{thebibliography}{}
 
+\bibitem[AiKodex, 2021]{stadium_crowd_generator}
+AiKodex (2021).
+\newblock Stadium crowd generator.
+\newblock
+  \url{https://assetstore.unity.com/packages/tools/modeling/stadium-crowd-generator-203643},
+  accessed 08.06.2026.
+
+\bibitem[{ARVORE Immersive Games Inc.}, 2024]{clawball}
+{ARVORE Immersive Games Inc.} (2024).
+\newblock Clawball.
+\newblock
+  \url{https://www.meta.com/en-gb/experiences/clawball/7890078401040025/},
+  accessed 11.08.2026.
+
 \bibitem[Cunningham, 2022]{cunningham-2022-half}
 Cunningham, S. (2022).
 \newblock Half of premier league clubs use virtual reality to heal injuries and
@@ -8,11 +22,28 @@ Cunningham, S. (2022).
   \url{https://inews.co.uk/sport/football/premier-league-clubs-virtual-reality-heal-injuries-recreate-pressure-training-1635232?ito=link_share_article-top},
   accessed 04.08.2026.
 
+\bibitem[{Doge Labs Inc.}, 2023]{big-ballers}
+{Doge Labs Inc.} (2023).
+\newblock Big ballers '26.
+\newblock
+  \url{https://www.meta.com/en-gb/experiences/big-ballers-26/3947713001963656/},
+  accessed 11.08.2026.
+
+\bibitem[{Epic Games Inc.}, 2026]{unreal-engine}
+{Epic Games Inc.} (2026).
+\newblock Unreal engine.
+\newblock \url{https://www.unrealengine.com/}, accessed 11.08.2026.
+
 \bibitem[Farley et~al., 2020]{farley-2020-virtual}
 Farley, O.~R., Spencer, K., and Baudinet, L. (2020).
 \newblock Virtual reality in sports coaching, skill acquisition and application
   to surfing: A review.
 \newblock {\em Journal of Human Sport and Exercise}, 15(3):535--548.
+
+\bibitem[FIVB, 2026]{fivb-2026-volleyball}
+FIVB (2026).
+\newblock Volleyball - the game.
+\newblock \url{https://www.fivb.com/volleyball/the-game/}.
 
 \bibitem[Gerwann et~al., 2025]{gerwann-2025-immersive}
 Gerwann, S., Baetzner, A.~S., and Hill, Y. (2025).
@@ -47,12 +78,44 @@ Irwin, B.~C., Scorniaenchi, J., Kerr, N.~L., Eisenmann, J.~C., and Feltz, D.~L.
   group: a test of the kohler motivation gain effect.
 \newblock {\em Annals of Behavioral Medicine}, 44(2):151--159.
 
+\bibitem[Kulpa et~al., 2015]{kulpa-2015-virtual}
+Kulpa, R., Multon, F., and Argelaguet, F. (2015).
+\newblock Virtual reality \& sport.
+\newblock In {\em ISBS-Conference Proceedings Archive}.
+
+\bibitem[Leitner et~al., 2023]{leitner-2023-cauldron}
+Leitner, M.~C., Daumann, F., Follert, F., and Richlan, F. (2023).
+\newblock The cauldron has cooled down: a systematic literature review on home
+  advantage in football during the covid-19 pandemic from a socio-economic and
+  psychological perspective.
+\newblock {\em Management Review Quarterly}, 73(2):605--633.
+
+\bibitem[Leitner and Richlan, 2021]{leitner-2021-analysis}
+Leitner, M.~C. and Richlan, F. (2021).
+\newblock Analysis system for emotional behavior in football (aseb-f): matches
+  of fc red bull salzburg without supporters during the covid-19 pandemic.
+\newblock {\em Humanities and Social Sciences Communications}, 8(1).
+
+\bibitem[Murcia-Lopez et~al., 2020]{murcia-2020-evaluating}
+Murcia-Lopez, M., Collingwoode-Williams, T., Steptoe, W., Schwartz, R., Loving,
+  T.~J., and Slater, M. (2020).
+\newblock Evaluating virtual reality experiences through participant choices.
+\newblock In {\em 2020 IEEE conference on virtual reality and 3D user
+  interfaces (VR)}, pages 747--755. IEEE.
+
 \bibitem[Neumann et~al., 2018]{neumann-2018-systematic}
 Neumann, D.~L., Moffitt, R.~L., Thomas, P.~R., Loveday, K., Watling, D.~P.,
   Lombard, C.~L., Antonova, S., and Tremeer, M.~A. (2018).
 \newblock A systematic review of the application of interactive virtual reality
   to sport.
 \newblock {\em Virtual Reality}, 22(3):183--198.
+
+\bibitem[{Neuston AB}, 2021]{volleyball-fever}
+{Neuston AB} (2021).
+\newblock Volleyball fever.
+\newblock
+  \url{https://www.meta.com/en-gb/experiences/volleyball-fever/3858203824244597/},
+  accessed 11.08.2026.
 
 \bibitem[Nunes et~al., 2014]{nunes-2014-motivating}
 Nunes, M., Nedel, L., and Roesler, V. (2014).
@@ -61,8 +124,35 @@ Nunes, M., Nedel, L., and Roesler, V. (2014).
 \newblock In {\em proceedings of the 29th annual ACM symposium on applied
   computing}, pages 970--975.
 
-\bibitem[Richlan et~al., 2023]{richlan-2023-virtual}
-Richlan, F., Wei{\ss}, M., Kastner, P., and Braid, J. (2023).
+\bibitem[{Pink Marmot Studios}, 2021]{volleggball}
+{Pink Marmot Studios} (2021).
+\newblock Volleggball.
+\newblock
+  \url{https://www.meta.com/en-gb/experiences/volleggball/3910010955788003/},
+  accessed 11.08.2026.
+
+\bibitem[Relph, 2007]{relph-2007-spirit}
+Relph, E. (2007).
+\newblock Spirit of place and sense of place in virtual realities.
+\newblock {\em Techne: Research in Philosophy \& Technology}, 10(3):17.
+
+\bibitem[Riches et~al., 2019]{riches-2019-factors}
+Riches, S., Elghany, S., Garety, P., Rus-Calafell, M., and Valmaggia, L.
+  (2019).
+\newblock Factors affecting sense of presence in a virtual reality social
+  environment: A qualitative study.
+\newblock {\em Cyberpsychology, Behavior, and Social Networking},
+  22(4):288--292.
+
+\bibitem[Richlan et~al., 2023a]{richlan-2023-subjective}
+Richlan, F., Th{\"u}rmer, J.~L., Braid, J., Kastner, P., and Leitner, M.~C.
+  (2023a).
+\newblock Subjective experience, self-efficacy, and motivation of professional
+  football referees during the covid-19 pandemic.
+\newblock {\em Humanities and Social Sciences Communications}, 10(1):215.
+
+\bibitem[Richlan et~al., 2023b]{richlan-2023-virtual}
+Richlan, F., Wei{\ss}, M., Kastner, P., and Braid, J. (2023b).
 \newblock Virtual training, real effects: a narrative review on sports
   performance enhancement through interventions in virtual reality.
 \newblock {\em Frontiers in psychology}, 14:1240790.
@@ -73,10 +163,48 @@ Ritter, Y., B{\"u}rger, D., Pastel, S., Sprich, M., L{\"u}ck, T., Hacke, M.,
 \newblock Gymnastic skills on a balance beam with simulated height.
 \newblock {\em Human Movement Science}, 87:103023.
 
+\bibitem[Skarbez et~al., 2018]{skarbez-2018-immersion}
+Skarbez, R., Brooks~Jr, F.~P., and Whitton, M.~C. (2018).
+\newblock Immersion and coherence in a stressful virtual environment.
+\newblock In {\em Proceedings of the 24th ACM symposium on virtual reality
+  software and technology}, pages 1--11.
+
+\bibitem[Slater, 2009]{slater-2009-place}
+Slater, M. (2009).
+\newblock Place illusion and plausibility can lead to realistic behaviour in
+  immersive virtual environments.
+\newblock {\em Philosophical Transactions of the Royal Society B: Biological
+  Sciences}, 364(1535):3549.
+
+\bibitem[Slater et~al., 2022]{slater-2022-separate}
+Slater, M., Banakou, D., Beacco, A., Gallego, J., Macia-Varela, F., and Oliva,
+  R. (2022).
+\newblock A separate reality: An update on place illusion and plausibility in
+  virtual reality.
+\newblock {\em Frontiers in virtual reality}, 3:914392.
+
 \bibitem[Slater et~al., 2023]{slater-2023-sentiment}
 Slater, M., Cabriera, C., Senel, G., Banakou, D., Beacco, A., Oliva, R., and
   Gallego, J. (2023).
 \newblock The sentiment of a virtual rock concert.
 \newblock {\em Virtual Reality}, 27(2):651--675.
+
+\bibitem[Stinson and Bowman, 2014]{stinson-2014-feasibility}
+Stinson, C. and Bowman, D.~A. (2014).
+\newblock Feasibility of training athletes for high-pressure situations using
+  virtual reality.
+\newblock {\em IEEE transactions on visualization and computer graphics},
+  20(4):606--615.
+
+\bibitem[{Unity Technologies}, 2026]{unity-engine}
+{Unity Technologies} (2026).
+\newblock Unity engine.
+\newblock \url{https://www.unity.com/}, accessed 11.08.2026.
+
+\bibitem[Vignais et~al., 2015]{vignais-2015-technology}
+Vignais, N., Kulpa, R., Brault, S., Presse, D., and Bideau, B. (2015).
+\newblock Which technology to investigate visual perception in sport: Video vs.
+  virtual reality.
+\newblock {\em Human movement science}, 39:12--26.
 
 \end{thebibliography}

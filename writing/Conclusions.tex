@@ -4,24 +4,27 @@
 This chapter should summarize the work presented in the dissertation and discuss the conclusions that can be drawn from the work and the results presented in chapter \ref{chap::evaluation-5}.
 
 \section{Limitations}
-
-- VB in VR exposes MANY limitations of iVR in general:
 \begin{itemize}
-	\item complete absence of haptic feedback
-	\item dangerosity from lack of vision of feet/ground
-	\item need for micro-detail recognition (ex. for blockers, any indication, e.g. eye or head movement, hand orientation and signals, from the setter where the ball will go counts)
-	\item very complex ball handling compared to other sports (uniquely so)
-	\item complexity of implementation to a realistic level (many nitpicky rules e.g. double touching, holding the ball for too long during a set, setting foot on the other side of the net by accident etc.)
+	\item VB in VR exposes MANY limitations of iVR in general:
+	\begin{itemize}
+		\item complete absence of haptic feedback
+		\item dangerosity from lack of vision of feet/ground
+		\item need for micro-detail recognition (ex. for blockers, any indication, e.g. eye or head movement, hand orientation and signals, from the setter where the ball will go counts)
+		\item very complex ball handling compared to other sports (uniquely so)
+		\item complexity of implementation to a realistic level (many nitpicky rules e.g. double touching, holding the ball for too long during a set, setting foot on the other side of the net by accident etc.)
+	\end{itemize}
+	\item simplicity of implementation + faulty aim estimation \& hit classification
+	\item questionnaire not nearly good enough: Open text fields not leveraged at all, crowd influence should have been measured from negative influence to positive with neutral/unaffected as a mid value instead of extreme
+	\item usefulness of transition matrix? Yet to look at it more closely but on face value it seems like a bit of a pointless metric idk
 \end{itemize}
-- simplicity of implementation + faulty aim estimation \& hit classification
 
 \section{Future Work}
 
-The section may present a list of items that were beyond the scope of the dissertation.
+The section may present a list of items that were beyond the scope of the dissertation.\\
 
 Game improvements:
 \begin{itemize}
-	\item use of controller-free controls (e.g. hand-tracking, maybe full-body or foot-tracking for more holistic games) - e.g. for specialised systems through a real-time MoCap setup -> could be paired with haptic gloves to simulate ball physics on hands!
+	\item use of controller-free controls (e.g. hand-tracking, maybe full-body or foot-tracking for more holistic games) - e.g. for specialised systems through a real-time MoCap setup $\rightarrow$ could be paired with haptic gloves to simulate ball physics on hands!
 	\item Better hit classification (esp. from one hand), refining aim recognition for specific mechanics (e.g. dig particularly)
 	\item including actual opponents rather than just reacting to balls flying in
 \end{itemize}
@@ -36,4 +39,5 @@ Tangential directions for further research:
 \begin{itemize}
 	\item More alive/reactive crowds (with more accurate levels of engagement, maybe recorded from events of the actual sport; also more individual shouts, more reactiveness to on-pitch happenings (oohs and ahhs with bigger events e.g. blocks), or wider range of emotion - cheering, booing, jeering, chants, boredom/relative quiet etc.), e.g. using researched crowd behaviour models like the one used for \cite{glemarec-2021-indifferent}.
 	\item more detailed investigation into human factors (what kind of trait reacts the most to the taunting spectator, what kind of trait is associated with complete indifference from the crowd etc.)
+	\item add more factors to crowd for participant control, e.g. detach audio from crowd level (what if lv 2 audio was more accurate with a fuller crowd for example).
 \end{itemize}

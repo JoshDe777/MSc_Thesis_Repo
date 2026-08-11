@@ -61,7 +61,7 @@
 \renewcommand{\thesisauthor}{Joshua O'Donnell}                %% Your official TCD name.
 \renewcommand{\thesismonth}{August}                   %% Your month of graduation.
 \renewcommand{\thesisyear}{2026}                      %% Your year of graduation.
-\renewcommand{\thesistitle}{Evaluating Plausibility in VR Beach Volleyball with varying levels of Game and Crowd Population}          %% The title of your thesis; use mixed-case.
+\renewcommand{\thesistitle}{Evaluating Plausibility in VR Beach Volleyball with varying levels of Crowd Population}          %% The title of your thesis; use mixed-case.
 \renewcommand{\thesisauthorpreviousdegrees}{, B.Sc.}    %% Your previous degrees, abbreviated; separate multiple degrees by commas.
 \renewcommand{\thesissupervisor}{Dr. Gareth Young}            %% Your thesis supervisor; use mixed-case and don't use any titles or degrees.
 % \renewcommand{\thesiscosupervisor}{}                %% Your PhD. thesis co-supervisor; if any.
@@ -163,19 +163,22 @@
 
 
 \newacronym{vr}{VR}{Virtual Reality}
-\newacronym{ivr}{iVR}{interactive Virtual Reality}
+\newacronym{ivr}{iVR}{immersive Virtual Reality}
 \newacronym{hmd}{HMD}{Head-Mounted Display}
 \newacronym{av}{AV}{Augmented Virtuality}
-
+\newacronym{fov}{FoV}{Field of View}
+\newacronym{pi}{PI}{Place Illusion}
+\newacronym{psi}{Psi}{Plausibility Illusion}
+\newacronym{ui}{UI}{user interface}
 
 \begin{document}                                  %% BEGIN THE DOCUMENT
 
 \thesistitlepage                                  %% Generate the title page.
 
 %\hypersetup{pageanchor=false}
-%\thesisdeclarationpage                            %% Generate the declaration page.
+\thesisdeclarationpage                            %% Generate the declaration page.
 
-%\thesispermissionpage                             %% Generate the copyright permission page
+\thesispermissionpage                             %% Generate the copyright permission page
 %\hypersetup{pageanchor=true}
 
 \begin{thesisabstract}                            %% the abstract for your thesis
@@ -212,7 +215,7 @@
 % \begin{thebibliography}{refs}                   %% Start your bibliography here; you can
 \addcontentsline {toc}{chapter}{Bibliography}     %% Force Bibliography to appear in contents
 \bibliographystyle{apalike}
-\bibliography{refs}                               %% also use the \bibliography command
+\bibliography{refs,external_resources}                               %% also use the \bibliography command
 %\end{thebibliography}                            %% to generate your bibliography.
 
 

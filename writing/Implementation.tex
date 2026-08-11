@@ -3,8 +3,86 @@
 \lstset{language=Python, captionpos=b, frame=single}
 \captionsetup{width=.8\linewidth} 
 
+In the previous chapter, the task participants were asked to perform in order to measure plausibility of crowds was described. Performing this task, predictably, requires the existence of a platform to do so.\\
+In a first section, the absence of a viable, commercially available product to do so is laid out, before the purpose-built game made towards this project is detailed in follow-up sections, broken down by individual components.
 
-Focus of this chapter on detailing the game built for the study, as the object used to conduct the study. Presented in [x] order.
+\section{Absence of a commercially available alternative}
+
+For use of a standalone \gls{vr} device, when looking for applications to download and use, the Meta app store is the main platform to use. A search was made to find games with the only keyword queried being 'volleyball', which produced only four results: "Volleyball Fever" \cite{volleyball-fever}, "Volleggball" \cite{volleggball}, "BIG BALLERS '26" \cite{big-ballers}, and "Clawball" \cite{clawball}.\\
+The last two are games for a different sport altogether, tailored for basketball, and football respectively. Of the other two games, neither featured any visual crowds whatsoever, and the trailer of Volleyball Fever did not indicate any audio tracks to represent a disembodied crowd, while Volleggball includes these when points are scored.\\
+
+This researcher neither had the skills nor the time to attempt to mod either of these games for the purposes of this project, therefore the decision was taken to make a volleyball game from scratch using a conventional game engine.
+
+
+\section{Overview of the Solution}
+
+The requirements for a game supporting the participants' task are for the game to take place in a suitable visual environment, enable classic interactions with the ball as accurately as possible to resemble their real counterparts, a baseline set of volleyball rules, and to feature a crowd that could be dynamically adjustable by way of a \gls{ui} field.\\
+In order to accommodate the free play mode, there was also a need for a baseline tutorial phase, that also did not count points or propose the crowd adjustment panel. Finally, to increase engagement, a varied set of play situations was considered desirable.\\
+
+For development, two game engines were considered for their status as industry-leading, as well as the researcher's prior experience in working with both. Unity \cite{unity-engine} was chosen over Unreal Engine \cite{unreal-engine} for the researcher's comfort in using the engine in prior projects, alongside Unity's comprehensive \gls{vr} template packages that already implemented many \gls{vr} features, such as grabbing and throwing, or the provision of a fully \gls{vr}-rigged avatar with basic movement and interactions. The chosen version reflected the latest update at the time development started, Unity 6000.4.8f1.\\
+
+Over the next few pages, the various components of the projects will be outlined in order of implementation, beginning with the template assets, followed by the crowds and game rules, then a quick primer on Unity's physics engine before going into ball physics and interactions, then closing off with any parts of components that didn't deserve a dedicated section.
+
+\subsection{Unity's VR[MP] template}
+
+Go into the features reused for the project:
+
+\begin{itemize}
+	\item movement: Left-Right-Forward-Backwards via left joystick + teleport
+	\item jump
+	\item XRGrabInteractable and components
+	\item XRInteractionSetup
+	\item settings menu
+\end{itemize}
+
+might also dedicate a quick sentence to scene setup, either here or before starting the actual implementation to reference the assets used + procedurally generated terrain.
+
+\subsection{Stadium Crowd Generator}
+
+Virtual crowd from plugin \cite{stadium_crowd_generator}, modified for:\\
+a) randomised seating (! not at runtime, every participant had the exact same crowd), and\\
+b) dynamic density adjustment. Audience was composed of a random choice between n different spectator prefabs, each assigned a distinct animation rooted in a different sentiment, and all wearing a different colour shirt.\\
+Spectators were diverse* in both gender and ethnicity, and were recognisably Human but did not have any faces, thus couldn't have any facial expressions, any reaction was based solely on gestures.
+
++ a word on audio
+
+\subsection{Game Rules}
+
+\begin{itemize}
+	\item Ball landing point recognition (on or off court + side landed on)
+	\item Movement boundaries as invisible walls
+	\item ball boundaries
+	\item Match flow (points system + crowd change prompt) and ball respawn
+	\item ball lifetime states
+\end{itemize}
+
+\subsection{Ball Physics}
+
+Quick tangent on Unity Physics, as much as I can find in documentation + Ball Material properties
+
+\subsection{Hitting Types}
+
+\begin{itemize}
+	\item Initial hope to leverage built-in physics engine crushed by non-consideration of controller velocity
+	\item Attempts at velocity estimation based on positional difference: raw difference, smoothened difference, weighted smoothened difference + explain lack of reliability (frame length variability mostly) then transition to controller-based velocity reading
+	\item Hit simulation by using hand colliders as triggers rather than physical objects $\rightarrow$ aim estimation + force 'balancing' based on trial and error
+	\item hit classification
+\end{itemize}
+
+\subsection{Other}
+
+\begin{itemize}
+	\item maybe a word on the plan to include bots? Scrapped for time concerns
+	\item Incoming ball mechanic: Spawn at random point above net and aim for player at bounded random strength for variability in receiving height.
+\end{itemize}
+
+\subsection{Performance}
+
+will get framerate and stuff like hardware/memory usage (?) today.
+
+\section{Summary}
+
+Every chapter aside from the first and last chapter should conclude with a summary. 
 
 structure of chapter:
 \begin{itemize}
@@ -21,37 +99,4 @@ structure of chapter:
 	\end{itemize}
 	\item Summary of the section
 \end{itemize}
-
-
-\section{Overview of the Solution}
-
-%% Short caption for the table of listings - long caption for the explanation for the reader
-\includecode{Sample Code}{Lengthy caption explaining the code to the reader}{lst:snippet}{snippet.py}
-
-The code in listing~\ref{lst:snippet} is a demonstration how to include a file with code into the template.
-
-
-
-\section{Component One}
-
-%% Defaults for listings
-
-The code in listing~\ref{lst:snippet2} is a demonstration how to include code in the template.
-
-%% Short caption for the table of listings - long caption for the explanation for the reader
-\begin{lstlisting}[caption={[Sample Code 2]Second Lengthy caption}, label={lst:snippet2}]
-x = 1
-if x == 1:
-    # indented four spaces
-    print("x is 1.")
-\end{lstlisting}
-
-
-Virtual crowd from plugin (add ref here), modified for: a) randomised seating (! not at runtime, every participant had the exact same crowd), and b) dynamic density adjustment. Audience was composed of a random choice between n different spectator prefabs, each assigned a distinct animation rooted in a different sentiment, and all wearing a different colour shirt. Spectators were diverse* in both gender and ethnicity, and were recognisably Human but did not have any faces, thus couldn't have any facial expressions, any reaction was based solely on gestures.
-
-get framerate from app whenever trials are done.
-
-\section{Summary}
-
-Every chapter aside from the first and last chapter should conclude with a summary. 
 
