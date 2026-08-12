@@ -14,6 +14,19 @@ AiKodex (2021).
   \url{https://www.meta.com/en-gb/experiences/clawball/7890078401040025/},
   accessed 11.08.2026.
 
+\bibitem[Caputo et~al., 2023]{caputo-2023-eyes}
+Caputo, A., Zancanaro, M., and Giachetti, A. (2023).
+\newblock Eyes on teleporting: Comparing locomotion techniques in virtual
+  reality with respect to presence, sickness and spatial orientation.
+\newblock In {\em IFIP conference on human-computer interaction}, pages
+  547--566. Springer.
+
+\bibitem[ChuckCG, 2025]{procedural_terrain_blender}
+ChuckCG (2025).
+\newblock Geometry nodes terrain - blender tutorial.
+\newblock \url{https://youtu.be/d4k9-KF6GkI?si=9d2tDXpFmqU1ETZX}, accessed
+  09.06.2026.
+
 \bibitem[Cunningham, 2022]{cunningham-2022-half}
 Cunningham, S. (2022).
 \newblock Half of premier league clubs use virtual reality to heal injuries and
@@ -95,6 +108,13 @@ Leitner, M.~C. and Richlan, F. (2021).
 \newblock Analysis system for emotional behavior in football (aseb-f): matches
   of fc red bull salzburg without supporters during the covid-19 pandemic.
 \newblock {\em Humanities and Social Sciences Communications}, 8(1).
+
+\bibitem[Listudio, 2024]{volleyball_assets}
+Listudio (2024).
+\newblock Volleyball set 1.
+\newblock
+  \url{https://assetstore.unity.com/packages/3d/props/volleyball-set-1-274085},
+  accessed 08.06.2026.
 
 \bibitem[Murcia-Lopez et~al., 2020]{murcia-2020-evaluating}
 Murcia-Lopez, M., Collingwoode-Williams, T., Steptoe, W., Schwartz, R., Loving,
@@ -196,8 +216,29 @@ Stinson, C. and Bowman, D.~A. (2014).
 \newblock {\em IEEE transactions on visualization and computer graphics},
   20(4):606--615.
 
-\bibitem[{Unity Technologies}, 2026]{unity-engine}
-{Unity Technologies} (2026).
+\bibitem[Sullivan, 2022]{tropical_beach_assets}
+Sullivan, J. (2022).
+\newblock Tropical beach urp.
+\newblock
+  \url{https://assetstore.unity.com/packages/3d/environments/tropical-beach-urp-176533},
+  accessed 08.06.2026.
+
+\bibitem[{Unity Technologies}, 2026a]{unity-physics}
+{Unity Technologies} (2026a).
+\newblock The [physics] simulation pipeline.
+\newblock
+  \url{https://docs.unity3d.com/Packages/com.unity.physics@6.6/manual/concepts-simulation.html},
+  accessed 11.08.2026.
+
+\bibitem[{Unity Technologies}, 2026b]{unity-damping}
+{Unity Technologies} (2026b).
+\newblock Rigidbody.angulardamping.
+\newblock
+  \url{https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Rigidbody-angularDamping.html},
+  accessed 11.08.2026.
+
+\bibitem[{Unity Technologies}, 2026c]{unity-engine}
+{Unity Technologies} (2026c).
 \newblock Unity engine.
 \newblock \url{https://www.unity.com/}, accessed 11.08.2026.
 
@@ -206,5 +247,18 @@ Vignais, N., Kulpa, R., Brault, S., Presse, D., and Bideau, B. (2015).
 \newblock Which technology to investigate visual perception in sport: Video vs.
   virtual reality.
 \newblock {\em Human movement science}, 39:12--26.
+
+\bibitem[Wang et~al., 2023]{wang2023effect}
+Wang, J., Shi, R., Zheng, W., Xie, W., Kao, D., and Liang, H.-N. (2023).
+\newblock Effect of frame rate on user experience, performance, and simulator
+  sickness in virtual reality.
+\newblock {\em IEEE Transactions on Visualization and Computer Graphics},
+  29(5):2478--2488.
+
+\bibitem[Zindulka et~al., 2020]{zindulka2020performance}
+Zindulka, T., Bachynskyi, M., and M{\"u}ller, J. (2020).
+\newblock Performance and experience of throwing in virtual reality.
+\newblock In {\em Proceedings of the 2020 CHI conference on human factors in
+  computing systems}, pages 1--8.
 
 \end{thebibliography}
