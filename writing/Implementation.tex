@@ -142,7 +142,7 @@ Having described the shape of the curve $g_{1HH}$, which would be a logistic dec
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{figures/placeholder.png}
+	\includegraphics[width=\textwidth]{figures/curve-1hh.png}
 	\caption[1-Handed Hit Force Modifier Curve]{A graph showcasing the behaviour of $g_{1HH}(x)$ (green), and the output hit strength $g(x)_{1HH} * x$ (blue) divided by 10 for visualisation. The orange dotted line represents the $MAX$ value (55), the purple dotted line represents the $MIN$ value (13). $k = 0.33$, and $MID$ is set to 5,5.}
 	\label{fig::hit-modifier-1hand}
 \end{figure}
@@ -160,7 +160,7 @@ Through trial and error, again testing on serving scenarios, the values of $MAX 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{figures/placeholder.png}
+	\includegraphics[width=\textwidth]{figures/curve-set.png}
 	\caption[Setting Hit Strength Modifier Curve]{A graph showcasing the behaviour of $g_{set}(x)$ (green), and the output hit strength $g_{set}(x) * x$ (blue) divided by 10 for visualisation. This function features the parameters $MAX = 130, MIN=21.5,\text{ and } SPDMAX=9$}
 \end{figure}
 
@@ -169,7 +169,7 @@ Testing showed it worked relatively well when used as designed, so this aim mech
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.8\textwidth]{figures/placeholder.png}
+	\includegraphics[width=0.8\textwidth]{figures/set-aim.png}
 	\caption[Set Aiming Mechanism Visualisation]{A visualisation of the set's aim estimation mechanism, showcasing the hand normals in green and red, and the produced aim direction in yellow.}
 	\label{fig::setting-aim-explained}
 \end{figure}
@@ -178,6 +178,13 @@ Testing showed it worked relatively well when used as designed, so this aim mech
 
 The final move to implement was digging. In real life, digs are used to cushion incoming fast balls to bounce off the arms placed together to form a makeshift platform, for the setters to have an easier time controlling the second ball.\\
 Therefore the output hit strength had to be proportional to the speed of the ball on impact, whilst still retaining some proportion of user control to handle e.g. slower balls, or to revive a ball by sending it away even stronger.\\
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/dig-aim.png}
+	\caption[Visualisation of the dig's aim estimation]{An illustration the dig's aim estimation mechanic, estimating a platform between the thumbs, and bouncing the ball off the normal of this platform.}
+	\label{fig::dig-vis}
+\end{figure}
 
 Implementing the forearms usually used for this instead of the hands would have involved a time-consuming process of rigging relative to the controller, and more adjustments to not otherwise interfere with the player, so this idea was replaced by an esimation for the platform using the hands. When replicating the digging motion in-game, the hands would align, and it was noticed the thumbs could be an intuitive visualisation of the platform.\\
 Hands then calculated a "dig normal" $N$ representing the cross product of the thumb direction ($\overrightarrow{L}$ or $\overrightarrow{R}$) and a vector between the palms of both hands ($I$ from right to left) - a sketch to help illustrate this dig normal is provided in figure \ref{fig::dig-normal} - combined to calculate the normal $\overrightarrow{N} = \overrightarrow{R}\times\overrightarrow{I} = -\overrightarrow{I}\times\overrightarrow{L}$. The 'aim' direction is then the ball's velocity vector reflected across this dig normal using the built-in \verb|Vector3.Reflect| function implemented by Unity.\\
@@ -197,7 +204,7 @@ Vector3 force = (ballVelocityModifier + handVelocityModifier) *
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/placeholder.png}
+	\includegraphics[width=0.7\textwidth]{figures/sketch-dig.png}
 	\caption[Visualisation of the dig normal calculation]{A sketch illustrating the vector math used to calculate the dig normal. The order of operations in the cross-product is flipped to accommodate for the right hand rule determining the orientation of the cross vector.}
 	\label{fig::dig-normal}
 \end{figure}

@@ -1,0 +1,8 @@
+﻿* Encoding: UTF-8.
+COMPUTE LastVal = -1.
+DO REPEAT V = V2 TO V19.
+  IF (V <> -1) LastVal = V.
+END REPEAT.
+EXECUTE.
+
+FREQUENCIES VARIABLES=LastVal.
