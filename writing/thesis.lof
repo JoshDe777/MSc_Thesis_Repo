@@ -1,14 +1,35 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Arousal-Valence relationship graph, from Glémarec et.al. (2021).}}{14}{figure.caption.8}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces A screenshot of the Virtual Goalkeeper application from Stinson and Bowman}}{10}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Screenshots of the virtual rock concert in Slater et.al.}}{12}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Arousal-Valence relationship graph, from Glémarec et.al. (2021).}}{15}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Crowd sentiment examples in Glémarec et.al.}}{16}{figure.caption.13}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Stadium Crowd Generator Showcase}}{30}{figure.caption.10}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces 1-Handed Hit Force Modifier Curve}}{39}{figure.caption.11}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Setting Hit Strength Modifier Curve}}{41}{figure.caption.12}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Set Aiming Mechanism Visualisation}}{42}{figure.caption.13}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Visualisation of the dig's aim estimation}}{42}{figure.caption.14}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Visualisation of the dig normal calculation}}{44}{figure.caption.15}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Volleggball game image}}{31}{figure.caption.15}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Stadium Crowd Generator Showcase}}{33}{figure.caption.16}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces The ball and its associated collider}}{36}{figure.caption.17}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Playing court bird's eye view}}{36}{figure.caption.18}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Movement Boundary Visualisation}}{38}{figure.caption.19}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Ball lifetime flow chart}}{39}{figure.caption.20}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces 1-Handed Hit Force Modifier Curve}}{42}{figure.caption.21}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Setting Hit Strength Modifier Curve}}{44}{figure.caption.22}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Set Aiming Mechanism Visualisation}}{45}{figure.caption.23}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Visualisation of the dig's aim estimation}}{46}{figure.caption.24}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Visualisation of the dig normal calculation}}{47}{figure.caption.25}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Measurement of System Wakeups}}{47}{figure.caption.17}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Participant Demographic Data - Age and Gender}}{50}{figure.caption.26}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Participant Demographic Data - prior experience with \gls {vr} and volleyball}}{51}{figure.caption.27}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces State Change Count Distribution}}{55}{figure.caption.31}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Participant Overall Enjoyment}}{55}{figure.caption.33}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Participant Satisfaction with gameplay mechanics}}{56}{figure.caption.34}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Participant Satisfaction with UI/UX}}{56}{figure.caption.35}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Participant Satisfaction with Final Crowd States}}{57}{figure.caption.38}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Participant Assessment of Crowd Update Prompt Frequency}}{58}{figure.caption.39}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Participant Estimation of Crowd Effect at Most Comfortable Setting}}{59}{figure.caption.40}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Participant Estimation of Crowd Effect at Least Comfortable Setting}}{59}{figure.caption.41}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Participant Assessment of crowd Naturalness}}{60}{figure.caption.42}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces \gls {ux} comparison between unamused participants and others}}{62}{figure.caption.46}%
+\contentsline {figure}{\numberline {5.13}{\ignorespaces \gls {ux} comparison between participants by prior experience of \gls {vr}}}{64}{figure.caption.47}%
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Crowd effect on concentration at least comfortable level, compared between people who scored high vs low at the most comfortable setting}}{65}{figure.caption.48}%
 \addvspace {10\p@ }

@@ -6,51 +6,62 @@
 \contentsline {subsection}{\numberline {2.1.1}Virtual Reality}{4}{subsection.2.1.1}%
 \contentsline {subsection}{\numberline {2.1.2}Immersion, Illusion of Place, and of Plausibility}{5}{subsection.2.1.2}%
 \contentsline {subsection}{\numberline {2.1.3}Beach Volleyball}{7}{subsection.2.1.3}%
-\contentsline {subsection}{\numberline {2.1.4}Crowd Population}{9}{subsection.2.1.4}%
-\contentsline {section}{\numberline {2.2}"Feasibility of training athletes for high-pressure situations using virtual reality"}{10}{section.2.2}%
+\contentsline {subsection}{\numberline {2.1.4}Crowd Population}{8}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}"Feasibility of training athletes for high-pressure situations using virtual reality"}{9}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Plausibility Assessment}{10}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Methodology}{10}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.2}Methodology}{11}{subsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.2.3}Studied Subject}{11}{subsection.2.2.3}%
 \contentsline {section}{\numberline {2.3}"The sentiment of a virtual rock concert"}{11}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Plausibility Assessment}{12}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.1}Plausibility Assessment}{13}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Methodology}{13}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Studied Subject}{13}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.3}Studied Subject}{14}{subsection.2.3.3}%
 \contentsline {section}{\numberline {2.4}"Indifferent or Enthusiastic? Virtual Audiences Animation and Perception in Virtual Reality"}{14}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Plausibility Assessment}{15}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Methodology}{15}{subsection.2.4.2}%
-\contentsline {subsection}{\numberline {2.4.3}Studied Subject}{16}{subsection.2.4.3}%
-\contentsline {section}{\numberline {2.5}"Factors Affecting Sense of Presence in a Virtual Reality Social Environment: A Qualitative Study"}{16}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Plausibility Assessment}{17}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Methodology}{17}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Studied Subject}{18}{subsection.2.5.3}%
-\contentsline {section}{\numberline {2.6}Summary}{18}{section.2.6}%
-\contentsline {chapter}{Chapter{} \numberline {3}Research Aims and Methodology}{20}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Research Gap and Research Question}{20}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Identified Challenges}{20}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Proposed Work}{22}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {2.4.1}Plausibility Assessment}{16}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Methodology}{17}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Studied Subject}{17}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.5}"Factors Affecting Sense of Presence in a Virtual Reality Social Environment: A Qualitative Study"}{17}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Plausibility Assessment}{18}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Methodology}{18}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Studied Subject}{19}{subsection.2.5.3}%
+\contentsline {section}{\numberline {2.6}Summary}{19}{section.2.6}%
+\contentsline {chapter}{Chapter{} \numberline {3}Research Aims and Methodology}{21}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Research Gap and Research Question}{21}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Identified Challenges}{21}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Proposed Work}{23}{subsection.3.1.2}%
 \contentsline {section}{\numberline {3.2}Research Design}{23}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Task}{23}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Hardware}{24}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Participants}{24}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Procedure}{25}{subsection.3.2.4}%
-\contentsline {subsection}{\numberline {3.2.5}Evaluation}{25}{subsection.3.2.5}%
-\contentsline {section}{\numberline {3.3}Summary}{26}{section.3.3}%
-\contentsline {chapter}{Chapter{} \numberline {4}Implementation}{27}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Absence of a commercially available alternative}{27}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Overview of the Solution}{28}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Unity's VR[MP] template and Scene Setup}{28}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Stadium Crowd Generator}{29}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Physics and Ball Properties}{31}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Game Rules}{33}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Hit Mechanics}{36}{subsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.2.6}Performance}{43}{subsection.4.2.6}%
-\contentsline {section}{\numberline {4.3}Summary}{45}{section.4.3}%
-\contentsline {chapter}{Chapter{} \numberline {5}Evaluation}{46}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Experiments}{46}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Results}{46}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Summary}{47}{section.5.3}%
-\contentsline {chapter}{Chapter{} \numberline {6}Conclusions \& Future Work}{48}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Limitations}{48}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Future Work}{49}{section.6.2}%
-\contentsline {chapter}{Bibliography}{50}{section.6.2}%
-\contentsline {chapter}{Appendices}{53}{chapter*.18}%
+\contentsline {subsection}{\numberline {3.2.1}Task}{24}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Hardware}{25}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Participants}{25}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Procedure}{26}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.5}Evaluation}{27}{subsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.2.6}Usage of Generative AI}{27}{subsection.3.2.6}%
+\contentsline {section}{\numberline {3.3}Summary}{28}{section.3.3}%
+\contentsline {chapter}{Chapter{} \numberline {4}Implementation}{30}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Absence of a commercially available alternative}{30}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Overview of the Solution}{31}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Unity's VR[MP] template and Scene Setup}{32}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Stadium Crowd Generator}{32}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Physics and Ball Properties}{34}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Game Rules}{35}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Hit Mechanics}{40}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Performance}{47}{subsection.4.2.6}%
+\contentsline {section}{\numberline {4.3}Summary}{47}{section.4.3}%
+\contentsline {chapter}{Chapter{} \numberline {5}Evaluation}{49}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Experiments}{49}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Results}{52}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Crowd State Transitions}{52}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Questionnaire Responses}{53}{subsection.5.2.2}%
+\contentsline {subsubsection}{Gameplay Factors}{54}{section*.32}%
+\contentsline {subsubsection}{Crowd Reactions}{57}{section*.37}%
+\contentsline {subsubsection}{Observations}{60}{section*.44}%
+\contentsline {section}{\numberline {5.3}Discussion}{60}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Simulation suitability to the research task}{61}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Crowd plausibility and effects on users}{63}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Comfort of crowd states}{66}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Interesting, independent findings and notes}{66}{subsection.5.3.4}%
+\contentsline {section}{\numberline {5.4}Summary}{67}{section.5.4}%
+\contentsline {chapter}{Chapter{} \numberline {6}Conclusions \& Future Work}{69}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Limitations}{69}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Future Work}{70}{section.6.2}%
+\contentsline {chapter}{Bibliography}{72}{section.6.2}%
+\contentsline {chapter}{Appendices}{75}{chapter*.49}%

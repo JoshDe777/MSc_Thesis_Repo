@@ -1,7 +1,7 @@
 \chapter{Research Aims and Methodology}
 \label{chap::design-3}
 
-Having introduced the subject in a broad sense in chapter \ref{chap::intro-1}, and laid out background knowledge and existing works in chapter \ref{chap::sota-2}, it is now time to look forward and describe first the aims of this project, by way of identifying the research gap it aims to patch up, and the research question making up the substance of it. Following this, the proposed methodology will be laid out, alongside a description of the various components envisioned to make up a patch to fill the identified gap, that won't fly off under the first bit of scrutiny.
+Having introduced the subject in a broad sense in chapter \ref{chap::intro-1}, and laid out background knowledge and existing works in chapter \ref{chap::sota-2}, it is now time to look forward and describe first the aims of this project, by way of identifying the research gap it aims to patch up, and the research question making up the substance of it. Following this, the proposed methodology will be laid out, alongside a description of the various components envisioned to make up a patch to fill the identified gap.
 
 \section{Research Gap and Research Question}
 \label{sec:ProblemFormulation}
@@ -9,9 +9,10 @@ Having introduced the subject in a broad sense in chapter \ref{chap::intro-1}, a
 The information laid out over the past two chapters, particularly the second, will be leveraged in order to outline all the edges and corners of the identified literature gap, then quickly outline a research question cut out to fit over it.
 
 \subsection{Identified Challenges}
+\label{sec::challenges}
 
 Chapter \ref{chap::sota-2} established that existing use-cases of VR in high-level sport, as shown for \cite{stinson-2014-feasibility}, the question of plausibility was only tangentially addressed for the purpose of the project, which served more as a proof-of-concept than anything else.\\
-With \cite{slater-2023-sentiment}, and \cite{riches-2019-factors}, two approaches to measuring and improving the sense of subjective immersion, described as \gls{psi} in the former, and sense of presence in the latter, in order to make a simulated environment feel more lifelike, each resorting to detailed participant feedback in the form of essays or semi-structured interviews to extrapolate what should be done to improve the experience, each study leading to their own recommendations for best practises in the investigated scenarios.\\
+With \cite{slater-2023-sentiment}, and \cite{riches-2019-factors}, two approaches to measuring and improving the sense of Presence, in order to make a simulated environment feel more lifelike, each resorting to detailed participant feedback in the form of essays or semi-structured interviews to extrapolate what should be done to improve the experience, each study leading to their own recommendations for best practises in the investigated scenarios.\\
 Additionally, \cite{glemarec-2021-indifferent}, whose study served to flesh out a more expressive crowd in \gls{vr}, illustrates, not only that certain features of body language pair in various ways to exhibit widely different sentiments, but also that it neither takes a full body, nor even a full crowd, to impress these sentiments onto participants.\\
 And finally, in the introduction (Chapter \ref{chap::intro-1}), the lack of meaningful such applications for use in volleyball was mentioned as well.\\
 
@@ -19,31 +20,26 @@ This absence is probably not down to chance, although there is no scientific evi
 \begin{itemize}
 	\item the lack of haptic feedback to e.g. improve setting, which would be difficult to translate to real play at competitive levels, 
 	\item a reduced \gls{fov} which can lead to important peripheral information escaping perception, 
-	\item the limited ability to receive very precise physical cues in a timely manner, examplified in the above review how batters in baseball need to rely on the pitcher's kinematics to predict ball speed, rotation and curve before it goes flying, 
+	\item the limited ability to receive very precise physical cues in a timely manner, exemplified in the above review how batters in baseball need to rely on the pitcher's kinematics to predict ball speed, rotation and curve before it goes flying, 
 	\item the sheer complexity and granularity of some movements, in particular the set that would either need expensive programming to map accurately, paired with robust hand-tracking technology for use on professional athletes,
 	\item the use of complex, and potentially hazardous movements in smaller spaces, e.g. diving for the ball in a controlled manner, or a very specific run up to jump when spiking in order to maximise jump height.
 \end{itemize}
 In this same review, the author emphasizes through these limitations that \gls{vr} will never be, and never should be, a full substitution of training in physical environments, and should only be used where it makes sense to use for a real benefit. As a follow-up, the author explains that the potential for \gls{vr} is highest towards injury prevention and the sharpening of mental skills, e.g. subjecting athletes to matchday pressures, or particularly stressful situations such as goalkeeping training under penalty shootout conditions in football/soccer \cite{gerwann-2025-immersive}.\\
 
-The aim of this research project being to contribute towards adoption of \gls{vr} to enhance volleyball training regimes, it is the hope of this researcher to shorten development and design time for such training applications and scenarios with projects such as this one, by proposing best practises to form better starting points than guesswork on developers' sides.\\
+The aim of this research project being to contribute towards adoption of \gls{vr} to enhance volleyball training regimes, this study will aim to shorten development and design time for \gls{vr} sports simulations by proposing research-based starting points for the plausible design of components like virtual spectators.\\
 Considering that crowds form a large part of pressure during matches, it is proposed to look into crowds more specifically, in order to find out in what ways virtual crowds may interact with participants, to be able to suggest potential best-practise configurations to support \gls{psi} during gameplay, and, by extension, to keep motivation and performance up while immersed in \gls{vr} training scenarios.
 
 \subsection{Proposed Work}
 
-As such, the question of what the study must investigate amounts to:
-\begin{itemize}
-	\item assess participants' level of \gls{psi} during gameplay,
-	\item determine the level of comfort and proficiency with the volleyball mechanics, to mention it as a potential factor in plausibility breaks.,
-	\item provide different levels of crowd involvement to provide viable best practise estimations.
-\end{itemize}
+As such, the factors relevant for measure during this study includes participants' perception of \gls{psi} during gameplay, their level of comfort and proficiency with the volleyball mechanics as a major factor influencing \gls{pi} and overall Presence, and the variations of perception and behaviour across different levels of crowd density, in order to make educated assumptions about the factors informing behaviour relative to virtual spectators.\\
 
-\noindent All of this subtly builds up to the research question this paper poses:
+\noindent All of this subtly builds up to the research question this study poses:
 
 \begin{quote}
-	\textbf{"Do trade-offs in environment population, such as variations in crowd population affect the illusion of plausibility in a VR Beach Volleyball setting?"}
+	\textbf{"Do different levels of virtual crowd presence affect perceived plausibility in a VR beach-volleyball environment?"}
 \end{quote}
 
-It is a question that may be tentatively answered by a few guiding hypotheses, such as 
+\noindent It is a question that may be tentatively answered by a few guiding hypotheses, such as 
 
 \begin{itemize}
 	\item The VR Beach Volleyball game is suitable as a baseline to establish a state of presence, including both \gls{pi} and \gls{psi}.
@@ -51,7 +47,7 @@ It is a question that may be tentatively answered by a few guiding hypotheses, s
 	\item The digital crowds can reach a level of activity considered comfortable for users to play with.
 \end{itemize}
 
-Furthermore, a side hypothesis of "Users are more comfortable with a crowd than without one" can be proposed as well. In order to verify these hypotheses, a methodology is proposed in the following section.
+In order to verify these hypotheses, a methodology is proposed in the following section.
 
 \section{Research Design}
 \label{sec::methodology}
@@ -84,29 +80,50 @@ The study was conducted exclusively in the SCSS Computer Labs at Trinity College
 
 \subsection{Participants}
 
-After receiving approval from the Trinity College Dublin's School of Computer Science and Statistics Ethics Committee, participants were recruited through direct contact with the researcher, either via e-mail, or in-person at the place this study was conducted and written. In total, 14 participants were recruited, and all completed the study.\\
+After receiving approval from the Trinity College Dublin's School of Computer Science and Statistics Ethics Committee, participants were recruited through convenience sampling, either via e-mail, or in-person using the documentation provided in Appendices at the place this study was conducted and written. In total, 14 participants were recruited, and all completed the study.\\
+Participants actively contacted first were sent the invitation email included as Appendix A, and upon a positive expression of interest in participating, a follow-up email attaching the Participant Information Leaflet (PIL), which you will find in Appendix B. For participants having expressed their interest in-person, this document was also printed for reading.\\
+
 No compensation was offered to participants for their time, most were graduate students at Trinity College Dublin, and the only age ranges represented were 18-24 and 25-34, specific ages were not recorded. 3 of the participants were female, and 11 were male. None of the participants had any experience with Volleyball prior to this study, and prior experience in \gls{vr} ranged from never having used such devices before, to regular users.\\
 
 \subsection{Procedure}
 
-Upon arrival, each participant was greeted and asked to fill out the Informed Consent Form. After a short explanation of the procedure, participants were offered a bottle of water, and asked to put on the \gls{hmd} and controllers, with help offered by the researcher for users with little prior experience with \gls{vr}.\\
+Upon arrival, each participant was greeted and asked to fill out the Informed Consent Form, attached to this dissertation in Appendix C. After a short explanation of the procedure, participants were offered a bottle of water, and asked to put on the \gls{hmd} and controllers, with help offered by the researcher for users with little prior experience with \gls{vr}.\\
 
-Participants then performed the task outlined above, with the researcher in the room to make private observations on exhibited behaviour, answer questions, and direct participants back towards the centre of the active space in case they moved closer to the surrounding walls. Special care was given not to reveal the full purpose of the study, beyond its title, to prevent participants from overthinking the influence of the crowds on their experience, as recommended by \cite{murcia-2020-evaluating}. The researcher never actively engaged participants in conversation during gameplay, only intervening unprompted to direct participants towards a safe middle in the room.\\
+Participants then performed the task outlined above, with the researcher in the room to make private observations on exhibited behaviour, answer questions, and direct participants back towards the centre of the active space in case they moved closer to the surrounding walls. A video presenting the tasks performed by participants is available at \url{https://youtu.be/HFBU9WQoUNE}.\\
+Special care was given not to reveal the full purpose of the study, beyond its title, to prevent participants from overthinking the influence of the crowds on their experience, as recommended by \cite{murcia-2020-evaluating}. The researcher never actively engaged participants in conversation during gameplay, only intervening unprompted to direct participants towards a safe middle in the room.\\
 During the gameplay phase, participants were permitted to take a break whenever they wanted or needed, which would pause the 20 minute minimum play time.\\
 
-Following the experience, participants would cleanly exit the game, then proceed to answer a questionnaire relating to the experience, following which they were thanked for their participation. No study session lasted longer than 60 minutes overall.
+Following the experience, participants would cleanly exit the game, then proceed to answer a questionnaire relating to the experience, consisting of three sections probing into demographic classification, gameplay \gls{ux} through satisfaction ratings on various aspects of the experience, and the effects of crowds on participants' concentration, as well as their perceptions of the crowd's authenticity. The full questionnaire can be found in Appendix D. All but one quantitative questions were answered on 1-10 Likert scales, the last question pertaining to a frequency assessment was posed using a 1-9 satisfaction scale, with 1 representing a frustrating rarity of occurrence, while 9 represented a frustrating frequency of occurrence.\\
+
+The gameplay-related questions relate to the hypothesis of the simulation being an accurate medium for this study, as a platform with bad \gls{ux} would incite its own frustrations that threaten \gls{pi} by bringing attention to the hardware or software defects, rather than the happenings of the game, whilst the crowd-related questions aim to assess answers towards the hypotheses that the crowd is plausible, and that the proposed densities were considerable as comfortable for participants.\\
+
+A full overview of the questionnaire can be found in the appendices to this document.
+
+After completing the questionnaire, they were thanked for their participation. No study session lasted longer than 60 minutes overall.
 
 \subsection{Evaluation}
 
 The data collected towards this study is recorded in two separate prongs: Firstly, there is the crowd state history established during the participant task, which aims to showcase a trend in transitions. This history will also be used to establish a ranking of crowd states by final preference, due to the instruction to participants to close on their preferred configuration.\\
 Questionnaire answers containing quantitative answers to certain questions on Likert scales, as well as open text answers to complete sections, will be leveraged to evaluate the hypotheses with quantitative answers, whilst also hopefully showcasing interesting correlations, or in the case of open text answers, illustrate or nuance findings through direct user feedback.\\
 
-Observations made by the researcher during participants' gameplay, such as particularly salient behaviours will also be used to illustrate or nuance findings, though they cannot be used to directly prove or disprove hypotheses, considering expressed behaviours don't always match inside states and may mirror other factors, e.g. the presence of other people in the space, or comfort in exhanging with the researcher or not.
+Observations made by the researcher during participants' gameplay, such as particularly salient behaviours will also be used to illustrate or nuance findings, though they cannot be used to directly prove or disprove hypotheses, considering expressed behaviours don't always match inside states and may mirror other factors, e.g. the presence of other people in the space, or comfort in exchanging with the researcher or not.
+
+\subsection{Usage of Generative AI}
+
+The advantages provided by Generative AI (= GenAI) are varied, and can be particularly useful to more opaque work environments such as programming. Its capabilities being so great to nowadays enable entire projects, it is important to delimit where this technology was involved, and in what ways it supported the work made towards this project. As a guiding doctrine, GenAI was only involved to support the understanding of error messages, and correct and help design features that were otherwise outside the field of proficiency of the involved person.\\
+Claude AI (not Claude Code, no AI agent was directly embedded in project files) was queried mainly for assistance in debugging and hunting for frustrations within the template code, as well as own code if the solution to a malfunction was unsuccessfully searched for first.\\
+
+The specific components that were partly influenced by Claude AI were the ballistics estimation for the incoming ball mechanic, and the establishment of a viable mathematical function for both non-linear hit force modifiers, will be explicitly mentioned in their respective sections.\\
+No line of code suggested by the AI agent was implemented without full understanding of its function, and was limited to context-specific injections of code, never involved in larger-scale design or implementation of components and mechanics.\\
+
+Claude also helped formulate the syntax in unfamiliar software for the data analysis program used to evaluate participants' crowd transition history.\\
+
+No GenAI influence has crept into either the writing or overarching creative process on this master's dissertation. In particular the use of em dashes, often misinterpreted as a flag for AI-generated scripts, is a fond part of this student's writing kit. 
 
 \section{Summary}
 \label{sec:SummaryDesign}
 
 In short, we have outlined the potential uses of a study outlining the effects of crowds on plausibility, to avoid breaks in presence during gameplay in \gls{vr} sports application, which would lead to a loss in motivation and performance in athletes using such technology to support their training regime.\\
-This potential aims to be addressed by this study by answering the question, whether trade-offs in crowd population meaningfully affects plausibility in a \gls{vr} beach volleyball scenario, chosen for its relative absence of scrutiny in existing literature.\\
+This potential aims to be addressed by this study by answering the question, whether trade-off's in crowd population meaningfully affects plausibility in a \gls{vr} beach volleyball scenario, chosen for its relative absence of scrutiny in existing literature.\\
 
 This question is addressed in a participant study featuring 14 young adults, within the age range of 18-34, without any prior experience in volleyball, playing a purpose-built game in which they would either serve, or react to balls played in from the other side of the net. During gameplay, they would adjust crowd density using a regularly appearing prompt, producing a history of crowd transition ending with a given participant's preferred state overall. Participants also answered a questionnaire to assess their reactions in a more quantitative fashion, with open text fields to relate any nuance or more expressive answers.

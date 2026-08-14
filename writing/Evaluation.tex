@@ -1,37 +1,355 @@
 \chapter{Evaluation}
 \label{chap::evaluation-5}
 
-The Evaluation chapter should present a comparison of the work that forms the basis of the dissertation and existing work. At a higher level, it should demonstrate an awareness of the relationship of the dissertation work to the research area that it is based in.
+Having completed the build-up to the experiments, following the methodology and research aims in chapter \ref{chap::design-3}, then the technical side of things in chapter \ref{chap::implementation-4}, it is now time to showcase the results of this study.\\
+In a first time, the experiment's procedures will be outlined and refreshed, before diving into the makeup of the participants, following which the results of the study will be showcased, preceding a discussion around the hypotheses established in Chapter \ref{chap::design-3}.\\
 
 \section{Experiments}
+\label{sec::experiments-desc}
 
-In the case where experiments have been carried out, the experimental setup and the values that were defined for the variables need to be presented in a table e.g. table~\ref{tab:experimentsetup}.
+Participant trials were carried out over a period of 10 days, with approval by a relevant ethics board, all in a dedicated, enclosed space made available by the researcher's university, and without any form of compensation offered. Participants were asked, following the signature of a written consent form, to perform a task consisting of 20 minutes of gameplay on the game outlined in chapter \ref{chap::implementation-4} using a standalone Meta Quest 3 \gls{hmd}, before filling out a questionnaire.\\
+During gameplay, participants were regularly prompted to adjust the crowd's density to their preference. The trials' location offered enough space to perform arm swings in any direction, leaving participants the freedom to turn physically rather than relying solely on digital movement, with the researcher in the room to redirect participants towards the centre of the room if necessary.\\
 
-\begin{table}[!h]
-\begin{center}
-	\begin{tabular}{|l|c|c|} 
-	\hline
- 	\bf Column 1  & \bf Column 2  & \bf Column 3 \\
-  	\hline
-	Row 1 & Item 1 & Item 2 \\
-	Row 2 & Item 1 & Item 2 \\
-	Row 3 & Item 1 & Item 2 \\
-	Row 4 & Item 1 & Item 2 \\
-	\hline
+\begin{figure}
+	\centering
+	\begin{tabular}{c}
+		\includegraphics[width=0.7\textwidth]{figures/demographics-age.png} \\
+		\includegraphics[width=0.7\textwidth]{figures/demographics-gender.png} 
 	\end{tabular}
-\end{center}
-\caption[Variables of the experiment]{Caption that explains the table to the reader}	
-\label{tab:experimentsetup}
-\end{table}
+	\caption[Participant Demographic Data - Age and Gender]{
+		Pie charts displaying relevant demographic information of the 14 participants to this study, first the age range, then the gender.\\
+		71,4\% of participants were aged 18 to 24, whilst the rest reported an age between 25 and 34. 78,57\% of participants were male, the other 21,43\% female.
+	}
+	\label{fig::demographics}
+\end{figure}
 
+\begin{figure}
+	\centering
+	\begin{tabular}{c}
+		\includegraphics[width=0.9\textwidth]{figures/demographics-vr-experience.png} \\
+		\includegraphics[width=0.7\textwidth]{figures/demographics-vb-experience.png} 
+	\end{tabular}
+	\caption[Participant Demographic Data - prior experience with \gls{vr} and volleyball]{
+		Pie charts displaying relevant demographic information of the 14 participants to this study, first prior experience with \gls{vr}, then with Volleyball.\\
+		All 14 participants had 0-2 years prior experience playing volleyball. 2 of the 14 participants had never been exposed to \gls{vr} before (purple), whilst 5 declared having tried it before (light blue), 3 declaring to have used it somewhat more (orange), and 4 declared being regular \gls{vr} users (dark blue).}
+	\label{fig::demographics-2}
+\end{figure}
+
+In total, 14 people took part in the study, of which 11 declared as male, and the remaining 3 identified as female. Demographic distributions are showcased in figures \ref{fig::demographics}, and \ref{fig::demographics-2}. No age range above 25-34 was represented, and 10 participants' age ranged between 18 and 24. Exact ages were not recorded for reasons of privacy, therefore no specific average age, or distribution can be established.\\
+Participants were also queried their about prior experience in playing volleyball, of which none declared longer exposure than the lowest 0-2 years range, as well as prior experience with \gls{vr} technology, which provided the best mix of traits.\\
+2 participants declared having never experienced \gls{vr} before, 5 expressed individual, prior exposure, 3 had used it somewhat more regularly, and 4 declared familiarity with the technology.\\
 
 \section{Results}
 
-Figures that present results such as figure~\ref{fig:measurements} need to display descriptions of the axes, the units and scales of the measurements, statistical values, etc. Where measurements were taken from experiments, error bars or confidence intervals need to be provided to give the reader an indication of the spread of the measurements.
+As mentioned in the build-up, two types of data were selected: a history of crowd states mirroring the participants' direct gameplay choices based on preference, and the questionnaire filled following the experience to reflect on it. The results will be presented in chronological order of collection, i.e. first the crowd states and any relevant, derived findings, before taking a look at the questionnaire's responses.\\
 
-\includescalefigure{fig:measurements}{Measurement of System Wakeups}{Long caption that describes the figure to the reader}{1}{measurements.png}
+\subsection{Crowd State Transitions}
 
+Tables \ref{tab::transition-matrix-quant} and \ref{tab::transition-matrix-percent} showcase a transition matrix, presenting the amount and proportion respectively of moves from a source state to a target state.\\
+Before analysing the data, there is an inherent bias are worth mentioning: all participants always started at level 3, therefore this state will inherently feature an artificially raised volume of transitions away from itself, proven true in the table, as featuring the highest volume of transitions from itself, with 31.25\%, despite a balanced transitions to ratio compared to other states.\\
+
+For comfort, from here on a transition from state A to state B will be described as a pair in order of (source, target), i.e. (A, B). Similarly, the conditional probability of moving from state A to state B will be expressed as $P_A(B)$.\\
+
+The state visited the most turns out to have been level 1, with 28,1\% of all transitions, whilst level 0 brought in the lowest traffic with 'only' 21,9\%.\\
+The most performed transitions were a stay in level 3 (3, 3), done 19 times with $P_3(3) = 38$\%, and incremental transitions (0, 1), and (1, 2) tied at 16 counts, or $P_0(1) = 51,6$\% and $P_1(2) = 38,1$\% respectively. In terms of proportions within a given source state, (0, 1) scores the highest, leading (1, 2) and (3, 3) by a country mile.\\
+The least performed transitions were (0, 3) with 4 counts and $P_0(3) = 12,9$\%, (0, 2) at 5 repetitions across all playthroughs and $P_0(2) = 16,1$\%, and (0, 0) tied with (2, 0) and (1, 3) on 6 counts, or $P_0(0) = 19,4$\%, $P_2(0) = 16,2$\%, and $P_1(3) = 14,3$\% respectively.\\
+Proportionally, the least performed transitions were (0, 3) with $P_0(3) = 12,9$\%, (1, 3) with $P_1(3) = 14,3$\%, and (0, 2) with $P_0(2) = 16,1$\%.
+
+
+\begin{table}[!h]
+	\begin{center}
+		\begin{tabular}{|l|c|c|c|c|c|} 
+			\hline
+			\bf $\downarrow$ Source $\backslash$ Target $\rightarrow$ & \bf Level 0 & \bf Level 1 & \bf Level 2 & \bf Level 3 & \bf Total From State \\
+			\hline
+			\bf Level 0 & 6 & 16 & 5 & 4 & 31 \\
+			\bf Level 1 & 10 & 10 & 16 & 6 & 42 \\
+			\bf Level 2 & 6 & 10 & 10 & 11 & 37 \\
+			\bf Level 3 & 13 & 9 & 9 & 19 & 50 \\
+			\hline
+			\bf Total To State & 35 & 45 & 40 & 40 & 160 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption[Numerical State Transition Matrix]{A table showcasing the amount of transitions from one state to another. A transition counts from a state in column 1 to any other column, i.e. a transition from Level 1 to Level 2 will register in row[Level 1], column[Level 2]. A table representing these values in proportions / probabilities is showcased in table \ref{tab::transition-matrix-percent}.}	
+	\label{tab::transition-matrix-quant}
+\end{table}
+
+Another data point to mention in this regard is a ranking of states by expressed preference, as participants were instructed to close the simulation on their preferred configuration. The ranking, shown on table \ref{tab::state-pref-table}, shows an overall spread out set of preference, with no state receiving less than three votes. Level 0 and 3 pull away with four votes each, by receiving the backing from 28,6\% of participants.\\
+
+\begin{table}[!h]
+	\begin{center}
+		\begin{tabular}{|l|c|c|c|c|c|} 
+			\hline
+			\bf $\downarrow$ Source $\backslash$ Target $\rightarrow$   & \bf Level 0 & \bf Level 1 & \bf Level 2 & \bf Level 3 & \bf Total From State \\
+			\hline
+			\bf Level 0 & 19,4\% & 51,6\% & 16,1\% & 12,9\% & 19,4\% \\
+			\bf Level 1 & 23,8\% & 23,8\% & 38,1\% & 14,3\% & 26,25\% \\
+			\bf Level 2 & 16,2\% & 27,0\% & 27,0\% & 29,7\% & 23,1\% \\
+			\bf Level 3 & 26,0\% & 18,0\% & 18,0\% & 38,0\% & 31,25\% \\
+			\hline
+			\bf Total To State & 21,9\% & 28,1\% & 25,0\% & 25,0\% & 100\% \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption[Proportional State Transition Matrix]{A table showcasing the proportion of transitions from one state to another. A transition counts from a state in column 1 to any other column, i.e. a transition from Level 1 to Level 2 will register in row[Level 1], column[Level 2]. Percentages are represented as the conditional probability to transition to a state from a given start state ($P_{source}(target)$), meaning the sum of all probabilities in a row will add up to 100\%. Total To and From State proportions are expressed as a percentage of all transitions.}	
+	\label{tab::transition-matrix-percent}
+\end{table}
+
+\begin{table}[!h]
+	\begin{center}
+		\begin{tabular}{|l|c|c|} 
+			\hline
+			\bf State Number  & \bf Occurrences & \bf Proportion \\
+			\hline
+			\bf Level 0 & 4 & 28,6\% \\
+			\bf Level 1 & 3 & 21,4\% \\
+			\bf Level 2 & 3 & 21,4\% \\
+			\bf Level 3 & 4 & 28,6\% \\
+			\hline
+			\bf Total & 14 & 100\% \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption[Final State Preference Table]{The distribution of states expressed as preferred by players during gameplay. This preference was read using the last state participants were in before closing the session, as they were instructed to set.}	
+	\label{tab::state-pref-table}
+\end{table}
+
+Finally, as a proxy for recorded play time, table \ref{fig::n-state-transitions} displays the distribution of crowd state transition counts recorded per participant. The graph shows a normal distribution of values peaking at 12, with the lowest recorded count being 4, whilst the longest anyone has played was 18 transitions.\\
+The average or mean count is 12,43, with a \gls{stddev} of $\pm$ 3,44.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/GP_nStateChanges.png}
+	\caption[State Change Count Distribution]{A graph showing the amount of states participants have visited. The $x$-axis describes the amount of state changes performed by a participant whilst playing, while the $y$-axis describes the amount of participants having performed that amount of transitions. The lowest recorded amount of transitions is 4, whilst the highest recorded count is 18. The mean transition count is 12,43 with a \gls{stddev} of 3,44, for a total amount of 14 participants.}
+	\label{fig::n-state-transitions}
+\end{figure}
+
+\subsection{Questionnaire Responses}
+
+The questionnaire consisted of three separate sections, assessing different aspects of the participants' experience.\\
+The first section enquires about demographic characteristics outlined in section \ref{sec::experiments-desc}, followed by a sequence of questions assessing general enjoyment and quality of gameplay mechanics, before concluding with a section focused on the crowd states.
+
+\subsubsection{Gameplay Factors}
+
+The first non-demographic question prompts participants to rate their general enjoyment playing on a 1-10 Likert scale, as showcased in figure \ref{fig::general-enjoyment}. The result provided an average value just above 7/10, with a \gls{stddev} value of 2,49. Only three participants expressed an enjoyment level of 5 or lower, whilst 9 expressed enthusiasm higher or equal to 7.\\
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/GP_Enjoyment.png}
+	\caption[Participant Overall Enjoyment]{A bar graph showcasing participants' responses to the question "Please rate your general enjoyment whilst playing, all factors considered." on a 1-10 Likert scale. The results yielded an average value of 7.07, with \gls{stddev}=2,49.}
+	\label{fig::general-enjoyment}
+\end{figure}
+
+The next question was posed to establish the quality of the implemented mechanics, expressed on a 1-10 Likert scale, the results of which are displayed in figure \ref{fig::ball-handling}. The responses gathered an average value of 5,79, with a \gls{stddev} of 1,82.\\
+
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/GP_BallHandling.png}	
+	\caption[Participant Satisfaction with gameplay mechanics]{A bar graph showcasing participants' responses to the question "Please rate how natural the ball handling felt." on a 1-10 Likert scale, yielding an average value of 5,79, with \gls{stddev}=1,82.}
+	\label{fig::ball-handling}
+\end{figure}
+
+In order to assess potential frustrations with the \gls{ui}, participants were also asked to rate the comfort of their interactions with the various interfaces in-game on a 1-10 Likert scale. The responses displayed in figure \ref{fig::ui-comfort} gathered an average value of 7,71, with a \gls{stddev} of 1,71.\\
+
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/GP_UIComfort.png}
+	\caption[Participant Satisfaction with UI/UX]{A bar graph displaying participants' responses to the question "Please rate how comfortable the interactions with user interface were." on a 1-10 Likert scale, yielding an average value of 7,71, with \gls{stddev}=1,71.}
+	\label{fig::ui-comfort}
+\end{figure}
+
+In closing of this section, participants were invited to optionally leave comments on overall gameplay in an open text field.
+
+\begin{table}
+	\centering
+	\begin{tabular}{ p{0.3\textwidth} | p{0.1\textwidth} | p{0.6\textwidth}}
+		\bf Theme & \bf Count & \bf Illustrative Quote \\
+		\hline
+		Difficulty in directing the ball properly & 5 & "Except sometime where I didn't understand where the ball might land up, everything was great" \\
+	\end{tabular}
+	\caption[Open-ended responses to Crowds]{A table displaying the overarching themes of responses to the optional invitation to leave any comments about the gameplay.}
+	\label{tab::quest-gameplay-answers}
+\end{table}
+
+\subsubsection{Crowd Reactions}
+
+As an opener to the crowd questions, participants were asked to confirm or deny their satisfaction with the crowd state, to establish whether more, intermediate crowd states could have been considered. The results displayed in figure \ref{fig::crowd-final-state-satisfaction} produced a unanimous positive response.\\
+
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/CR_Satisfaction.png}
+	\caption[Participant Satisfaction with Final Crowd States]{A bar graph displaying participants' responses to the question "Do you feel like you have been able to reach a comfortable setting for the game's crowd?" between "Yes" and "No", yielding a unanimous vote for "Yes".}
+	\label{fig::crowd-final-state-satisfaction}
+\end{figure}
+
+After that, participants were asked to assess their perception of how frequently they were prompted to adjust the crowd, on a satisfaction scale from 1-9, with 1 indicating they had too few opportunities, 5 that they received an appropriate amount of opportunities, and 9 that they were prompted too often.\\
+The results, showcased in figure \ref{fig::crowd-prompt-frequency} produced an average value of 5,43, with a \gls{stddev} of 1,50.\\
+
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/CR_PromptFreq.png}
+	\caption[Participant Assessment of Crowd Update Prompt Frequency]{A bar graph displaying participants' responses to the question "How would you assess the frequency of opportunities to adjust the crowd population during matches?" on a 1-9 Satisfaction scale, yielding an average value of 7,71, with \gls{stddev}=1,71.}
+	\label{fig::crowd-prompt-frequency}
+\end{figure}
+
+Participants were then asked to reflect on the impact of the crowd on their concentration, first at their most comfortable setting displayed in figure \ref{fig::crowd-concentration-most}, then at their least comfortable setting displayed in figure \ref{fig::crowd-concentration-least}.\\
+The former yielded an average value of 5,14 with \gls{stddev} of 3,58. Notably, this graph features a stark split in distribution between the lower end of the scale (rating 1-3) and higher end (rating 7-10).\\
+At the least comfortable setting, participants' responses produced an average rating of 7, with a \gls{stddev} of 2,67.\\
+
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/CR_AffectMostComfy.png}
+	\caption[Participant Estimation of Crowd Effect at Most Comfortable Setting]{A bar graph displaying participants' responses to the question "How much do you believe your concentration on the game was affected by the crowd at your most comfortable setting?" on a 1-10 Likert scale, yielding an average value of 5,14, with \gls{stddev}=3,58.}
+	\label{fig::crowd-concentration-most}
+\end{figure}
+
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/CR_AffectLeastComfy.png}
+	\caption[Participant Estimation of Crowd Effect at Least Comfortable Setting]{A bar graph displaying participants' responses to the question "How much do you believe your concentration on the game was affected by the crowd at your least comfortable setting?" on a 1-10 Likert scale, yielding an average value of 7,00, with \gls{stddev}=2,67.}
+	\label{fig::crowd-concentration-least}
+\end{figure}
+
+Finally, participants were asked to rate how natural the crowd felt at their preferred configuration, in order to assess whether this resulted in any change in behaviour to grasp plausibility. The results, displayed in figure \ref{fig::crowd-nat}, produce an average value of 7,29, with a \gls{stddev} of 2,22.\\
+
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/CR_Nat.png}
+	\caption[Participant Assessment of crowd Naturalness]{A bar graph displaying participants' responses to the question "How natural did you find the crowd at your preferred configuration?" on a 1-10 Likert scale, yielding an average value of 7,29, with \gls{stddev}=2,22.}
+	\label{fig::crowd-nat}
+\end{figure}
+
+Closing off the questionnaire, participants were invited to leave any comments about the crowd in-game in an open text form, in particular how it caught their attention if at all. The responses to this question featured some overarching themes, detailed in table
+
+\begin{table}
+	\centering
+	\begin{tabular}{ p{0.3\textwidth} | p{0.1\textwidth} | p{0.6\textwidth}}
+		\bf Theme & \bf Count & \bf Illustrative Quote \\
+		\hline
+		Motivation from the crowd & 2 & "Having the crowd cheering just feels you up with a sense of pride and also further motivated me to have a better game!" \\
+		Explanation on crowd state preference & 3 & "I had level 1 setting throughout most of the experience which felt pretty nice, not distracting and gave a nice ambience".
+	\end{tabular}
+	\caption[Open-ended responses to Crowds]{A table displaying the overarching themes of responses to the optional invitation to leave any comments about the crowd, particularly how they caught participants' attention if at all.}
+	\label{tab::quest-crowd-answers}
+\end{table}
+
+\subsubsection{Observations}
+
+During gameplay, the researcher made observations based on the verbal and non-verbal behaviour exhibited by participants in action, helping to better frame some of the results, the findings were then summarised into a set of categories, displayed in table \ref{tab::observations}.\\
+Note that these observations are purely anecdotal to illustrate findings, rather than conclusive evidence brought forward in a standardised manner.
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|p{0.45\linewidth}|p{0.45\linewidth}|}
+		\hline
+		\bf Recorded Observation & \bf Study Record \\
+		\hline
+		\hline
+		Reacts positively to crowd's cheering (clapping, nodding, verbal) & 5 participants \\
+		\hline
+		Got angry at specific spectators & 4 participants \\
+		\hline
+		Taunted the crowd after scoring points & 3 participants \\
+		\hline
+		Were actively distracted from ongoing play by the crowd & 2 participants \\
+		\hline
+		Expressed a history of, or concerns about cyber-sickness & 3 participants \\
+		\hline
+		Took breaks during gameplay & 2 participants \\
+		\hline
+	\end{tabular}
+	\caption[Observations overview]{A table showcasing some notable traits observed in participants' behaviour during gameplay, alongside the amount of participants (out of the total 14) exhibiting that trait.}
+	\label{tab::observations}
+\end{table}
+
+\section{Discussion}
+
+In Chapter \ref{chap::design-3}'s section proposing the research aims, three main hypotheses were proposed, which will be leveraged as angles of analysis of the results. Particularly salient, standalone findings and correlations will be outlined in a separate subsection as well.
+
+\subsection{Simulation suitability to the research task}
+
+Presence in \gls{vr} is enabled by a successful \gls{ux} in the app, without which users will otherwise be reminded too often of the physical environment they are supposed to escape sensorially.\\
+
+When asked about general enjoyment, we find that participants overall responded positively, with an average of approximately 7 out of 10 points given, and nine out of 14 votes equal or greater than the mentioned average, against only 3 votes of 5/10 or lower.\\
+Of the other two components queried, the mechanics doubtlessly provided the bigger challenge to \gls{ux}, with an average rating of 5,79/10 in satisfaction, compared to the 7,71/10 average vote for comfort and intuitiveness in \gls{ui} interactions.\\
+One last potential factor of frustration apart from the crowd could have been the frequency of prompting, although the average of 5,43 speaks against this question, with exactly half the participants voting that the frequency was 'just right'.\\
+
+\begin{figure}
+	\centering
+	\begin{tabular}{c}
+		\includegraphics[width=0.6\textwidth]{figures/GP_BallHandling_x_LowEnjoyment.png} \\
+		\includegraphics[width=0.6\textwidth]{figures/GP_UIComfort_x_LowEnjoyment.png} \\
+		\includegraphics[width=0.6\textwidth]{figures/CR_PromptFreq_x_LowEnjoyment.png} \\
+	\end{tabular}
+	\caption[\gls{ux} comparison between unamused participants and others]{Three graphs comparing the \gls{ux} of participants that scored $\leq 5$ on overall enjoyment (in dark blue) against the rest of the participant pool (in light blue), in satisfaction with, from top to bottom, gameplay mechanics, \gls{ui} Interactions, and Crowd Update Prompt Frequency.}
+	\label{fig::enjoyment-ux-comparison}
+\end{figure}
+
+Figure \ref{fig::enjoyment-ux-comparison} showcases the ratings placed by dissatisfied participants in the other non-crowd-related categories, showing that all three were among the most unhappy with the gameplay mechanics, 2 of the three were also the least satisfied with the user interface. The third graph representing the prompt frequency shows that 2 of the three dissatisfied users also scored off-centre for this metric, suggesting this might also have affected satisfaction somewhat.\\
+Other than the \gls{ui} however, there are often also users who were relatively satisfied with the experience joining critique of the mechanics and prompting, meaning that there were certainly also other factors at play, that were regretfully neither recorded in the quantitative questions, nor mentioned in the feedback forms.\\
+
+\begin{figure}
+	\centering
+	\begin{tabular}{c}
+		\includegraphics[width=0.6\textwidth]{figures/GP_BallHandling_x_VRExp.png} \\
+		\includegraphics[width=0.6\textwidth]{figures/GP_UIComfort_x_VRExp.png} \\
+		\includegraphics[width=0.6\textwidth]{figures/CR_PromptFreq_x_VRExp.png} \\
+	\end{tabular}
+	\caption[\gls{ux} comparison between participants by prior experience of \gls{vr}]{Three graphs comparing the \gls{ux} of participants by familiarity with \gls{vr} technology, in satisfaction with, from top to bottom, gameplay mechanics, \gls{ui} Interactions, and Crowd Update Prompt Frequency. In rising order of familiarity, participants are indexed in purple (no prior experience), light blue (occasional trials), orange (somewhat regular use), and dark blue (familiar with the technology).}
+	\label{fig::vrExp-ux-comparison}
+\end{figure}
+
+A relationship with prior experience in \gls{vr} was inspected, as shown in figure \ref{fig::vrExp-ux-comparison}, however no real trends have been detectable between different groups and sub-groups, and the data sample is not large enough overall to make any authoritative claims in this direction either way.\\
+
+So far the crowd has not yet been mentioned for this section, as it receives its own dose of scrutiny, since their performance is the central point of interest for the next angle of scrutiny. Of course, the crowd may have contributed to (dis-)satisfaction, however. Overall, it would seem the majority of the players found the experience suitable, with the major field of improvement being levied at the gameplay mechanics.
+
+\subsection{Crowd plausibility and effects on users}
+
+Figure \ref{fig::crowd-concentration-most}, depicting the perceived effect of the crowd, or its absence, on participants, provides one of the more interesting graphs. At their most comfortable setting, users were either unbothered by the crowd (score $\leq 3$), or very affected by it (score $\geq 7$) at a perfectly even split. No participant rated the crowd as having a somewhat-ish effect on them in the mid-range of this chart.\\
+When compared with figure \ref{fig::crowd-concentration-least} which answers the same question on participants' least comfortable crowd setting, 10 of the 14 participants have voted a high level of effect, whilst 2 stated being relatively unbothered in turn.\\
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/CR_AffectLeast_x_HighAffectMost.png}
+	\caption[Crowd effect on concentration at least comfortable level, compared between people who scored high vs low at the most comfortable setting]{A bar graph displaying the perceived effect of the crowd at participants' least comfortable setting, setting those who declared indifference at the most comfortable configuration (in light blue) apart from those who declared being affected by the crowd (in dark blue).}
+	\label{fig::crowd-concentration-least-vs-most}
+\end{figure}
+
+Figure \ref{fig::crowd-concentration-least-vs-most} showcases the votes of people who declared being very affected by the crowd at their most comfortable level, against those who declared being unaffected.\\
+All participants who were affected by the crowd at their most comfortable setting were also very affected at their least comfortable configuration, whilst a majority of those who signalled disinterest in the crowd stated being affected at their least comfortable configuration.\\
+
+Due to the low sample size, this would require further research to confirm, however this finding suggests there are two schools of thought regarding the crowd, where some would enjoy a crowd that is either absent, or that they can tune out, whilst others enjoy having the crowd as a stimulant of sorts, be it a competitive or taunting stimulant, or a general positive sentiment being coasted on, as may be suggested from the observations outlined in table \ref{tab::observations}.\\
+
+However these observations meet the biggest limitations of this questionnaire specifically, as well as of the questionnaire format in general, according to \cite{murcia-2020-evaluating}, which is unsuited to pick up factors influencing the responses measured in the questionnaire.\\
+The question of whether a participant was 'affected' by the crowd should have been framed as a pendulum, where there is positive and negative affect, for example a player being lifted by the cheering, vs the cheering being perceived as mocking or applying pressure to the user. In this scenario, there is also the question of individual perception. For example, a highly competitive user could have considered themselves comfortable in an adversarial scenario where they can taunt the crowd with good performances.\\
+Furthermore the presence of users declaring to be relatively unaffected in both scenarios also suggests there may be a positive and a negative lack of effect, for example a comfortably quiet crowd the user can tune out, vs one the player wishes could be more active or supportive for example.\\
+
+Crowd authenticity or naturalness also scored relatively high with its average of 7,29, despite the spectators being variations of the same 7 models with looping animations lacking variety.\\
+
+Overall, the fact many users recognised some effect of the crowd on their performances and concentration, and overall determined the crowd to be fairly authentic, it may be considered sufficiently plausible, although the reasons for the outliers would have been interesting to understand on a deeper level.\\
+
+\subsection{Comfort of crowd states}
+
+The unanimous vote of 'yes' on the question of whether the users were able to reach a comfortable crowd setting, displayed in figure \ref{fig::crowd-final-state-satisfaction}, stands in support of this argument, as well as the fact that, in the transition matrix (table \ref{tab::transition-matrix-percent}), the act to remain within a given state was always the first or second in order of preference, alongside transitions directly one state up or down where applicable.\\
+A nuance to this finding would be the distribution of preference across all states, meaning that maybe the difference was not stark enough to really make an impact in one direction or another. The fact that the choice to stay within any given state did not dominate either also clouds this finding somewhat.\\
+
+\subsection{Interesting, independent findings and notes}
+
+In the distribution of state transition count (figure \ref{fig::n-state-transitions}), there is a notable outlier in one participant having only explored 4 states before ending their session. They were the only participant to have played before the mandating of a minimum play time of 20 minutes. Other than this, the main variance in state changes will have been the speed of play, where faster progressing points would prompt more frequently, as well as the time spent in free play.\\
+
+The relatively uniform distribution of state preference (see table \ref{tab::state-pref-table}) was a fairly surprising finding, as many expressed that level 0 was eerily quiet, or that level 3 was too loud during gameplay.\\
+Also, the uniformity of state transitions between levels, with no transition achieving a proportion higher than 40\% of transitions from a given starting state - the dominance of (0, 1) from state 0 being an outlier - alongside this diverse expression of preference makes it difficult to suggest any specific state as a good, or best practise. If one is to follow the most followed path from every state, one ends up incrementally at level 3 and staying there, with (0, 1) - (1, 2) - (2, 3) - (3,3) the most likely transition in every state, there could be an argument made for level 3, although it only ranks tied 2$^{\text{nd}}$ in inbound transitions, behind level 1.\\
+
+Many participants were pleased with the ability to turn physically rather than in-game, particularly participants who expressed concerns relating to cyber-sickness when asked before starting proceedings.\\
+
+A particularly noteworthy observation that no participant unfortunately worded in the open feedback rounds, was that several players responded to various crowd events. 5 responded positively to the crowd cheering when they scored, either nodding towards the crowd and making celebratory arm gestures.\\
+Some participants also responded fiercely to more negative events. For instance, a certain spectator would repeatedly make provocative gestures, which prompted some angry reactions for some, and even some forms of taunting after scoring 'despite the adversity'. As this results solely from observations, these reports will not be used for more than showcasing how plausible the crowds were to some participants (those not under \gls{psi} would dismiss the crowd and avert reactions, or react to the perceived inauthenticity rather than the happenings themselves), however they are worth outlining as candidates for further research as well.
 
 \section{Summary}
 
-Every chapter aside from the first and last chapter should conclude with a summary that presents the outcome of the chapter in a short, accessible form. 
+Over this chapter, the various findings of the user study have been presented, with overall fairly positive assessments of the \gls{ux} of the game used to perform the task, whilst the declared effects of crowd on participant's concentration and, by extension, performance, were also notable through, the split between users in associating comfort with a crowd they can ignore, and users associating it with a crowd that affects them deeply.\\
+
+The hypotheses established to build towards the overarching question this study tasks itself with, were all confirmed, albeit at various levels of nuance, such as the frustration around the gameplay mechanics for the suitability of the game in maintaining user presence and promoting \gls{pi} and \gls{psi}, or the impossibility to explain the underlying factors behind users' description of being 'affected' by the crowd.\\
+
+Therefore, the question of whether different levels of virtual crowd presence affect perceived plausibility in a VR beach-volleyball environment, can be answered positively, but with little authority due to the size of the user study, and the many nuances in its methodology and results.

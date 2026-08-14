@@ -34,12 +34,12 @@
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[a4paper, 12pt, oneside]{report}         %% LaTeX2e document.
-\usepackage {tcdthesis}              %% Preamble.
+\usepackage{tcdthesis}              %% Preamble.
 
 \mastersthesis                       %% Uncomment one of these; if you don't
 % \phdthesis                         %% use either, the default is \phdthesis.
 
-\thesisdraft                         %% Uncomment this if you want a draft
+%\thesisdraft                         %% Uncomment this if you want a draft
                                      %% version; this will print a timestamp
                                      %% on each page of your thesis.
 
@@ -120,6 +120,9 @@
 \usepackage{listings}
 \usepackage{float}
 \usepackage[acronym]{glossaries}
+\usepackage{fancyhdr}
+\usepackage{pdfpages}
+\usepackage{tabularx}
 
 %%------------------------------------------------
 %% Listing macros
@@ -161,6 +164,7 @@
 \end{figure}
 }
 
+\makeglossaries
 
 \newacronym{vr}{VR}{Virtual Reality}
 \newacronym{ivr}{iVR}{immersive Virtual Reality}
@@ -171,6 +175,8 @@
 \newacronym{psi}{Psi}{Plausibility Illusion}
 \newacronym{ui}{UI}{user interface}
 \newacronym{vrmp}{VRMP}{Virtual Reality MultiPlayer}
+\newacronym{stddev}{$\sigma$}{standard deviation}
+\newacronym{ux}{UX}{User Experience}
 
 \begin{document}                                  %% BEGIN THE DOCUMENT
 
@@ -183,7 +189,10 @@
 %\hypersetup{pageanchor=true}
 
 \begin{thesisabstract}                            %% the abstract for your thesis
-...ABSTRACT...
+With the rising availability of commercial-grade, high performance \gls{vr} devices, its ability to reliably reproduce scenarios that would otherwise be expensive to gather and repeat is of increasing interest to athletes in competitive sport. The Illusion of Plausibility is a central, but brittle component to maintaining users immersed, and by extension both motivated and performant in their virtual environment and task.\\
+This study aims to contribute towards increasing its adoption to training regimes by looking into whether variations in crowd presence affect this factor in an interactive \gls{vr} beach volleyball simulation, led by the question of whether different levels of virtual crowd presence affect perceived plausibility in a \gls{vr} beach-volleyball environment.\\
+This study makes use of a purpose-built \gls{vr} game allowing its users to respond to serving and reactive scenarios, thereby putting fundamental skills of the sport to the test. In this interactive game, 14 participants adjust the crowd density to their liking across four distinct settings. In this user study, a history of their adjustments was inspected, alongside their chosen preferred configurations and their responses to a questionnaire, for any hints on the ways their concentration was affected by the crowd during gameplay.\\
+The study found that, while participants were able to choose a crowd density they found comfortable, and were confident in their choice, the notion of 'comfort' was vague enough to distribute preference across all four presets, with little supplemental information and insights to make out the underlying symptoms driving this decision.
 \end{thesisabstract}
 
 %\thesisdedicationpage                            %% Generate the dedication page.
@@ -202,6 +211,7 @@
 \tableofcontents                                  %% Generate table of contents.
 \listoftables                                     %% Uncomment this to generate list of tables.
 \listoffigures                                    %% Uncomment this to generate list of figures.
+\printglossary[type=\acronymtype, title={Acronyms}]
 
 %%
 %% Include thesis chapters here...
@@ -223,7 +233,12 @@
 \addcontentsline {toc}{chapter}{Appendices}       %% Force Appendices to appear in contents
 \begin{appendix}
 \include{appendix1}
-\include{appendix2}
+\pagebreak
+\chapter*{Appendix B}
+\includepdf[pages=-]{pil.pdf}
+\chapter*{Appendix C}
+\includepdf[pages=-]{icf.pdf}
+\include{appendix4}
 \end{appendix}
 
 

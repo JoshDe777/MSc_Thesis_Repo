@@ -13,6 +13,12 @@ The last two are games for a different sport altogether, tailored for basketball
 
 This researcher neither had the skills nor the time to attempt to mod either of these games for the purposes of this project, therefore the decision was taken to make a volleyball game from scratch using a conventional game engine.
 
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/volleggball.jpg}
+	\caption[Volleggball game image]{An image showcasing the game 'Volleggball' \cite{volleggball} in action.}
+	\label{fig::volleggball}
+\end{figure}
 
 \section{Overview of the Solution}
 
@@ -26,11 +32,11 @@ Over the next few pages, the various components of the projects will be outlined
 \subsection{Unity's VR[MP] template and Scene Setup}
 
 This project leverages Unity's \gls{vrmp} package, which leverages built-in implementations of OpenXR, an API enabling the use of input from various types of \gls{vr} hardware, as well as Unity's XR Plugin Management package, to provide a wide range of features and prefabs - ready made game objects developers can use immediately without dependency - that are fundamental to any \gls{vr} application.\\
-This package specifically provides a full implementation of movement, both continuous along the ground using a directional joystick on the left controller, and teleportation to a point aimed from the right controller whilst holding a focused button. Including both modes of transport is advantageous, for the former's ability to navigate all reachable terrain, whilst teleportation is an effective mode of virtual transportation that notably can negate the potential for cyber-sickness, albeit at a relative loss in presence \cite{caputo-2023-eyes}. \\
+This package specifically provides a full implementation of movement, both continuous along the ground, and teleportation. Including both modes of transport is advantageous, for the former's ability to navigate all reachable terrain, whilst teleportation is an effective mode of virtual transportation that notably can negate the potential for cyber-sickness, albeit at a relative loss in presence \cite{caputo-2023-eyes}. \\
 A functional virtual jumping motion is also included in the package, although participants mentioning a history of cyber-sickness were discouraged from using this feature.\\
-From the packaged prefabs, this project also leverages the implementation of grab interactables, enabling users to grab the volleyball for serving, as well as the visualisation of a ray for UI interactions. Finally, the avatar and linkage of controllers were imported from the template's XR Rig prefab, which included the targeting of the virtual camera to the players' display, and the tracking of controller position and rotation within the scene as well.\\
+From the packaged prefabs, this project also leverages the implementation of grab-interactables, enabling users to grab the volleyball for serving, as well as the visualisation of a ray for UI interactions. Finally, the avatar and linkage of controllers were imported from the template's XR Rig prefab.\\
 
-Regarding the visual environment, the raw terrain was generated procedurally in and exported from Blender, following a Youtube tutorial by \cite{procedural_terrain_blender} for the base setup. The animated water texture as well as beach decoration assets were sourced from the "Tropical Beach URP" \cite{tropical_beach_assets} package, whilst the volleyball-specific assets, i.e. the net and ball, alongside associated textures, were sourced from the "Volleyball Set 1" \cite{volleyball_assets} package, both purchased from the Unity Asset Store.\\
+Regarding the visual environment, the raw terrain was generated procedurally in and exported from Blender, following a YouTube tutorial by \cite{procedural_terrain_blender} for the base setup. The animated water texture as well as beach decoration assets were sourced from the "Tropical Beach URP" \cite{tropical_beach_assets} package, whilst the volleyball-specific assets, i.e. the net and ball, alongside associated textures, were sourced from the "Volleyball Set 1" \cite{volleyball_assets} package, both purchased from the Unity Asset Store.\\
 
 \subsection{Stadium Crowd Generator}
 
@@ -38,19 +44,17 @@ Having set up an appealing scene, the stakes for the crowd were high. \gls{vr} a
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/placeholder.png}
-	\caption[Stadium Crowd Generator Showcase]{A screenshot of one of the stands, featuring a diversity of spectators randomly placed in.}
+	\includegraphics[width=\textwidth]{figures/crowd-screenshot.png}
+	\caption[Stadium Crowd Generator Showcase]{A screenshot of a generated stand, featuring a diversity of spectators randomly placed in. Each different spectator prefab has a distinct shirt colour, and an assigned default animation which is repeated indefinitely.}
 	\label{fig::crowd-showcase}
 \end{figure}
 
-Against all hope, the Unity Asset store actually produced a product that checked all of the boxes, with the "Procedural Crowd Generator" plugin (\cite{stadium_crowd_generator}). This plugin builds - prior to runtime, so the procedural aspect doesn't eat away at loading time - a stand featuring a custom amount of rows and columns of spectators, varying between 7 variants of humanoid spectator prefabs with a decent diversity in both gender and ethnicity, as showcased in figure \ref{fig::crowd-showcase}. And importantly, every part of the plugin, i.e. meshes and animations, came with performance optimisation in mind. After running a few tests, the game featuring two separate stands of 8x22 spectators ran without a dent in performance, earning its spot in the project, sparing a lot of effort that would otherwise have been required to reach any level close to this.\\
+In the Unity Asset Store, the "Procedural Crowd Generator" plugin (\cite{stadium_crowd_generator}) is available for purchase, and meets many requirements outlined above. This plugin builds - prior to runtime, so the procedural aspect doesn't eat away at loading time, meaning all participants experienced the same exact visual crowd - a stand featuring a custom amount of rows and columns of spectators, varying between 7 variants of humanoid spectator prefabs with a decent diversity in both gender and ethnicity, as showcased in figure \ref{fig::crowd-showcase}. And importantly, every part of the plugin, i.e. meshes and animations, came with performance optimisation in mind. After running some tests, the game featuring two separate stands of 8x22 spectators ran without a dent in performance, earning its spot in the project, sparing a lot of effort that would otherwise have been required to reach any level close to this.\\
 
-The plugin was not, however, entirely perfect for the purpose, prompting a few small adjustments that were thankfully not a mess to add, as the source code running the plugin came with the package. The first adjustment was randomising the generated seating, as the plugin would simply rotate through the spectator variations when assigning each character. Instead, for every seat, a pseudo-randomly generated number would determine which prefab was chosen.\\
-The second amendment to the crowd plugin was to dynamically adjust crowd density. The initial hope was that the built-in "distribution" setting, changeable in-editor between "Standard", "Easy", and "Compact", at rising levels of density, could be leveraged directly, with the addition of an 'empty' setting that would remove the crowd altogether. Unfortunately, that distribution did not trigger a re-generation of the crowd when adjusted during runtime. Consequently, the spectator prefabs were assigned a specific tag, which would enable a new CrowdManager script to reference all spectators when starting play, to then disable the desired proportion of characters when changing the crowd density for the purpose of the research study.\\
+The plugin was not, however, entirely perfect for the purpose, prompting a few small adjustments in the source code running the plugin that was provided with the package. The first adjustment was pseudo-randomising the generated seating, instead of letting it iterate through the prefabs with an \verb|i%prefabs.Count| selector, which produced a crowd with visible patterns, which would have affected \gls{psi} perception negatively.\\
+The second amendment to the crowd plugin was to dynamically adjust crowd density. Considering the system did not accommodate for online re-generation of the crowd at different density levels, the spectator prefabs were assigned a specific tag, which would enable a new CrowdManager script to reference all spectators when starting play, to then disable the desired proportion of characters when changing the crowd density for the purpose of the research study.\\
 
-The added, small benefit of the crowd generation being done during development is that all participants experienced the exact same crowd for every game, signifying the elimination of any potential bias from the proximity of different spectators between participants.\\
-
-The final touch to participants was to add an audio track, which did not come with the plugin. The goal was to, for every crowd level featuring at least one participant, gather at least two different audio tracks for the overall background, that would loop, and one audio track for cheering whenever a point was scored.\\
+The final touch to participants was to add an audio track, which did not come with the plugin. The goal was to, for every crowd level featuring at least one participant, gather at least two different audio tracks for the overall background, that would loop, and one audio track for cheering whenever a point was scored. A sound effect for general beach audio was also played regardless of scenarios for level 0, where no crowd was present.\\
 Audio tracks were sourced from pixabay.com from sounds marked as royalty-free. 
 
 \subsection{Physics and Ball Properties}
@@ -61,48 +65,72 @@ The implementation itself is limited to adding the ball prefab containing the me
 
 In order to explain these, a quick exposé on Unity's physics system (\cite{unity-physics} is due.\\
 
-For every object desired to have a physical presence in the virtual environment, there are two components to consider: the Collider, which represents the shape and [physical] presence type of the object, and the Rigidbody representing the physical properties of the object, i.e. mass, the use of gravity, or linear and angular damping to simulate friction.\\
-Colliders can separate the type of collision between two objects: if a collider is marked as a trigger, it does not need a Rigidbody component, and will not trigger physical collisions with objects with a Rigidbody. Instead, they will produce OnTrigger events, which are mostly used to detect objects passing in a certain area.\\
-If a collider is not marked a trigger, it should be paired with a Rigidbody to simulate physical collisions, and will trigger OnCollision events when colliding with another physics body. The rigidbody can disable gravity, and can also be designated as 'kinematic', which will exempt its object from external influence. Any impulse, collision, or force applied to it is simply discarded, and for all intents and purposes, the object is unmovable through the physics engine, although its position and rotation can be manually overwritten using its Transform component.\\
+For every object desired to have a physical presence in the virtual environment, there are two components to consider: the Collider, which represents the , and the Rigidbody representing .\\
+Colliders represent the shape and [physical] presence type of the object, and separate the type of collision between two objects: if a collider is marked as a trigger, it does not need a Rigidbody component, and will not trigger physical collisions with objects with a Rigidbody. Instead, they will produce OnTrigger events, which are mostly used to detect objects passing in a certain area.\\
+If a collider is not marked a trigger, it should be paired with a Rigidbody to simulate physical collisions, and will trigger OnCollision events when colliding with another physics body. This component contains the physical properties of the object, i.e. mass, the use of gravity, or linear and angular damping to simulate friction.\\
 
 The PhysicsWorld defines core and default values for e.g. gravity calculations, which default to natural values. In the case of Gravity in 3D, it is defined as a 3D-vector defaulting to (0, -9.8, 0), representing a pull of 9.8N straight downwards, applied to every object with a Rigidbody component with gravity enabled.\\
 
-When they do not collide, objects with rigidbodies move through the environment based on their velocity, a 3D-vector representing their movement speed from one frame to the next in units per second. This velocity is adjusted to reflect the influence of gravity and simulated friction, but the aftermath of collisions with other bodies.\\
+When they do not collide, objects with rigidbodies move through the environment based on their velocity, a 3D-vector representing their movement speed from one frame to the next in units per second. This velocity is adjusted to reflect the influence of gravity and simulated friction, but also the aftermath of collisions with other bodies.\\
 Inorganically, developers can also affect a rigidbody's flight path by adding raw impulses or forces through code, which are internally updated by unity algorithms based on the type of force applied. Velocity can also simply be overwritten, though that is often undesirable due to it producing unnatural behaviour.\\
 
-The collision solvers run at different settings depending on required accuracy and granularity, defaulting to the lightest of configurations, the discrete solver which only considers the position in a given frame. The issue with discrete collision solving is, that objects travelling fast enough to theoretically pass through a given object between two frames would not trigger any collisions, and therefore lead to faulty behaviour. The alternative settings, "continuous", "continuous dynamic", and "continuous speculative" increase the accuracy of collision detection, costing performance as compensation. Due to the low amount of objects requiring collision detection - the ball, ground, and invisible boundaries - and the absence of performance issues, the most expensive solver was tested, and adopted after playtests did not result in noticeable performance drops.\\
+The algorithms used to estimate collisions, known as collision solvers, were set to the highest level of accuracy for the ball and ground to avoid scenarios where a fast travelling ball would fly through the ground and missed as a collision.\\
+
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.6\textwidth]{figures/ball-collider.png}
+	\caption[The ball and its associated collider]{A showcase of the textured volleyball prefab from a top-down view, with its collider boundaries displayed in green wiring. Ball mesh and texture are from the package \cite{volleyball_assets}.}
+	\label{fig::ball-collider}
+\end{figure}
 
 Now armed with a grasp of Unity's physics simulation system, this last paragraph will outline the material properties governing the ball's physics behaviour.\\
-Mirroring a volleyball's average mass of approximately 230g, the ball's weight is set to 0.23 mirroring Unity's default weight unit representing kg. Linear and angular damping, or friction in the air, were left at the default values of 0.1 (Unity doesn't provide a real unit in its documentation \cite{unity-damping} for comparison, and flight behaviour looked realistic enough), and the material properties were mostly adjusted for behaviour interacting with the ground, as hand collisions were later discarded as will be explained in section \ref{subsec::hitting-mechanics}, and material properties associated with the ground didn't seem to propagate to the ball in first tests. Static and dynamic friction, representing resistance to sliding and spinning motion respectively were left at the default values of 0.6, while bounciness was lowered to 0.2 - or 20\% of potential on impact - to mirror and slightly exaggerate the reduced, but not nonexistent bounce on sand.
+Mirroring a volleyball's average mass of approximately 230g, the ball's weight is set to 0.23 mirroring Unity's default weight unit representing kg. Linear and angular damping, or friction in the air, were left at the default values of 0.1 (Unity doesn't provide a real unit in its documentation \cite{unity-damping} for comparison, and flight behaviour looked realistic enough), and the material properties were mostly adjusted for behaviour interacting with the ground, as hand collisions were later discarded as will be explained in section \ref{subsec::hitting-mechanics}, and material properties associated with the ground didn't seem to propagate to the ball in first tests. Static and dynamic friction, representing resistance to sliding and spinning motion respectively were left at the default values of 0.6, while bounciness was lowered to 0.2 - or 20\% of potential on impact - to mirror and slightly exaggerate the reduced, but not non-existent bounce on sand.
 
 \subsection{Game Rules}
 
 \noindent\textbf{\underline{Point Recognition:}}
 
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/court-top-down.png}
+	\caption[Playing court bird's eye view]{A screenshot from above the playing surface, showcasing the stands beside the court. The blue rectangle in the middle defines the limits of the playing area, while the net in the middle separates the two court sides. Scoreboards are displayed at either end of the court and above one of the stands for visibility.}
+	\label{fig::court}
+\end{figure}
+
 The fundamental game rule of volleyball is point recognition, i.e. recognising when an object collides with an obstacle not considered part of the play. For this purpose, the ground was beset with a kinematic collider (not impacted by direct physics influence), tagged as 'Ground' for separation from other colliders. To recognise whether the ball landed inside, or outside the court, a pair of transforms was placed on the corners of the playing field - at the outside of the blue line, which was aligned so its edges went on straight in x and z-direction. i.e. the plane could be represented using a point $P$ at any corner as $P + a*(1, 0, 0) + b*(0, 0, 1)$, with $a, b$ lower or equal in magnitude than the length of a given side.\\
 With the recognition points at diagonally opposed corners of the pitch, this gave a pair of boundaries $(x_{min}, z_{min}),\quad(x_{max}, z_{max})$. If the collision point between the ball and the ground is within these bounds, i.e. $x_{min} \leq x \leq x_{max} \wedge z_{min} \leq z \leq z_{max}$, then the ball is considered in bounds, otherwise it is out of bounds. The y coordinates representing elevation are not relevant for point handling.\\
 
-If the ball is in bounds, however, it is also important to determine which side of the court it landed on. Given the court stretched in z-direction, the net's z-position was noted, and used as a discriminator. Given the net was befitted with a collider, it was technically impossible for the ball to land exactly on that z coordinate, so if $z > z_{net}$, the ball landed on courtside A, assuming A was on the side of the net with greater z values - the discriminator was set using a bool value determining whether Team 1 was occupying courtside A or not. This simple comparison-based point recognition system is very lightweight and practical, compared to relying on multiple, potentially conflicting colliders for different pitch sides.\\
+If the ball is in bounds, however, it is also important to determine which side of the court it landed on. Given the court stretched in z-direction, the net's z-position was noted, and used as a discriminator. Given the net was befitted with a collider, it was technically impossible for the ball to land exactly on that z coordinate, so if $z > z_{net}$, the ball landed on court side A, assuming A was on the side of the net with greater z values - the discriminator was set using a boolean value determining whether Team 1 was occupying court side A or not. This simple comparison-based point recognition system is very lightweight and practical, compared to relying on multiple, potentially conflicting colliders for different pitch sides.\\
 
 The ball was given a boolean parameter \verb|LastTouch|, which stored whether the player's team - always Team 1 on the scoreboard - touched the ball last, or not. If the ball landed out of bounds, the point is given to the team that did not touch the ball last, and if it was in play, Team 1 gets the point if it last touched a ball landing in the opposing team's half, otherwise the point went to Team 2.\\
 
 \noindent\textbf{\underline{World Boundaries:}}
 
-No virtual world is infinite, given the existence of some level of hardware and computational limits for every possible device on the planet. It is therefore good practise to implement some movement barriers the player cannot bypass, to avoid the ultimate punishment of falling through the environment, should they reach a place without any solid ground to navigate on.\\
-The simplest solution which requires no budget at all, and comparatively little implementation time, is to add physical walls that do not render visually, only existing with a presence in the Physics System.\\
-Therefore, an invisible barrier was set around the perimeter of the stadium, barring the player from going into the stands, and further towards the shore than the scoreboards above the palm trees. This barrier also blocks the ball, which resulted in collisions with this barrier being considered a kill of the ball as well, as they would represent an obstacle that prevents the ball from flying out indefinitely.\\
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/court-bounds.png}
+	\caption[Movement Boundary Visualisation]{A top-down view of the court showcasing the movement boundaries as thick walls, that are not rendered during gameplay to preserve the scenery. The walls surround the playing surface, preventing players from accessing the stands or reaching the shoreline.}
+	\label{fig::court-bounds}
+\end{figure}
 
-The scenario of the ball flying out indefinitely could still kick in on a misunderstanding, as a point would, until now, only be granted if a collision with an object tagged as 'Ground' is recorded. To patch this scenario, a trigger collider encompassing the stadium was fitted, where upon exiting this bounding box, the ball would also be considered out of bounds and killed, as it was unsalvageable.\\
+To prevent players from straying from the game environment, a set of four walls visualised in figure \ref{fig::court-bounds} is introduced, which are not rendered during gameplay, and therefore serve as invisible walls. To reduce the time necessary for a ball to register as killed if it was to fly out of bounds, a boundary trigger collider was also added, that marks the ball as dead upon exit.\\
 
 \noindent\textbf{\underline{Ball Lifetime:}}
 
-After a point ends, a short waiting period is set, whereafter the previous ball is destroyed, to reappear on the pitch, ready to be played. For every point except the very first, which will always be a serve, a pseudo-random number generator rolls a dice - random integer in the range $[0, 3[$ to determine the type of start to the next rally. If the number is larger than 0 (or equal to either 1 or 2), the ball would simulate being played in by the opposing team, otherwise it would be placed at a serving position for the player to grab at their leisure.\\
+After a point ends, a short waiting period is set, whereafter the previous ball is destroyed, to reappear on the pitch, ready to be played. A flow chart of this process is showcased in figure \ref{fig::ball-lifetime}. For every point except the very first, which will always be a serve, a pseudo-random number generator rolls a dice - random integer in the range $[0, 3[$ to determine the type of start to the next rally. If the number is larger than 0 (or equal to either 1 or 2), the ball would simulate being played in by the opposing team, otherwise it would be placed at a serving position for the player to grab at their leisure.\\
 If the ball is played in, a notification reading "Incoming!" will be shown to the player, and the ball appears at a random point above the net, and is calculated to aim above the player's head, at a speed calculated so that it will reach the player within a random timespan $T\in[1.2, 1.5]$ seconds.\\
+
+\begin{figure}[!h]	
+	\centering	
+	\includegraphics[width=0.8\textwidth]{figures/ball-lifetime.png}
+	\caption[Ball lifetime flow chart]{A flow chart visualising the process of bringing the ball in play at the start of new rallies. The Serving selector determines the choice at random, with 1/3 chance to serve, and 2/3 chance to play the ball in.}
+	\label{fig::ball-lifetime}
+\end{figure}
 
 This was done by establishing the x-z direction as a simple vector from the ball to the player, then calculating the y velocity making up the ball's curve, in order to reach the target position in time $T$. This calculation for the y velocity was ideated with assistance of the AI agent Claude to speed up the establishment of a viable function. The function reads as follows, with $g$ representing the gravity in y-direction in Unity's Physics Engine, and $\overrightarrow{dir}$ the 3D vector from the ball to the player ($\overrightarrow{dir} = \overrightarrow{player} - \overrightarrow{ball}$): \[y_{vel} = dir.y - \frac{g * T^2}{2}\], citing a kinematic equation used in fundamental ballistics, $s = \frac{gt^2}{2}$, attributed to Galileo Galilei.\\
 The overall resulting vector $\overrightarrow{v} = (dir.x, y_{vel}, dir.z)$ was then divided by $T$ to add in the time constraint. This meant that the ball would travel faster the further the player was from the ball's position, encouraging players to move further up field for these rallies.\\
 
-If the ball is presented for a serve, the ball is made grabbable by activating its XRGrabInteractable component, allowing users to take a hold of it. Once the ball is released, the ball is sent upwards by a constant force, in order to mimick a serving throw. Attempts to implement this serving throw as an actual continuation of hand movements resulted in jerky throws that often went out of reach, and away from expected directions due to the inherent difficulties in estimating throwing directions in \gls{vr} (\cite{zindulka2020performance}). Therefore velocity was straight overwritten to an upwards vector $(0, 1, 0)$, scaled by a serveThrowForce parameter in-editor adjusted through trial and error, yielding a value of 7,5.\\
+If the ball is presented for a serve, the ball is made grabbable by activating its XRGrabInteractable component, allowing users to take a hold of it. Once the ball is released, the ball is sent upwards by a constant force, in order to mimic a serving throw. Attempts to implement this serving throw as an actual continuation of hand movements resulted in jerky throws that often went out of reach, and away from expected directions due to the inherent difficulties in estimating throwing directions in \gls{vr} (\cite{zindulka2020performance}). Therefore velocity was straight overwritten to an upwards vector $(0, 1, 0)$, scaled by a serveThrowForce parameter in-editor adjusted through trial and error, yielding a value of 7,5.\\
 The XRGrabInteractable component is disabled on release, to ensure players don't catch the ball during gameplay.\\
 
 Once the ball is killed, i.e. as soon as it collides with the ground or any obstacle, the ball rolls on naturally for a few seconds, ignoring any collisions with the player, before being destroyed by the game managing script.\\
@@ -124,7 +152,7 @@ The following attempt was to then explicitly pass on the impact through a trigge
 Several attempts were made to gather this information directly in-engine, such as using the raw difference in position between two frames (\verb|velocity = lastPosition -|\\\verb|transform.position|). This led to many issues including lack of consistency, and the exclusion of factors like momentum, by which way a jerky reaction would be interpreted the same as a stone cold spike on the moment of impact, or how e.g. braking a move, common to alter a ball's flight path for floating serves for example, would negate velocity altogether.\\
 Various methods of smoothening were attempted in order to remedy these issues, such as weighted, and unweighted averaging over 5 frames, each presented its own problems, and none were reliable. In testing hit strength over several runs, for the same arm movements, the engine would one time record hand speeds in the range of $[0, 2]$ m/s, whilst in the next run, the range would inexplicably rise to $[0, 10]$ m/s.\\
 
-Finally, with a bit of documentation perused and many fruitless forum discussions read, it was noted that the Input System has a built-in function to read controller velocity in game space, via embedded sensors. It is not a perfect solution, as it also doesn't store momentum as mentioned above, a very important factor in the resulting hit strength, however it was at least consistent over several runs, and was adopted as a baseline due to the rapidly approaching development timelines.\\
+Finally, it was noted that the Input System has a built-in function to read controller velocity in game space, via embedded sensors. It is not a perfect solution, as it also doesn't store momentum as mentioned above, a very important factor in the resulting hit strength, however it was at least consistent over several runs, and was adopted as a baseline due to the rapidly approaching development timelines.\\
 
 Therefore, hit strength was calculated proportionally to hit speed on impact, moderated by a hit modifier which will be detailed in the next subsection for their specificity to certain hit types, which at least had the benefit of making that factor relatively independent of users' physical strength.\\
 
@@ -135,14 +163,14 @@ In volleyball, there are many distinct ways to interact with the ball, each leve
 \textbf{\underline{One-Handed Hits}}
 
 One-handed hits were first implemented as a baseline, and never improved upon later as a result of the development phase coming to a close. The aim estimation was set to going in exactly the direction the hand is moving towards when the hit is registered, i.e. the clear kinematic intent.\\
-For the hit modifier, a curve was desired that eases punishment of weaker or slower hits, for the scenario of e.g. braking a hit, or a more cautious \gls{vr} user dosing their swings, whilst balancing hits in an esablished mid-range of hit strength, to avoid making the dosing too gimmicky.\\
+For the hit modifier, a curve was desired that eases punishment of weaker or slower hits, for the scenario of e.g. braking a hit, or a more cautious \gls{vr} user dosing their swings, whilst balancing hits in an established mid-range of hit strength, to avoid making the dosing too gimmicky.\\
 The output hit strength should look along the lines of $|f| = g_{1HH}(x) * x$, with $x$ the magnitude of the hand velocity when the hit registers. This would result in a directional hit vector of \[\overrightarrow{hit} = \overrightarrow{vel_{hand}}.normalized * g(|\overrightarrow{vel_{hand}}|)*|\overrightarrow{vel_{hand}}|\]
 
-Having described the shape of the curve $g_{1HH}$, which would be a logistic decay function starting at a maximum multiplier $MAX$, then ending at a minimum multiplier $MIN$ with a steepness $k$, and a midway point $MID \rightarrow g_{1HH}(MID) = MIN+\frac{MAX-MIN}{2}$ for better control, a function designed with corrections from Claude AI was established with the function \[g_{1HH}(x) = \frac{MAX - MIN}{1 + e^{k*(x-MID)}} + MIN\], visualised in figure \ref{fig::hit-modifier-1hand}.
+Having described the shape of the curve $g_{1HH}$, which would be a logistic decay function starting at a maximum multiplier $MAX$, then ending at a minimum multiplier $MIN$ with a steepness $k$, and a midway point $MID \rightarrow g_{1HH}(MID) = MIN+\frac{MAX-MIN}{2}$ for better control, a function designed with corrections from Claude AI was established with the following function: \[g_{1HH}(x) = \frac{MAX - MIN}{1 + e^{k*(x-MID)}} + MIN.\]
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{figures/curve-1hh.png}
+	\includegraphics[width=0.5\textwidth]{figures/curve-1hh.png}
 	\caption[1-Handed Hit Force Modifier Curve]{A graph showcasing the behaviour of $g_{1HH}(x)$ (green), and the output hit strength $g(x)_{1HH} * x$ (blue) divided by 10 for visualisation. The orange dotted line represents the $MAX$ value (55), the purple dotted line represents the $MIN$ value (13). $k = 0.33$, and $MID$ is set to 5,5.}
 	\label{fig::hit-modifier-1hand}
 \end{figure}
@@ -158,16 +186,16 @@ Hit strength for setting was established as the combined hand speed on impact, i
 The strength modifier was here just made to be a regular decay function relying on three parameters $MIN$ and $MAX$ representing the same min and max modifier values as in $g_{1HH}$, and $SPDMAX$, the speed value after which $g_{set}(x)$ should converge towards $MIN$, defined as \[g_{set}(x) = (MAX-MIN) * e^{-b*x} +  MIN,\] with $b = -\frac{ln(\epsilon) - ln(MAX-MIN)}{SPDMAX}$ and $\epsilon$ greater but very close to 0, $b$ having been suggested by Claude to ease on the curve's converging factor, rather than trying to add another steepness factor to adjust on top.\\
 Through trial and error, again testing on serving scenarios, the values of $MAX = 130, MIN = 21.5, \text{ and } SPDMAX=9$ were adopted for use.\\
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{figures/curve-set.png}
+	\includegraphics[width=0.6\textwidth]{figures/curve-set.png}
 	\caption[Setting Hit Strength Modifier Curve]{A graph showcasing the behaviour of $g_{set}(x)$ (green), and the output hit strength $g_{set}(x) * x$ (blue) divided by 10 for visualisation. This function features the parameters $MAX = 130, MIN=21.5,\text{ and } SPDMAX=9$}
 \end{figure}
 
 Aim estimation was more tricky, as it is a complex move to direct even in real life. To efficiently calculate aim, a trick of sorts is often taught to beginners to form a sort of diamond between the thumbs and index fingers of the two, outstretched hands, oriented towards where the ball is desired to go. This could, in turn for engine systems, be simplified to a "hand normal" that would stretch out of each palm, that could subsequently be summed up to establish a direction, as visualised in figure \ref{fig::setting-aim-explained}.\\
 Testing showed it worked relatively well when used as designed, so this aim mechanism was kept.\\
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/set-aim.png}
 	\caption[Set Aiming Mechanism Visualisation]{A visualisation of the set's aim estimation mechanism, showcasing the hand normals in green and red, and the produced aim direction in yellow.}
@@ -179,33 +207,22 @@ Testing showed it worked relatively well when used as designed, so this aim mech
 The final move to implement was digging. In real life, digs are used to cushion incoming fast balls to bounce off the arms placed together to form a makeshift platform, for the setters to have an easier time controlling the second ball.\\
 Therefore the output hit strength had to be proportional to the speed of the ball on impact, whilst still retaining some proportion of user control to handle e.g. slower balls, or to revive a ball by sending it away even stronger.\\
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/dig-aim.png}
 	\caption[Visualisation of the dig's aim estimation]{An illustration the dig's aim estimation mechanic, estimating a platform between the thumbs, and bouncing the ball off the normal of this platform.}
 	\label{fig::dig-vis}
 \end{figure}
 
-Implementing the forearms usually used for this instead of the hands would have involved a time-consuming process of rigging relative to the controller, and more adjustments to not otherwise interfere with the player, so this idea was replaced by an esimation for the platform using the hands. When replicating the digging motion in-game, the hands would align, and it was noticed the thumbs could be an intuitive visualisation of the platform.\\
+Implementing the forearms usually used for this instead of the hands would have involved a time-consuming process of rigging relative to the controller, and more adjustments to not otherwise interfere with the player, so this idea was replaced by an estimation for the platform using the hands. When replicating the digging motion in-game, the hands would align, and it was noticed the thumbs could be an intuitive visualisation of the platform.\\
 Hands then calculated a "dig normal" $N$ representing the cross product of the thumb direction ($\overrightarrow{L}$ or $\overrightarrow{R}$) and a vector between the palms of both hands ($I$ from right to left) - a sketch to help illustrate this dig normal is provided in figure \ref{fig::dig-normal} - combined to calculate the normal $\overrightarrow{N} = \overrightarrow{R}\times\overrightarrow{I} = -\overrightarrow{I}\times\overrightarrow{L}$. The 'aim' direction is then the ball's velocity vector reflected across this dig normal using the built-in \verb|Vector3.Reflect| function implemented by Unity.\\
 
-The speed modifiers for hand and ball speed were implemented as direct multipliers, adjusted through trial and error to the values $mod_{ball} = 20$, and $mod_{hands} = 10$. The two hit modifier were applied in additive fashion, to avoid the absence of one, e.g. a static hand on receive, to penalise the other modifier. The code to determine the dig's aim and direction is provided below:\\
+The speed modifiers for hand and ball speed were implemented as direct multipliers, adjusted through trial and error to the values $mod_{ball} = 20$, and $mod_{hands} = 10$. The two hit modifier were applied in additive fashion, to avoid the absence of one, e.g. a static hand on receive, to penalise the other modifier. 
 
-\begin{lstlisting}[language=C++]
-Vector3 reflectDirection = Vector3.Reflect(BallVelocity.normal-
-	ized, DigNormal.normalized);
-float ballVelocityModifier = ballVelocityMod * BallVelocity.
-	magnitude;
-float handVelocityModifier = handVelocityMod * HandVelocity.
-	magnitude;
-Vector3 force = (ballVelocityModifier + handVelocityModifier) * 
-	reflectDirection;
-\end{lstlisting}
-
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{figures/sketch-dig.png}
-	\caption[Visualisation of the dig normal calculation]{A sketch illustrating the vector math used to calculate the dig normal. The order of operations in the cross-product is flipped to accommodate for the right hand rule determining the orientation of the cross vector.}
+	\caption[Visualisation of the dig normal calculation]{A sketch illustrating the vector maths used to calculate the dig normal. The order of operations in the cross-product is flipped for the left hand, to accommodate for the right hand rule determining the orientation of the cross vector.}
 	\label{fig::dig-normal}
 \end{figure}
 

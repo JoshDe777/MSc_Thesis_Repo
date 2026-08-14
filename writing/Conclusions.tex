@@ -1,43 +1,38 @@
 \chapter{Conclusions \& Future Work}
 \label{chap::conclusion-6}
 
-This chapter should summarize the work presented in the dissertation and discuss the conclusions that can be drawn from the work and the results presented in chapter \ref{chap::evaluation-5}.
+Over the course of this dissertation, the current state of \gls{vr} use in sports as a rising topic with much room for research and improvement was outlined. In order to contribute towards this, a user study is proposed to capture the effects of crowds on the illusion of Plausibility, and on overall gameplay experience during a \gls{vr} beach volleyball scenario.\\
+This scenario was implemented from scratch, leveraging external plugins and packages to boost the starting point, following which 14 participants with no prior experience in volleyball took part in mapping crowds in vr through their choices in-game, and a questionnaire after the experience.\\
+
+The results brought forward that, players did in fact react to the crowds plausibly, with participants stating they were either carried by them, or had a clear preference in ambiance, supported by the repartition in preferred configurations between users who felt unbothered by the crowd, and those who felt particularly affected.\\
+An inconclusive result in the measures meant to rank crowd states in order of particular viability meant that some of the research aims require further scrutiny.
 
 \section{Limitations}
-\begin{itemize}
-	\item VB in VR exposes MANY limitations of iVR in general:
-	\begin{itemize}
-		\item complete absence of haptic feedback
-		\item dangerosity from lack of vision of feet/ground
-		\item need for micro-detail recognition (ex. for blockers, any indication, e.g. eye or head movement, hand orientation and signals, from the setter where the ball will go counts)
-		\item very complex ball handling compared to other sports (uniquely so)
-		\item complexity of implementation to a realistic level (many nitpicky rules e.g. double touching, holding the ball for too long during a set, setting foot on the other side of the net by accident etc.)
-	\end{itemize}
-	\item simplicity of implementation + faulty aim estimation \& hit classification
-	\item questionnaire not nearly good enough: Open text fields not leveraged at all, crowd influence should have been measured from negative influence to positive with neutral/unaffected as a mid value instead of extreme
-	\item usefulness of transition matrix? Yet to look at it more closely but on face value it seems like a bit of a pointless metric idk
-\end{itemize}
+
+As a whole, this study features many limitations in all aspects - methodology and participant recruitment, gameplay design and implementation, as well as inherently from a technological point of view.\\
+
+Firstly, the demographic recruited is unsuited for research towards athletic use. None of the participants had any prior experience in the sport inspected, and the convenience sampling done in the direct entourage of a computer science student, rather than a targeted recruitment of athletes, means that the findings are barely if at all generalisable to the target demographic this study primarily aims to support.\\
+Regardless, a sample size of 14 is also too small to bring any of the findings forward as solid, scientific fact, rather serving as suggestions to help direct further research into the matter.\\
+
+Secondly, the limitations in methodology are also substantial, with the lack of any qualitative data collection, many subtleties and underlying factors that could have been used to explain the quantitative results were lost. This loss is further exacerbated by a questionnaire which focused mainly on the quantitative rating of targeted feelings, sometimes even with the wrong approach, e.g. in the case of the query of the crowd's effect on participants, which should, in hindsight, have featured a scale allowing to differentiate between positive and negative influence.\\
+
+The collected data was also infused with some bias, from e.g. the starting point at level 3 without counter-balance between crowd levels makes the possibility of an ordering or anchoring effect - which may be confirmed by the popularity of the jump from level 3 to level 0. The timing of prompts adjusted to game pace rather than a stable time-based metric also affects the amount of transitions proposed to a player, meaning that decision fatigue may for example set in quicker for users that burn through rallies one way or another.\\
+No performance of any kind, be it the raw score, or any physiological or other measure was recorded, meaning that the findings of this study are not linkable to any effects on athletic performance, or the learning of sport-specific movement or technique.\\
+
+Finally, as outlined in section \ref{sec::challenges}, Volleyball is a difficult sport to bring to \gls{vr}, meaning that any implementation within the time frame granted for this project was impossible without major trade-off's in realism and mechanical accuracy - expressed in the low average rating of 5,79 for the mechanics -, further distancing the findings from direct use in sport-specific scenarios.
 
 \section{Future Work}
 
-The section may present a list of items that were beyond the scope of the dissertation.\\
+From the findings outlined, as well as the limitations mentioned above, there are many avenues to improve on this study in the future.\\
 
-Game improvements:
-\begin{itemize}
-	\item use of controller-free controls (e.g. hand-tracking, maybe full-body or foot-tracking for more holistic games) - e.g. for specialised systems through a real-time MoCap setup $\rightarrow$ could be paired with haptic gloves to simulate ball physics on hands!
-	\item Better hit classification (esp. from one hand), refining aim recognition for specific mechanics (e.g. dig particularly)
-	\item including actual opponents rather than just reacting to balls flying in
-\end{itemize}
+In order to improve the simulation, a methodic approach to examine aim estimation in volleyball, ideally directly applied in \gls{vr} through e.g. machine learning algorithms, as well as a more comprehensive hit classification mechanism would go a long way towards making the fundamental act of hitting the ball more viable for competitive use.\\
+The inclusion of opponents, either in the form of a multiplayer application, or of computer-controlled agents could also form a more engaging game loop, and enable more variance in rally length.\\
+Finally, the crowds could be made more reactive to game events, or with a wider range in sentiment.\\
 
-Study direct improvements:
-\begin{itemize}
-	\item use as a learning experience, e.g. using this to teach complex IRL mechanics (e.g. setting) and measuring how well that translates to improvement on the pitch.
-	\item more in-depth probing for results (e.g. sentiment analysis on interviews or similar, more open responses, as lauded by Slater in \cite{slater-2023-sentiment} to pick up on a much larger depth of information than a 10 point scale ever could)
-\end{itemize}
+In terms of building upon this study, there are many more explorations that could be done into the crowds. For instance, a study into how users react to different crowd sentiments - can a crowd that is very adversarial, regularly booing and jeering at the user stimulate competitive participants, or does a more supportive crowd benefit more as a whole? Does a simulation of a home or away crowd in \gls{vr} affect performance?\\
+More direct improvements could also be made by decoupling the audio from the visual crowd: would the audio for crowd level 2 with the visual density of a full stand have been more comfortable for example.\\
+A comparison of performance-related measures between crowd states could also serve to either underline the absence of a best-practise in terms of crowd density, or prove there is one against the modest findings of this paper.\\
 
-Tangential directions for further research:
-\begin{itemize}
-	\item More alive/reactive crowds (with more accurate levels of engagement, maybe recorded from events of the actual sport; also more individual shouts, more reactiveness to on-pitch happenings (oohs and ahhs with bigger events e.g. blocks), or wider range of emotion - cheering, booing, jeering, chants, boredom/relative quiet etc.), e.g. using researched crowd behaviour models like the one used for \cite{glemarec-2021-indifferent}.
-	\item more detailed investigation into human factors (what kind of trait reacts the most to the taunting spectator, what kind of trait is associated with complete indifference from the crowd etc.)
-	\item add more factors to crowd for participant control, e.g. detach audio from crowd level (what if lv 2 audio was more accurate with a fuller crowd for example).
-\end{itemize}
+From a technological point of view, to improve the porting of volleyball to digital environments, it could be worth looking into alternative ways to control the ball. Commercial-grade \glspl{hmd} nowadays incorporate ever more accurate computer vision-based tracking techniques, particularly for hand-tracking, which could be worth looking into leveraging to enable more complex ball handling.\\
+In a larger study, it could alternatively be worth looking into pairing the activity with real-time motion capture, or adding haptic gloves, or maybe suits that simulate various pressures on the body to check whether this would help learn moves faster, or improve on training performance for athletes.\\
+Full-on \acrlong{av} will be more difficult to implement, as it would involve a simulated ball being controlled like a drone whilst behaving accurately to the touch, which would open its own ethical debates around the dangers such technologies introduce, so maybe a look into other ways of providing haptic feedback could be beneficial as well.
